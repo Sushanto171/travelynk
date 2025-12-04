@@ -2,6 +2,15 @@
   "name": "travelynk",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "Sushanto kumar",
+    "email": "sushantokumar171@gmail.com",
+    "url": "https://sushantokumar.vercel.app"
+  },
+  "repository": {
+    "url": "https://github.com/Sushanto171/travelynk",
+    "type": "github"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
