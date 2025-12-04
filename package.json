@@ -8,8 +8,7 @@
     "url": "https://sushantokumar.vercel.app"
   },
   "repository": {
-    "url": "https://github.com/Sushanto171/travelynk",
-    "type": "github"
+    "url": "https://github.com/Sushanto171/travelynk"
   },
   "scripts": {
     "dev": "next dev",
