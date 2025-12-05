@@ -24,10 +24,12 @@ const serverFetchHelper: IServerFetchProps = async (endpoint, options) => {
 
   const { headers } = options
 
-  const response = await fetch(`${baseUrl}/${endpoint}`, {
+  console.log(`${baseUrl}${endpoint}`,);
+  const response = await fetch(`${baseUrl}${endpoint}`, {
     ...headers,
     credentials: "include",
-    ...options
+    ...options,
+    redirect:"manual"
   })
 
   return response

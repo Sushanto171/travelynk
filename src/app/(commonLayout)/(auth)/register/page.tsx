@@ -1,4 +1,4 @@
-import RegisterForm from "@/components/modules/auth/RegisterFrom";
+import RegisterForm from "@/components/modules/auth/RegisterForm";
 import {
   Card,
   CardContent,
