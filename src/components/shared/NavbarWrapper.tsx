@@ -24,7 +24,7 @@ export default function NavbarWrapper({ children }: { children: ReactNode }) {
 
   return (
     <div
-      className={`sticky top-0 left-0 w-full z-50 bg-navbar px-6 md:px-12 backdrop-blur-md border-b border-border transition-transform duration-300 ${isVisible ? "translate-y-0" : "-translate-y-full"
+      className={`sticky top-0 left-0 w-full z-50 bg-navbar mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 backdrop-blur-md border-b border-border transition-transform duration-300 ${isVisible ? "translate-y-0" : "-translate-y-full"
         }`}
     >
       {children}
