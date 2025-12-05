@@ -1,6 +1,11 @@
+import VerifyEmail from "@/components/modules/auth/VerifyEmail";
+import { ISearchParams } from "@/types/searchParams";
 
-export default function VerifyPage() {
+export default async function VerifyPage({ searchParams }: ISearchParams) {
+  const { email , token } = await searchParams 
   return (
-    <div>This is VerifyPage Component.</div>
+    <div>
+      <VerifyEmail email={email || undefined } token={token} />
+    </div>
   );
 }
