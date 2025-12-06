@@ -1,12 +1,12 @@
 "use server"
+import { getDefaultDashboardRoute } from "@/lib/authUtils";
 import { catchAsyncAction } from "@/lib/catchAsyncAction";
 import { loginCookieManagement } from "@/lib/LogInCookieManagement";
 import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";
 import { loginValidationZodSchema } from "@/zod/auth/loginUser.validation";
-import { parse } from "cookie";
 import { redirect } from "next/navigation";
-import { getUser } from "./getUser.service";
+import { getUserAction } from "./getUser.service";
 
 export const login = catchAsyncAction(async (_pres, formData) => {
   const payload = {
@@ -34,7 +34,7 @@ export const login = catchAsyncAction(async (_pres, formData) => {
     }
   })
   const result = await res.json()
-  
+
   // from server redirect ==> "/verify"
   if (result.redirectTo) {
     return redirect(`${result.redirectTo}?loggedIn=true`)
@@ -43,15 +43,15 @@ export const login = catchAsyncAction(async (_pres, formData) => {
   if (!result.success) {
     throw new Error(process.env.NODE_ENV === "development" ? result.message : "Login Failed. You might have entered incorrect email or password.")
   }
-  
+
   await loginCookieManagement(res)
 
-  
+  const user = await getUserAction()
   if (redirectTo) {
     // from loginForm ===> "/any"
     return redirect(`${redirectTo}?loggedIn=true`)
   } {
     // from verify ==> "/dashboard"
-    return redirect(`${"/login"}?loggedIn=true`)
+    return redirect(`${getDefaultDashboardRoute(user!.role)}?loggedIn=true`)
   }
 })

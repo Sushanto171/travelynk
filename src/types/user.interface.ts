@@ -1,6 +1,7 @@
 export interface IUser {
   id: string
   email: string
+  name: string,
   status: UserStatus
   role: UserRole
   is_verified: boolean
@@ -24,16 +25,12 @@ export interface Admin {
 }
 
 
-enum UserRole {
+export enum UserRole {
+  ADMIN = "ADMIN",
   USER = "USER",
-  ADMIN = "ADMIN"
 }
 
-enum UserStatus {
-  ACTIVE = "ACTIVE",
-  INACTIVE = "INACTIVE",
-  BANNED = "BANNED"
-}
+export type UserStatus = "ACTIVE" | "INACTIVE" | "BANNED"
 
 
 export interface ITraveler {

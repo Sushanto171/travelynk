@@ -13,7 +13,7 @@ export default function LogoutSuccessMessage() {
 
   useEffect(() => {
     if (Logout === "true") {
-      toast.success("Verification successfully");
+      toast.success("Logout successfully");
 
       const params = new URLSearchParams(searchParams.toString());
       params.delete("loggedOut");

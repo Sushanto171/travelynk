@@ -1,4 +1,5 @@
-import { IUser } from "@/types/user.interface";
+import { getDefaultDashboardRoute } from "@/lib/authUtils";
+import { getUserAction } from "@/services/auth/getUser.service";
 import { EllipsisVertical } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
@@ -20,17 +21,17 @@ type ILink = {
   href: string;
 };
 
-interface IPublicNavbarProps {
-  user: IUser
-}
+export const dynamic = "force-dynamic";
 
-export default async function PublicNavbar({ user }: IPublicNavbarProps) {
+
+export default async function PublicNavbar() {
+  const user = await getUserAction()
 
   const links: ILink[] = [
     { title: "Home", href: "/" },
-    // ...(user
-    //   ? [{ title: "Dashboard", href: getDefaultDashboardRoute(user.role) }]
-    //   : []),
+    ...(user
+      ? [{ title: "Dashboard", href: getDefaultDashboardRoute(user.role) }]
+      : []),
     { title: "Find travel plans", href: "/travel-plans" },
     { title: "About us", href: "/about-us" },
     { title: "Contact us", href: "/contact-us" },
