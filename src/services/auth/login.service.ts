@@ -1,8 +1,10 @@
 "use server"
 import { catchAsyncAction } from "@/lib/catchAsyncAction";
+import { loginCookieManagement } from "@/lib/LogInCookieManagement";
 import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";
 import { loginValidationZodSchema } from "@/zod/auth/loginUser.validation";
+import { parse } from "cookie";
 import { redirect } from "next/navigation";
 
 export const login = catchAsyncAction(async (_pres, formData) => {
@@ -31,23 +33,23 @@ export const login = catchAsyncAction(async (_pres, formData) => {
     }
   })
   const result = await res.json()
+  
+  // from server redirect ==> "/verify"
+  if (result.redirectTo) {
+    return redirect(`${result.redirectTo}?loggedIn=true`)
+  }
 
   if (!result.success) {
-    throw new Error(process.env.NODE_ENV==="development"? result.message : "Login Failed. You might have entered incorrect email or password.")
+    throw new Error(process.env.NODE_ENV === "development" ? result.message : "Login Failed. You might have entered incorrect email or password.")
   }
+  
+  await loginCookieManagement(res)
 
-  if (result.success) {
-    // from server redirect ==> "/verify"
-    if (result.redirectTo) {
-      return redirect(`${result.redirectTo}?loggedIn=true`)
-    }
-    if (redirectTo) {
-      // from loginForm ===> "/any"
-      return redirect(`${redirectTo}?loggedIn=true`)
-    } {
-      // from verify ==> "/dashboard"
-      return redirect(`${"/dashboard"}?loggedIn=true`)
-    }
+  if (redirectTo) {
+    // from loginForm ===> "/any"
+    return redirect(`${redirectTo}?loggedIn=true`)
+  } {
+    // from verify ==> "/dashboard"
+    return redirect(`${"/login"}?loggedIn=true`)
   }
-  return result
 })
