@@ -8,9 +8,10 @@ export const catchAsyncAction = <S, P extends any[],>(fn: (state: S | null, ...p
     try {
       return await fn(state, ...payload)
     } catch (error: any) {
-   if (error?.digest?.startsWith("NEXT_REDIRECT")) {
-      throw error;
-    }      return {
+      if (error?.digest?.startsWith("NEXT_REDIRECT")) {
+        throw error;
+      }
+      return {
         success: false,
         message: error?.message ?? "Something went wrong!"
       } as S

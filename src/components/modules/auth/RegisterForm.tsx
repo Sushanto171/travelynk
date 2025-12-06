@@ -11,13 +11,17 @@ import GetFieldError from "@/lib/GetFieldError";
 import { registerTraveler } from "@/services/auth/register.service";
 import Link from "next/link";
 import { useActionState, useEffect } from 'react';
+import { toast } from "sonner";
 
 export default function RegisterForm() {
 
   const [state, action, isPending] = useActionState(registerTraveler, null)
 
   useEffect(() => {
-    console.log(state);
+    if (!state) return
+    if (!state.success && !Array.isArray(state.error)) {
+      toast.error(state.message === "Duplicate key error" ? "This email already exist" : state.message)
+    }
   }, [state])
 
   return (

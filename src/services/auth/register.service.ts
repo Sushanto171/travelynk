@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 
 
 export const registerTraveler = catchAsyncAction(async (_pre, fromData: FormData) => {
-  console.log(_pre, fromData);
+  // console.log(_pre, fromData);
 
   const payload = {
     name: fromData.get("name"),
@@ -39,9 +39,9 @@ export const registerTraveler = catchAsyncAction(async (_pre, fromData: FormData
     }
   })
   const result = await res.json()
-
-if (result.redirectTo) {
-  redirect(result.redirectTo)
-}
+  // form server ===> "/verify"
+  if (result.redirectTo) {
+    redirect(result.redirectTo)
+  }
   return result
 })
