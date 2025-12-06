@@ -24,7 +24,6 @@ export const verify = async (payload: { email: string, otp: string, token?: stri
     if (result.success) {
       if (result.data.token) {
         const info = jwtHelper.verifyToken(result.data.token, process.env.NEXT_PUBLIC_JWT_LOGIN_SECRET as string)
-        console.log(info);
         const newFormData = new FormData()
 
         newFormData.append("email", info.email)
@@ -35,13 +34,13 @@ export const verify = async (payload: { email: string, otp: string, token?: stri
       }
       if (payload.redirectTo) {
         const path = payload.redirectTo.toString()
-        return redirect(path)
+        return redirect(`${path}?verified=true`)
       }
       if (!payload.redirectTo) {
-        return redirect("/login")
+        return redirect("/login?verified=true")
       }
     }
-    
+
     return result
     // return
   } catch (error: any) {
@@ -49,7 +48,7 @@ export const verify = async (payload: { email: string, otp: string, token?: stri
       throw error;
     } console.log("error form verify catch:", error);
     return {
-      success:false,
+      success: false,
       message: error.message
     }
   }

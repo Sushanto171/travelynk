@@ -32,17 +32,21 @@ export const login = catchAsyncAction(async (_pres, formData) => {
   })
   const result = await res.json()
 
+  if (!result.success) {
+    throw new Error(process.env.NODE_ENV==="development"? result.message : "Login Failed. You might have entered incorrect email or password.")
+  }
 
   if (result.success) {
     // from server redirect ==> "/verify"
     if (result.redirectTo) {
-      return redirect(result.redirectTo)
+      return redirect(`${result.redirectTo}?loggedIn=true`)
     }
     if (redirectTo) {
-      return redirect(redirectTo)
+      // from loginForm ===> "/any"
+      return redirect(`${redirectTo}?loggedIn=true`)
     } {
       // from verify ==> "/dashboard"
-      return redirect("/dashboard")
+      return redirect(`${"/dashboard"}?loggedIn=true`)
     }
   }
   return result

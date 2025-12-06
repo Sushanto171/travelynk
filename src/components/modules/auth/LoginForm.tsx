@@ -85,7 +85,7 @@ export default function LoginForm({ redirectTo }: { redirectTo?: string }) {
         </Field>
         <Field>
 
-          <LoadingButton isLoading={isPending} loadingText="Logging.." >
+          <LoadingButton isLoading={isPending} loadingText="Logging in..." >
             Login
           </LoadingButton>
 
