@@ -1,5 +1,5 @@
 
-export default function Home() {
+export default async function HomePage() {
   return (
     <main className="">
       home page

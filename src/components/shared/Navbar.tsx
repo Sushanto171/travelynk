@@ -1,3 +1,4 @@
+import { IUser } from "@/types/user.interface";
 import { EllipsisVertical } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
@@ -20,14 +21,14 @@ type ILink = {
 };
 
 interface IPublicNavbarProps {
-  user: boolean | null
+  user: IUser
 }
 
 export default async function PublicNavbar({ user }: IPublicNavbarProps) {
 
   const links: ILink[] = [
     { title: "Home", href: "/" },
-    // ...(user 
+    // ...(user
     //   ? [{ title: "Dashboard", href: getDefaultDashboardRoute(user.role) }]
     //   : []),
     { title: "Find travel plans", href: "/travel-plans" },
