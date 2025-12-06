@@ -6,6 +6,7 @@ import { zodValidator } from "@/lib/zodValidator";
 import { loginValidationZodSchema } from "@/zod/auth/loginUser.validation";
 import { parse } from "cookie";
 import { redirect } from "next/navigation";
+import { getUser } from "./getUser.service";
 
 export const login = catchAsyncAction(async (_pres, formData) => {
   const payload = {
@@ -45,6 +46,7 @@ export const login = catchAsyncAction(async (_pres, formData) => {
   
   await loginCookieManagement(res)
 
+  
   if (redirectTo) {
     // from loginForm ===> "/any"
     return redirect(`${redirectTo}?loggedIn=true`)

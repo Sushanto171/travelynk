@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import LoginSuccessMessage from './LoginSuccessMessage';
 import RegisterSuccessMessage from './RegisterSuccessMessage';
 import VerifySuccessMessage from './VerifiedSuccessMessage';
+import LogoutSuccessMessage from './LogoutToastMessage';
 
 export default function SuccessToastMessageContainer() {
   return (
@@ -9,6 +10,7 @@ export default function SuccessToastMessageContainer() {
       <LoginSuccessMessage />
       <RegisterSuccessMessage />
       <VerifySuccessMessage />
+      <LogoutSuccessMessage />
     </Suspense>
   );
 }

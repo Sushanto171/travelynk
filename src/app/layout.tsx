@@ -74,7 +74,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} dark antialiased`}
       >
-        <Toaster richColors />
+        <Toaster richColors position="top-right" />
         {children}
         <SuccessToastMessageContainer />
       </body>

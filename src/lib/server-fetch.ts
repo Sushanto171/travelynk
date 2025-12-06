@@ -1,3 +1,5 @@
+import { getCookie } from "./tokenHelpers";
+
 const baseUrl = process.env.NEXT_PUBLIC_URL || "http://localhost:5000/api/v1"
 
 type IServerFetchProps = (
@@ -22,15 +24,25 @@ type IServerFetchProps = (
 
 const serverFetchHelper: IServerFetchProps = async (endpoint, options) => {
 
-  const { headers } = options
+   const { headers, ...restOptions } = options;
+  const accessToken = await getCookie("accessToken");
+  const refreshToken = await getCookie("refreshToken");
 
-  console.log(`${baseUrl}${endpoint}`,);
+  const cookieHeader = [
+    accessToken && `accessToken=${accessToken}`,
+    refreshToken && `refreshToken=${refreshToken}`,
+  ]
+    .filter(Boolean)
+    .join("; ");
+
   const response = await fetch(`${baseUrl}${endpoint}`, {
-    ...headers,
+    headers: {
+      ...(cookieHeader ? { Cookie: cookieHeader } : {}),
+      ...headers,
+    },
     credentials: "include",
-    ...options,
-    redirect:"manual"
-  })
+    ...restOptions,
+  });
 
   return response
 }

@@ -10,7 +10,7 @@ interface IToken {
   SameSite?: boolean | "none" | "lax" | "strict";
 }
 
-export const getToken = async (
+export const getHeaderToken = async (
   name: string,
   setCookieHeaders: string[]
 ): Promise<IToken | null> => {
@@ -44,3 +44,13 @@ export const setCookie = async (token: IToken) => {
     sameSite: "none",
   })
 }
+
+export const getCookie = async (name: string) => {
+  const cookieStore = await cookies();
+  return cookieStore.get(name)?.value || null;
+};
+
+export const deleteCookie = async (key: string) => {
+  const cookieStore = await cookies();
+  cookieStore.delete(key);
+};
