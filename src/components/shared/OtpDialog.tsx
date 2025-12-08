@@ -39,7 +39,8 @@ export function OtpDialog({
   isPending
 }: IOtpDialogProps) {
   return (
-    <AlertDialog open={open} onOpenChange={onClose}>
+    <AlertDialog open={open} onOpenChange={onClose}
+     >
       <AlertDialogContent className="max-w-sm rounded-xl border border-border bg-card shadow-xl p-6 mx-auto">
         <AlertDialogHeader className="flex flex-col items-center space-y-4">
           {/* Icon */}

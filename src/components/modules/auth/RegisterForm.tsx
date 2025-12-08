@@ -22,6 +22,7 @@ export default function RegisterForm() {
     if (!state.success && !Array.isArray(state.error)) {
       toast.error(state.message === "Duplicate key error" ? "This email already exist" : state.message)
     }
+
   }, [state])
 
   return (
@@ -31,7 +32,10 @@ export default function RegisterForm() {
           {/* name */}
           <Field>
             <FieldLabel htmlFor="name">Name</FieldLabel>
-            <Input id="name" name="name" type="text" placeholder="John Doe" />
+            <Input id="name" name="name" type="text"
+              defaultValue={state?.FormData?.name || null}
+
+              placeholder="John Doe" />
             <GetFieldError state={state} name="name" />
 
           </Field>
@@ -42,6 +46,8 @@ export default function RegisterForm() {
               id="email"
               type="email"
               name="email"
+              defaultValue={state?.FormData?.email || null}
+
               placeholder="m@example.com"
             />
             <GetFieldError state={state} name="email" />
@@ -49,7 +55,9 @@ export default function RegisterForm() {
           {/* address */}
           <Field>
             <FieldLabel htmlFor="address">Address (Optional)</FieldLabel>
-            <Input id="address" name="address" type="text" />
+            <Input id="address" name="address"
+              defaultValue={state?.FormData?.email || null}
+              type="text" />
           </Field>
           {/* password */}
           <Field>
