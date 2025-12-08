@@ -35,9 +35,11 @@ export const login = catchAsyncAction(async (_pres, formData) => {
   })
   const result = await res.json()
 
+  console.log({result});
+
   // from server redirect ==> "/verify"
   if (result.redirectTo) {
-    return redirect(`${result.redirectTo}?loggedIn=true`)
+    return redirect(`${result.redirectTo}`)
   }
 
   if (!result.success) {

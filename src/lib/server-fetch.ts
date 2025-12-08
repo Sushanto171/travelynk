@@ -1,6 +1,6 @@
 import { getCookie } from "./tokenHelpers";
 
-const baseUrl = process.env.NEXT_PUBLIC_URL || "http://localhost:5000/api/v1"
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000/api/v1"
 
 type IServerFetchProps = (
   endpoint: string,
@@ -23,7 +23,6 @@ type IServerFetchProps = (
  */
 
 const serverFetchHelper: IServerFetchProps = async (endpoint, options) => {
-
    const { headers, ...restOptions } = options;
   const accessToken = await getCookie("accessToken");
   const refreshToken = await getCookie("refreshToken");
