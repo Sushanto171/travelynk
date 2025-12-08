@@ -1,6 +1,6 @@
 "use server";
 
-import { deleteCookie } from "@/lib/tokenHelpers";
+import { deleteCookie } from "@/lib/cookieHelpers";
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 

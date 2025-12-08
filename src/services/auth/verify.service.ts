@@ -28,14 +28,13 @@ export const verify = catchAsync(async (payload: { email: string, otp: string, t
   }
 
   if (result.success) {
-    if (result.data.token) {
-      const info = jwtHelper.verifyToken(result.data.token, process.env.NEXT_PUBLIC_JWT_LOGIN_SECRET as string)
+    if (result.data.token && token) {
+      const info = jwtHelper.verifyToken(token, process.env.JWT_LOGIN_SECRET as string)
       const newFormData = new FormData()
 
       newFormData.append("email", info.email)
       newFormData.append("password", info.password)
       return await login(null, newFormData)
-
     }
     if (payload.redirectTo) {
       const path = payload.redirectTo.toString()

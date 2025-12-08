@@ -1,7 +1,9 @@
 import LoginForm from "@/components/modules/auth/LoginForm";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ISearchParams } from "@/types/searchParams";
 
-export default function LoginPage() {
+export default async function LoginPage({searchParams}:ISearchParams) {
+  const {redirectTo} = await searchParams
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
       <Card className="w-full max-w-md">
@@ -12,7 +14,7 @@ export default function LoginPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <LoginForm />
+          <LoginForm redirectTo={redirectTo} />
         </CardContent>
       </Card>
     </div>

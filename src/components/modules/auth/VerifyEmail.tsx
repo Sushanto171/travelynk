@@ -1,37 +1,43 @@
-"use client"
-import { OtpDialog } from '@/components/shared/OtpDialog';
-import { verify } from '@/services/auth/verify.service';
-import { useState, useTransition } from 'react';
-import { toast } from 'sonner';
+"use client";
+import { OtpDialog } from "@/components/shared/OtpDialog";
+import { verify } from "@/services/auth/verify.service";
+import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
+import { toast } from "sonner";
 
-export default function VerifyEmail({ email, token }: { email?: string, token?: string }) {
-  const [open, setOpen] = useState(email ? true : false)
-  const [otp, setOtp] = useState("")
-  const [isPending, startTransition] = useTransition()
-  if (!email) return
+export default function VerifyEmail({ email, token }: { email: string; token?: string }) {
+  const router = useRouter();
+
+  const [open, setOpen] = useState(!!email);
+  const [otp, setOtp] = useState("");
+  const [isPending, startTransition] = useTransition();
+
   const handleSubmit = () => {
-    if (!otp) return
+    if (!otp) return;
+
     startTransition(async () => {
-      const res = await verify({
-        email, otp, token
-      })
-      console.log(res);
+      const res = await verify({ email, otp, token });
+
       if (!res.success) {
-        toast.error(res.message)
+        toast.error(res.message);
+        return;
       }
-    })
-  }
+
+      toast.success("Email verified successfully");
+
+      // optional: navigate user to dashboard or login
+      router.replace("/login");
+    });
+  };
 
   return (
-    <div>
-      <OtpDialog
-        open={open}
-        onClose={(value: boolean) => setOpen(value)}
-        onChange={(value) => setOtp(value)}
-        onClick={handleSubmit}
-        email={email}
-        isPending={isPending}
-      />
-    </div>
+    <OtpDialog
+      open={open}
+      onClose={setOpen}
+      onChange={setOtp}
+      onClick={handleSubmit}
+      email={email}
+      isPending={isPending}
+    />
   );
 }

@@ -1,6 +1,6 @@
 "use server"
 
-import { getHeaderToken, setCookie } from "./tokenHelpers";
+import { getHeaderToken, setCookie } from "./cookieHelpers";
 
 export const loginCookieManagement = async (res: Response) => {
   const setCookieHeaders = res.headers.getSetCookie();
