@@ -1,5 +1,8 @@
+import { getCountry } from "@/services/admin/countryManagement";
 
-export default function AdminCountryManagementPage() {
+export default async function AdminCountryManagementPage() {
+  const countries = await getCountry()
+  console.log(countries);
   return (
     <div>This is AdminCountryManagementPage Component.</div>
   );

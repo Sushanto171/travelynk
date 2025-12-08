@@ -41,7 +41,7 @@ export const registerTraveler = catchAsyncAction(async (_pre, fromData: FormData
   const result = await res.json()
   // form server ===> "/verify"
   if (result.redirectTo) {
-    redirect(`${result.redirectTo}`)
+    redirect(`${result.redirectTo}&register="true"`)
   }
   return result
 })

@@ -9,7 +9,7 @@ export const proxy = async (request: NextRequest) => {
   const isAuthPage = isAuthRoute(pathname)
   const routeOwner = getRouteOwner(pathname)
   let userRole: UserRole | null = null
-
+console.log(request.url);
     if (pathname === "/verify") {
     const email = searchParams.get("email");
 
