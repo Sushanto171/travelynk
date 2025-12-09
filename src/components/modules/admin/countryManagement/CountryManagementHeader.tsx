@@ -1,11 +1,22 @@
 "use client"
 import { ManagementPageHeader } from '@/components/shared/ManagementPageHeader';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useState, useTransition } from 'react';
 import CountryFormDialog from './CountryFormDialog';
 
 export default function CountryManagementHeader() {
   const [open, setOpen] = useState(false)
   const [key, setKey] = useState(1)
+
+  const [, startTransition] = useTransition()
+  const router = useRouter()
+
+  const handleRefresh = () => {
+    startTransition(() => {
+      router.refresh()
+    })
+  }
+
   const handleDialogOpen = () => {
     setOpen(true)
     setKey(prev => prev + 1)
@@ -26,7 +37,9 @@ export default function CountryManagementHeader() {
       <CountryFormDialog
         open={open}
         key={key}
-        onClose={() => setOpen(false)} />
+        onClose={() => setOpen(false)}
+        onSuccess={handleRefresh}
+      />
 
     </div>
   );

@@ -16,7 +16,8 @@ export const zodValidator = <T>(payload: T, schema: ZodObject) => {
   } else {
     return {
       success: true,
-      data: validate.data
+      data: validate.data,
+      FormData: payload
     }
   }
 }

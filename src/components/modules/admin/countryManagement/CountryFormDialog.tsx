@@ -13,20 +13,23 @@ import {
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import GetFieldError from "@/lib/GetFieldError";
-import { createMultipleCountries } from "@/services/admin/countryManagement";
+import { createMultipleCountries, updateCountry } from "@/services/admin/countryManagement";
 import { ICountry } from "@/types/country.interface";
 import { useActionState, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 interface CountryModalProps {
   open: boolean;
   onClose: () => void;
   country?: ICountry;
+  onSuccess: () => void;
 }
 
 export default function CountryFormDialog({
   open,
   onClose,
   country,
+  onSuccess
 }: CountryModalProps) {
   const isCreate = !country;
 
@@ -44,15 +47,22 @@ export default function CountryFormDialog({
     setRows((prev) => prev.filter((_, i) => i !== index));
 
   // ---------- Server Action Handler ----------
-  const [state, action, isPending] = useActionState(createMultipleCountries, null);
+  const [state, action, isPending] = useActionState(isCreate ? createMultipleCountries : updateCountry, null);
 
   useEffect(() => {
     if (!state) return
-    console.log(state)
 
-  }, [state])
+    if (state.success) {
+      onSuccess()
+      onClose()
+      toast.success(state.message)
+    } else {
+      console.log(state)
+      toast.error(state.message)
+    }
 
-  console.log(country)
+  }, [state, onSuccess, onClose])
+
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
@@ -76,7 +86,7 @@ export default function CountryFormDialog({
                     <Input
                       id={`id`}
                       name={"id"}
-                      defaultValue={country.id}
+                      defaultValue={country?.id ||state?.FormData?.id }
                       hidden={true}
                     />
                   )
@@ -88,12 +98,12 @@ export default function CountryFormDialog({
                   <Input
                     id={`code-${i}`}
                     name={isCreate ? `countries[${i}].code` : "code"}
-                    defaultValue={row.code}
+                    defaultValue={row?.code || country?.code}
                     placeholder="BN"
                   />
                   <GetFieldError
                     state={state}
-                    name={isCreate ? `countries.${i}.code` : "code"}
+                    name={ "code"}
                   />
                 </Field>
 
@@ -103,12 +113,12 @@ export default function CountryFormDialog({
                   <Input
                     id={`name-${i}`}
                     name={isCreate ? `countries[${i}].name` : "name"}
-                    defaultValue={row.name}
+                    defaultValue={row?.name || country?.name}
                     placeholder="Bangladesh"
                   />
                   <GetFieldError
                     state={state}
-                    name={isCreate ? `countries.${i}.name` : "name"}
+                    name={isCreate ? `countries.${i}` : "name"}
                   />
                 </Field>
 
