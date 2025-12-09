@@ -1,7 +1,13 @@
-import React from 'react';
+import InterestManagementHeader from '@/components/modules/admin/interestManagement/InterestManagementHeader';
+import InterestTable from '@/components/modules/admin/interestManagement/InterestTable';
+import { getInterests } from '@/services/admin/interestManagement';
 
-export default function InterestManagementPage() {
+export default async function InterestManagementPage() {
+  const interests = await getInterests()
   return (
-    <div>This is InterestManagementPage Component.</div>
+    <div className={"space-y-6"}>
+      <InterestManagementHeader />
+      <InterestTable interests={interests} />
+    </div>
   );
 }

@@ -60,7 +60,7 @@ export default function CountryTable({ countries }: { countries: ICountry[] }) {
         getRowKey={(row) => row.code}
         onDelete={setDeleteCountry}
         onEdit={setCountry}
-        isRefreshing={isPending}
+        isRefreshing={isPending || isDeleting}
       />
     </div>
   );

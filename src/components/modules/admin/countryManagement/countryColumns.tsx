@@ -1,3 +1,4 @@
+import DateCell from '@/components/shared/cell/DateCell';
 import { Column } from '@/components/shared/ManagementTable';
 import { ICountry } from '@/types/country.interface';
 
@@ -11,7 +12,7 @@ export const countryColumns: Column<ICountry>[] = [
     render: (row) => row.name,
   },
   {
-    header: "Create",
-    render: (row) => row.created_at,
+    header: "Created",
+    render: (row) => <DateCell date={ row.created_at!} />,
   },
 ]
