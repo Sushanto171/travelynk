@@ -1,3 +1,6 @@
+import { ICountry } from "./country.interface"
+import { IInterest } from "./interest.interface"
+
 export interface IUser {
   id: string
   email: string
@@ -45,6 +48,8 @@ export interface ITraveler {
   address?: string
   current_location?: string
   has_verified_badge: boolean
+  interests?: IInterest[]
+  visited_countries?: ICountry[]
   last_active_at: string
   subscription_active: boolean
   created_at: string

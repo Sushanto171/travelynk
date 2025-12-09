@@ -2,18 +2,25 @@ import { CoverPhoto } from "@/components/modules/profile/CoverPhoto";
 import ProfileHeader from "@/components/modules/profile/ProfileHeader";
 import ProfileLayout from "@/components/modules/profile/ProfileLayout";
 import { ProfileTabs } from "@/components/modules/profile/ProfileTabs";
+import { getCountry } from "@/services/admin/countryManagement";
+import { getInterests } from "@/services/admin/interestManagement";
 import { getUserAction } from "@/services/auth/getUser.service";
 import { redirect } from "next/navigation";
 
 
 export default async function MyProfilePage() {
   const user = await getUserAction()
+  const interests = await getInterests()
+  const countries = await getCountry()
   if (!user) return redirect("/login")
   return (
     <ProfileLayout
       cover={<CoverPhoto src={""} />}
       profile={
         <ProfileHeader
+          interests={interests}
+          countries={countries}
+          traveler={user?.traveler}
           name={user.name}
           bio={user?.traveler?.bio}
           avatar={user?.traveler?.profile_photo || user?.admin?.profile_photo}

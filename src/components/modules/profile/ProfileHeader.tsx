@@ -6,8 +6,12 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { firstLatterUppercase, getInitials } from "@/lib/formatters";
+import { ICountry } from "@/types/country.interface";
+import { IInterest } from "@/types/interest.interface";
+import { ITraveler } from "@/types/user.interface";
 import { BadgeCheck, Edit } from "lucide-react";
 import Image from "next/image";
+import UpdateTravelerDialog from "../traveler/TravelerFormDialog";
 
 interface Props {
   name: string;
@@ -15,6 +19,9 @@ interface Props {
   avatar?: string;
   isOwner?: boolean;
   hasVerifyBadge?: boolean;
+  interests: IInterest[];
+  countries: ICountry[]
+  traveler?: ITraveler
 }
 
 export default function ProfileHeader({
@@ -23,6 +30,8 @@ export default function ProfileHeader({
   avatar,
   isOwner,
   hasVerifyBadge,
+  traveler,
+  interests, countries
 }: Props) {
   return (
     <div className="flex flex-col md:flex-row items-start md:items-end gap-4 relative w-full">
@@ -85,11 +94,16 @@ export default function ProfileHeader({
               <Edit className="w-4 h-4 mr-1" />
               Premium Subscription
             </Button>}
+            {
+              traveler && (
 
-            <Button variant="outline" size="sm" className="w-full md:w-auto">
+                <UpdateTravelerDialog traveler={traveler} interests={interests} countries={countries} />
+              )
+            }
+            {/* <Button variant="outline" size="sm" className="w-full md:w-auto">
               <Edit className="w-4 h-4 mr-1" />
               Edit Profile
-            </Button>
+            </Button> */}
           </>
         ) : (
           <></>
