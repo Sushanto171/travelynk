@@ -5,7 +5,7 @@ import { IInterest } from '@/types/interest.interface';
 export const interestColumns: Column<IInterest>[] = [
   {
     header: "Id",
-    render: (row) => row.id.toString().slice(0, 7) + "...",
+    render: (row) => row.id!.toString().slice(0, 7) + "...",
   },
   {
     header: "Name",
