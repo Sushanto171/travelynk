@@ -7,3 +7,11 @@ export const formatTimeDate = (date: string | Date) => {
     minute: "2-digit",
   });
 };
+
+export const getInitials = (name: string) => {
+  return name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .slice(0, 2);
+};
