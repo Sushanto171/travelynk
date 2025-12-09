@@ -2,9 +2,9 @@
 import { ManagementPageHeader } from '@/components/shared/ManagementPageHeader';
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
-import CountryFormDialog from './CountryFormDialog';
+import InterestFormDialog from './InterestFormDialog';
 
-export default function CountryManagementHeader() {
+export default function InterestManagementHeader() {
   const [open, setOpen] = useState(false)
   const [key, setKey] = useState(1)
 
@@ -24,17 +24,17 @@ export default function CountryManagementHeader() {
   return (
     <div>
       <ManagementPageHeader
-        title="Country Management"
-        description="Manage countries and update"
+        title="Interests Management"
+        description="Manage interests and update"
         action={
           {
-            label: "Add Country",
+            label: "Add Interest",
             onClick: () => handleDialogOpen()
           }
         }
       />
-
-      <CountryFormDialog
+      
+      <InterestFormDialog
         open={open}
         key={key}
         onClose={() => setOpen(false)}

@@ -114,7 +114,7 @@ const adminNavItems: NavSection[] = [
       },
       {
         title: "Interest",
-        href: "/admin/dashboard/Interest-management",
+        href: "/admin/dashboard/interest-management",
         icon: "Tag",          // 🏷️ Interests / categories
         roles: [UserRole.ADMIN],
       },

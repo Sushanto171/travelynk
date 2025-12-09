@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import { LoadingButton } from "@/components/shared/LoadingButton";
@@ -13,63 +11,64 @@ import {
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import GetFieldError from "@/lib/GetFieldError";
-import { createMultipleCountries, updateCountry } from "@/services/admin/countryManagement";
-import { ICountry } from "@/types/country.interface";
+import {
+  createMultipleInterests,
+  updateInterest,
+} from "@/services/admin/interestManagement";
+import { IInterest } from "@/types/interest.interface";
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 
-interface CountryModalProps {
+interface InterestModalProps {
   open: boolean;
   onClose: () => void;
-  country?: ICountry;
+  interest?: IInterest;
   onSuccess: () => void;
 }
 
-export default function CountryFormDialog({
+export default function InterestFormDialog({
   open,
   onClose,
-  country,
-  onSuccess
-}: CountryModalProps) {
-  const isCreate = !country;
+  interest,
+  onSuccess,
+}: InterestModalProps) {
+  const isCreate = !interest;
 
-  // ---------- Initialize Form Rows ----------
+  // ---------- Initialize Rows ----------
   const [rows, setRows] = useState(
-    isCreate
-      ? [{ code: "", name: "" }]
-      : [{ code: country.code, name: country.name }]
+    isCreate ? [{ name: "" }] : [{ name: interest?.name }]
   );
 
   const addRow = () =>
-    setRows((prev) => [...prev, { code: "", name: "" }]);
+    setRows((prev) => [...prev, { name: "" }]);
 
   const removeRow = (index: number) =>
     setRows((prev) => prev.filter((_, i) => i !== index));
 
   // ---------- Server Action Handler ----------
-  const [state, action, isPending] = useActionState(isCreate ? createMultipleCountries : updateCountry, null);
+  const [state, action, isPending] = useActionState(
+    isCreate ? createMultipleInterests : updateInterest,
+    null
+  );
 
   useEffect(() => {
-    if (!state) return
+    if (!state) return;
 
     if (state.success) {
-      onSuccess()
-      onClose()
-      toast.success(state.message)
+      onSuccess();
+      onClose();
+      toast.success(state.message);
     } else {
-      console.log(state)
-      toast.error(state.message)
+      toast.error(state.message);
     }
-
-  }, [state, onSuccess, onClose])
-
+  }, [state, onClose, onSuccess]);
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-w-md overflow-y-auto max-h-[400px]">
         <DialogHeader>
           <DialogTitle>
-            {isCreate ? "Create Country" : "Update Country"}
+            {isCreate ? "Create Interest" : "Update Interest"}
           </DialogTitle>
         </DialogHeader>
 
@@ -77,58 +76,40 @@ export default function CountryFormDialog({
           <FieldGroup className="gap-4">
 
             {rows.map((row, i) => (
-              <div
-                key={i}
-                className="space-y-3 border rounded-md p-4 bg-background"
-              >
-                {
-                  country && (
-                    <Input
-                      id={`id`}
-                      name={"id"}
-                      defaultValue={country?.id ||state?.FormData?.id }
-                      hidden={true}
-                    />
-                  )
-                }
+              <div key={i} className="space-y-3 border rounded-md p-4 bg-background">
 
-                {/* CODE FIELD */}
-                <Field>
-                  <FieldLabel htmlFor={`code-${i}`}>Code</FieldLabel>
+                {/** Hidden ID in update mode */}
+                {interest && (
                   <Input
-                    id={`code-${i}`}
-                    name={isCreate ? `countries[${i}].code` : "code"}
-                    defaultValue={row?.code || country?.code}
-                    placeholder="BN"
+                    name="id"
+                    defaultValue={interest?.id || state?.FormData?.id}
+                    hidden
                   />
-                  <GetFieldError
-                    state={state}
-                    name={ "code"}
-                  />
-                </Field>
+                )}
 
-                {/* NAME FIELD */}
+                {/** NAME FIELD */}
                 <Field>
                   <FieldLabel htmlFor={`name-${i}`}>Name</FieldLabel>
                   <Input
                     id={`name-${i}`}
-                    name={isCreate ? `countries[${i}].name` : "name"}
-                    defaultValue={row?.name || country?.name}
-                    placeholder="Bangladesh"
+                    name={isCreate ? `interests[${i}].name` : "name"}
+                    defaultValue={row?.name || interest?.name}
+                    placeholder="e.g. Traveling"
                   />
+
                   <GetFieldError
                     state={state}
-                    name={isCreate ? `countries.${i}` : "name"}
+                    name={isCreate ? `interests.${i}` : "name"}
                   />
                 </Field>
 
-                {/* REMOVE ROW (CREATE MODE ONLY) */}
+                {/** REMOVE ROW (CREATE MODE ONLY) */}
                 {isCreate && rows.length > 1 && (
                   <Button
                     type="button"
                     variant="destructive"
-                    onClick={() => removeRow(i)}
                     className="w-full"
+                    onClick={() => removeRow(i)}
                   >
                     Remove
                   </Button>
@@ -136,7 +117,7 @@ export default function CountryFormDialog({
               </div>
             ))}
 
-            {/* ADD ROW BUTTON */}
+            {/** ADD ROW button (CREATE ONLY) */}
             {isCreate && (
               <Button
                 type="button"
@@ -144,12 +125,12 @@ export default function CountryFormDialog({
                 className="w-full"
                 onClick={addRow}
               >
-                Add Another Country
+                Add Another Interest
               </Button>
             )}
           </FieldGroup>
 
-          {/* FOOTER ACTIONS */}
+          {/** FOOTER ACTIONS */}
           <div className="flex justify-end gap-3">
             <Button variant="outline" type="button" onClick={onClose}>
               Cancel
