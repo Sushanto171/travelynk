@@ -29,6 +29,7 @@ export const verify = catchAsync(async (payload: { email: string, otp: string, t
 
   if (result.success) {
     if (result.data.token && token) {
+      console.log({token});
       const info = jwtHelper.verifyToken(token, process.env.JWT_LOGIN_SECRET as string)
       const newFormData = new FormData()
 

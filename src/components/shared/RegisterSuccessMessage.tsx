@@ -10,7 +10,6 @@ export default function RegisterSuccessMessage() {
   const pathname = usePathname();
 
   const register = searchParams.get("register");
-
   useEffect(() => {
     if (register === "true") {
       toast.success("Registration success");
