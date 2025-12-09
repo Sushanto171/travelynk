@@ -1,31 +1,27 @@
-import { CoverPhoto } from "@/components/modules/admin/profile/CoverPhoto";
-import ProfileLayout from "@/components/modules/admin/profile/ProfileLayout";
-import { ProfileTabs } from "@/components/modules/admin/profile/ProfileTabs";
-import ProfileHeader from "@/components/modules/admin/profile/ProrileHeader";
+import { CoverPhoto } from "@/components/modules/profile/CoverPhoto";
+import ProfileHeader from "@/components/modules/profile/ProfileHeader";
+import ProfileLayout from "@/components/modules/profile/ProfileLayout";
+import { ProfileTabs } from "@/components/modules/profile/ProfileTabs";
+import { getUserAction } from "@/services/auth/getUser.service";
+import { redirect } from "next/navigation";
 
 
-export default function MyProfilePage({ params }: { params: { id: string } }) {
-  const isOwner = params.id === "me"; // or your auth check
-
-  const mock = {
-    name: "John Doe",
-    bio: "Traveler • Photographer • Explorer",
-    avatar: "profile.jpg",
-    cover: "/cover.jpg",
-  };
-
+export default async function MyProfilePage() {
+  const user = await getUserAction()
+  if (!user) return redirect("/login")
   return (
     <ProfileLayout
-      cover={<CoverPhoto src={mock.cover} />}
-    profile={
+      cover={<CoverPhoto src={""} />}
+      profile={
         <ProfileHeader
-          name={mock.name}
-          bio={mock.bio}
-          // avatar={mock.avatar}
-          isOwner={isOwner}
+          name={user.name}
+          bio={user?.traveler?.bio}
+          avatar={user?.traveler?.profile_photo || user?.admin?.profile_photo}
+          isOwner={true}
+          hasVerifyBadge={(user.admin ? true : user?.traveler?.has_verified_badge)}
         />
       }
-      tabs={<ProfileTabs />}
+      tabs={<ProfileTabs user={user!} traveler={user.traveler!} />}
     >
       {/* TAB CONTENT SLOTS (add real content later) */}
       {/* <div className="p-6 bg-card border rounded-lg shadow-sm">

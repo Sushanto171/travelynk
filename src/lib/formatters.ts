@@ -15,3 +15,7 @@ export const getInitials = (name: string) => {
     .join("")
     .slice(0, 2);
 };
+
+export const firstLatterUppercase = (name: string) => {
+  return name.charAt(0).toUpperCase() + name.slice(1);
+}

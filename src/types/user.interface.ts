@@ -5,10 +5,11 @@ export interface IUser {
   status: UserStatus
   role: UserRole
   is_verified: boolean
+  auths: Auth[]
   created_at: string
   updated_at: string
-  admin: Admin
-  traveler: ITraveler
+  admin?: Admin
+  traveler?: ITraveler
 }
 
 export interface Admin {
@@ -49,4 +50,17 @@ export interface ITraveler {
   created_at: string
   updated_at: string
   is_deleted: boolean
+}
+
+
+export interface Auth {
+  auth_providers: AuthProviders
+}
+
+export interface AuthProviders {
+  id: string,
+  provider_id: string,
+  provider: string,
+  created_at: string
+  updated_at: string
 }

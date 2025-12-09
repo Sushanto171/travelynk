@@ -1,0 +1,100 @@
+import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { firstLatterUppercase, getInitials } from "@/lib/formatters";
+import { BadgeCheck, Edit } from "lucide-react";
+import Image from "next/image";
+
+interface Props {
+  name: string;
+  bio?: string;
+  avatar?: string;
+  isOwner?: boolean;
+  hasVerifyBadge?: boolean;
+}
+
+export default function ProfileHeader({
+  name,
+  bio,
+  avatar,
+  isOwner,
+  hasVerifyBadge,
+}: Props) {
+  return (
+    <div className="flex flex-col md:flex-row items-start md:items-end gap-4 relative w-full">
+
+      {/* AVATAR */}
+      <div className="relative h-24 w-24 md:h-32 md:w-32 rounded-full ring-4 ring-background overflow-hidden bg-muted">
+        {avatar ? (
+          <Image
+            src={avatar}
+            alt="Profile"
+            fill
+            sizes="128px"
+            className="object-cover"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center " >
+            <span className="text-4xl">{getInitials(name)}</span>
+          </div>
+        )}
+      </div>
+
+      {/* TEXT BLOCK */}
+      <div className="flex-1 w-full">
+        <div className="flex items-center gap-2 flex-wrap">
+          <h2 className="text-xl md:text-2xl font-semibold">
+            {firstLatterUppercase(name)}
+          </h2>
+
+          {hasVerifyBadge && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <BadgeCheck className="w-5 h-5 text-blue-500 cursor-pointer" />
+                </TooltipTrigger>
+                <TooltipContent side="top" className="text-xs">
+                  Verified Profile
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
+        </div>
+
+        <div className="min-h-5 mt-1">
+          {bio && (
+            <p className="text-sm text-muted-foreground">{bio}</p>
+          )}
+        </div>
+      </div>
+
+      {/* ACTION BUTTONS */}
+      <div className="flex flex-wrap gap-4 w-full md:w-auto md:justify-end">
+        {isOwner ? (
+          <>
+            {/* Subscription Button */}
+            {!hasVerifyBadge && <Button
+              variant="outline"
+              size="sm"
+              className="relative animate-pulse shadow-[0_0_10px_rgba(0,150,255,0.6)] w-full md:w-auto"
+            >
+              <Edit className="w-4 h-4 mr-1" />
+              Premium Subscription
+            </Button>}
+
+            <Button variant="outline" size="sm" className="w-full md:w-auto">
+              <Edit className="w-4 h-4 mr-1" />
+              Edit Profile
+            </Button>
+          </>
+        ) : (
+          <></>
+        )}
+      </div>
+    </div>
+  );
+}
