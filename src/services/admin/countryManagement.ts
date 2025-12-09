@@ -11,7 +11,7 @@ import { ZodObject } from "zod"
 import { transformEntriesToCountries } from './../../lib/transformEntriesToCountries'
 
 export const getCountry = catchAsync(async (params?: string) => {
-  const res = await serverFetch.get("/country")
+  const res = await serverFetch.get(`/country?${params ? `?searchTerm=${params}` : ""}`)
   const result = await res.json()
   return result?.data ?? []
 })
@@ -31,7 +31,7 @@ export const createMultipleCountries = catchAsyncAction(async (_prev: any, formD
     return {
       ...validate,
       message: "All Field are required: code, name"
-    }; 
+    };
   }
 
   const payload = validate.data;
@@ -73,6 +73,20 @@ export const updateCountry = catchAsyncAction(async (_prev: any, formData: FormD
   if (!result?.success) {
     throw new Error(
       `Country update failed: ${result?.message || "Unknown server error"}`
+    )
+  }
+
+  return result
+})
+
+
+export const deleteCountryById = catchAsync(async (id: string) => {
+  const res = await serverFetch.delete(`/country/${id}`,)
+  const result = await res.json()
+
+  if (!result?.success) {
+    throw new Error(
+      `Country deletion failed: ${result?.message || "Unknown server error"}`
     )
   }
 
