@@ -4,11 +4,10 @@ import { catchAsyncAction } from "@/lib/catchAsyncAction";
 import { loginCookieManagement } from "@/lib/LogInCookieManagement";
 import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";
+import { UserRole } from "@/types/user.interface";
 import { loginValidationZodSchema } from "@/zod/auth/loginUser.validation";
 import { redirect } from "next/navigation";
 import { getUserAction } from "./getUser.service";
-import { NextResponse } from 'next/server';
-import { UserRole } from "@/types/user.interface";
 
 export const login = catchAsyncAction(async (_pres, formData) => {
   const payload = {
@@ -49,10 +48,8 @@ export const login = catchAsyncAction(async (_pres, formData) => {
 
   await loginCookieManagement(res)
 
-  const user = await getUserAction()
 
-  console.log("From Login:", {user, result})
-  const userRole: UserRole = user!.role
+  const userRole: UserRole = result.data.role ?? UserRole.USER
 
   if (redirectTo) {
     const requestedPath = redirectTo.toString();
