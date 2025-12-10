@@ -1,3 +1,6 @@
+import { ICountry } from "./country.interface"
+import { IInterest } from "./interest.interface"
+
 export interface IUser {
   id: string
   email: string
@@ -5,10 +8,11 @@ export interface IUser {
   status: UserStatus
   role: UserRole
   is_verified: boolean
+  auths: Auth[]
   created_at: string
   updated_at: string
-  admin: Admin
-  traveler: ITraveler
+  admin?: Admin
+  traveler?: ITraveler
 }
 
 export interface Admin {
@@ -44,9 +48,24 @@ export interface ITraveler {
   address?: string
   current_location?: string
   has_verified_badge: boolean
+  interests?: IInterest[]
+  visited_countries?: ICountry[]
   last_active_at: string
   subscription_active: boolean
   created_at: string
   updated_at: string
   is_deleted: boolean
+}
+
+
+export interface Auth {
+  auth_providers: AuthProviders
+}
+
+export interface AuthProviders {
+  id: string,
+  provider_id: string,
+  provider: string,
+  created_at: string
+  updated_at: string
 }
