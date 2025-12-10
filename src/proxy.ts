@@ -6,10 +6,22 @@ import { UserRole } from "./types/user.interface";
 
 export const proxy = async (request: NextRequest) => {
   const { pathname, origin, searchParams } = request.nextUrl;
+
+    const ignoredPrefixes = ["/api", "/_next", "/favicon.ico", "/sitemap.xml", "/robots.txt", "/assets"];
+  if (ignoredPrefixes.some(p => pathname.startsWith(p))) {
+    return NextResponse.next();
+  }
+
+  if (request.method === "POST" && isAuthRoute(pathname)) {
+    return NextResponse.next();
+  }
+
   const isAuthPage = isAuthRoute(pathname)
   const routeOwner = getRouteOwner(pathname)
   let userRole: UserRole | null = null
 console.log("From Proxy:",request.url);
+
+
     if (pathname === "/verify") {
     const email = searchParams.get("email");
 
