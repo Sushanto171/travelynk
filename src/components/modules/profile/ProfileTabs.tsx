@@ -7,6 +7,7 @@ import { useState } from "react";
 import { ProfileTabContent } from "./ProfileTabContent";
 import { AboutTab } from "./tabs/AboutTab";
 import { TrustTab } from "./tabs/TrustTab";
+import TravelPlanTab from "./tabs/TravelPlanTab";
 
 export function ProfileTabs({ defaultTab = "about", user, traveler }: {
   defaultTab?: string
@@ -55,9 +56,13 @@ user.role === UserRole.USER && (
           title="Travel Plans"
           description="Upcoming trips, destinations, and availability."
         >
+
+
           <div className="text-sm">
             Travel plan cards or schedule go here...
           </div>
+
+          <TravelPlanTab />
         </ProfileTabContent>
       </TabsContent>
 
