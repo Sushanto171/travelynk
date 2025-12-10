@@ -9,7 +9,7 @@ export const proxy = async (request: NextRequest) => {
   const isAuthPage = isAuthRoute(pathname)
   const routeOwner = getRouteOwner(pathname)
   let userRole: UserRole | null = null
-console.log(request.url);
+console.log("From Proxy:",request.url);
     if (pathname === "/verify") {
     const email = searchParams.get("email");
 
@@ -19,6 +19,9 @@ console.log(request.url);
   }
 
   const accessToken = await getCookie("accessToken")
+
+  console.log("From Proxy:", {accessToken})
+  
   if (accessToken) {
     try {
       const decoded = jwtHelper.verifyToken(accessToken as string, process.env.JWT_ACCESS_SECRET as string)
