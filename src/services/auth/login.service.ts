@@ -7,7 +7,7 @@ import { zodValidator } from "@/lib/zodValidator";
 import { loginValidationZodSchema } from "@/zod/auth/loginUser.validation";
 import { redirect } from "next/navigation";
 import { getUserAction } from "./getUser.service";
-import {  NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { UserRole } from "@/types/user.interface";
 
 export const login = catchAsyncAction(async (_pres, formData) => {
@@ -37,30 +37,31 @@ export const login = catchAsyncAction(async (_pres, formData) => {
   })
   const result = await res.json()
 
-  
+
   // from server redirect ==> "/verify"
   if (result.redirectTo) {
     return redirect(`${result.redirectTo}`)
   }
-  
+
   if (!result.success) {
     throw new Error(process.env.NODE_ENV === "development" ? result.message : "Login Failed. You might have entered incorrect email or password.")
   }
 
   await loginCookieManagement(res)
 
-  const user =await getUserAction() 
+  const user = await getUserAction()
 
-  const userRole : UserRole = user!.role
+  console.log("From Login:", {user, result})
+  const userRole: UserRole = user!.role
 
   if (redirectTo) {
-      const requestedPath = redirectTo.toString();
-      if (isValidUrlForRole(requestedPath, userRole)) {
-      return  redirect(`${requestedPath}?loggedIn=true`);
-      } else {
-       return redirect(`${getDefaultDashboardRoute(userRole)}?loggedIn=true`);
-      }
+    const requestedPath = redirectTo.toString();
+    if (isValidUrlForRole(requestedPath, userRole)) {
+      return redirect(`${requestedPath}?loggedIn=true`);
     } else {
-     return redirect(`${getDefaultDashboardRoute(userRole)}?loggedIn=true`);
+      return redirect(`${getDefaultDashboardRoute(userRole)}?loggedIn=true`);
     }
+  } else {
+    return redirect(`${getDefaultDashboardRoute(userRole)}?loggedIn=true`);
+  }
 })
