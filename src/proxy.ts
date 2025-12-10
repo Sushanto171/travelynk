@@ -12,14 +12,13 @@ export const proxy = async (request: NextRequest) => {
     return NextResponse.next();
   }
 
-  if (request.method === "POST" && isAuthRoute(pathname)) {
+    if (request.method === "POST" && isAuthRoute(pathname)) {
     return NextResponse.next();
   }
 
   const isAuthPage = isAuthRoute(pathname)
   const routeOwner = getRouteOwner(pathname)
   let userRole: UserRole | null = null
-console.log("From Proxy:",request.url);
 
 
     if (pathname === "/verify") {
@@ -32,8 +31,6 @@ console.log("From Proxy:",request.url);
 
   const accessToken = await getCookie("accessToken")
 
-  console.log("From Proxy:", {accessToken})
-  
   if (accessToken) {
     try {
       const decoded = jwtHelper.verifyToken(accessToken as string, process.env.JWT_ACCESS_SECRET as string)

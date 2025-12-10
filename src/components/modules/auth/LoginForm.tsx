@@ -26,6 +26,7 @@ export default function LoginForm({ redirectTo }: { redirectTo?: string }) {
     if (!state.success && !Array.isArray(state.error)) {
       toast.error(state.message)
     }
+    console.log("From Login form:", {state});
   }, [state])
 
   return (

@@ -16,7 +16,7 @@ export default async function MyProfilePage() {
     console.log(user)
   return (
     <ProfileLayout
-      cover={<CoverPhoto src={""} />}
+      cover={<CoverPhoto src={"/cover.jpg"} />}
       profile={
         <ProfileHeader
           interests={interests}

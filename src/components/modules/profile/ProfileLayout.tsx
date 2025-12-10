@@ -12,7 +12,7 @@ interface ProfileLayoutProps {
 export default function ProfileLayout({ cover, profile, tabs, children }: ProfileLayoutProps) {
   return (
     <div className="w-full max-w-4xl mx-auto space-y-6">
-      <Card className="overflow-hidden rounded-2xl shadow-sm">
+      <Card className="overflow-hidden rounded-2xl shadow-sm pt-0">
         {/* COVER SECTION */}
         {cover}
 

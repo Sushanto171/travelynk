@@ -10,7 +10,7 @@ export function CoverPhoto({ src }: { src?: string }) {
           src={src}
           alt="Cover"
           fill
-          className="object-cover"
+          className="object-cover md:object-center"
         />
       ) : (
         <div className="h-full w-full bg-gradient-to-r from-gray-200 to-gray-300" />

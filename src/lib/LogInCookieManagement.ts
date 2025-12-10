@@ -13,6 +13,6 @@ export const loginCookieManagement = async (res: Response) => {
   if (!refreshToken || !accessToken) {
     throw new Error("No Headers token found")
   }
-  await setCookie(accessToken)
-  await setCookie(refreshToken)
+  // await setCookie(accessToken)
+  // await setCookie(refreshToken)
 }
