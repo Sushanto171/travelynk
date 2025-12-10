@@ -15,7 +15,7 @@ export const login = catchAsyncAction(async (_pres, formData) => {
     email: formData.get("email"),
     password: formData.get("password")
   }
-  // login?redirectTO="my-profile"
+  // login?redirectTo="my-profile"
   const redirectTo = formData.get("redirectTo")
 
   const validate = zodValidator(payload, loginValidationZodSchema)
@@ -56,11 +56,11 @@ export const login = catchAsyncAction(async (_pres, formData) => {
   if (redirectTo) {
       const requestedPath = redirectTo.toString();
       if (isValidUrlForRole(requestedPath, userRole)) {
-        redirect(`${requestedPath}?loggedIn=true`);
+      return  redirect(`${requestedPath}?loggedIn=true`);
       } else {
-        redirect(`${getDefaultDashboardRoute(userRole)}?loggedIn=true`);
+       return redirect(`${getDefaultDashboardRoute(userRole)}?loggedIn=true`);
       }
     } else {
-      redirect(`${getDefaultDashboardRoute(userRole)}?loggedIn=true`);
+     return redirect(`${getDefaultDashboardRoute(userRole)}?loggedIn=true`);
     }
 })
