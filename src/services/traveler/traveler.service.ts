@@ -5,6 +5,7 @@ import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";
 import { UpdateTravelerInput, updateTravelerSchema } from "@/zod/traveler/updateTraveler.validation";
 import { UUID } from "crypto";
+import { revalidateTag } from "next/cache";
 
 export const updateTraveler = catchAsyncAction(async (pre, formData: FormData) => {
   const id = formData.get("id")
@@ -43,8 +44,16 @@ export const updateTraveler = catchAsyncAction(async (pre, formData: FormData) =
     body: newFormData
   })
 
+   revalidateTag("user-info", {expire:0})
+
   const result = await res.json()
-  console.log(result)
+
+  if (!result?.success) {
+    throw new Error(
+      `Profile update failed: ${result?.message || "Unknown server error"}`
+    );
+  }
+
   return result
 
 })

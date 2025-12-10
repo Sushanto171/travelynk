@@ -14,6 +14,7 @@ import { IInterest } from "@/types/interest.interface";
 import { ITraveler } from "@/types/user.interface";
 import { Edit } from "lucide-react";
 import { useActionState, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 interface UpdateTravelerDialogProps {
   traveler: ITraveler;
@@ -27,16 +28,23 @@ export default function UpdateTravelerDialog({
   countries,
 }: UpdateTravelerDialogProps) {
 
-  const [open, onClose] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
   const [state, action, isPending] = useActionState(updateTraveler, null);
 
   useEffect(() => {
     if (!state) return
-    console.log(state);
+    if(state.success){
+      toast.success(state.message)
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setOpen(false)
+    }else{
+      toast.error(state.message)
+    }
+    // console.log(state);
   }, [state])
 
   return (
-    <Dialog open={open} onOpenChange={onClose}>
+    <Dialog open={open} onOpenChange={setOpen }>
       <DialogTrigger asChild>
         <Button variant="outline" size="sm" className="w-full md:w-auto">
           <Edit className="w-4 h-4 mr-1" />
@@ -139,7 +147,7 @@ export default function UpdateTravelerDialog({
 
           {/* Footer */}
           <div className="flex justify-end gap-3 border-t px-6 py-4 bg-background">
-            <Button variant="outline" type="button" onClick={() => onClose(false)}>
+            <Button variant="outline" type="button" onClick={() => setOpen(false)}>
               Cancel
             </Button>
 

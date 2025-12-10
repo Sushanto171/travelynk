@@ -48,8 +48,8 @@ export interface ITraveler {
   address?: string
   current_location?: string
   has_verified_badge: boolean
-  interests?: IInterest[]
-  visited_countries?: ICountry[]
+  interests: IInterest[] | []
+  visited_countries: ICountry[] |[]
   last_active_at: string
   subscription_active: boolean
   created_at: string

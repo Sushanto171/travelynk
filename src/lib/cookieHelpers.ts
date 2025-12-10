@@ -1,5 +1,6 @@
 "use server";
 import { parse } from "cookie";
+import { ResponseCookie } from "next/dist/compiled/@edge-runtime/cookies";
 import { cookies } from "next/headers";
 
 interface IToken {
@@ -33,17 +34,26 @@ export const getHeaderToken = async (
 };
 
 
-export const setCookie = async (token: IToken) => {
-  const cookieStore = await cookies()
+// export const setCookie = async (token: IToken) => {
+//   const cookieStore = await cookies()
 
-  cookieStore.set(token.name, token.value, {
-    expires: token.Expires as number,
-    secure: true,
-    httpOnly: true,
-    path: token.Path,
-    sameSite: "none",
-  })
-}
+//   cookieStore.set(token.name, token.value, {
+//     expires: token.Expires as number,
+//     secure: true,
+//     httpOnly: true,
+//     path: token.Path,
+//     sameSite: "none",
+//   })
+// }
+
+export const setCookie = async (
+  key: string,
+  value: string,
+  options?: Partial<ResponseCookie>
+) => {
+  const cookieStore = await cookies();
+  cookieStore.set(key, value, options);
+};
 
 export const getCookie = async (name: string) => {
   const cookieStore = await cookies();
