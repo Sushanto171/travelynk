@@ -52,6 +52,7 @@ export const login = catchAsyncAction(async (_pres, formData) => {
   const user =await getUserAction() 
 
   const userRole : UserRole = user!.role
+
   if (redirectTo) {
       const requestedPath = redirectTo.toString();
       if (isValidUrlForRole(requestedPath, userRole)) {

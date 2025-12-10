@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { Field, FieldLabel } from "@/components/ui/field";
-import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import { Field, FieldLabel } from "@/components/ui/field";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
+import { useState } from "react";
 
 interface DatePickerFieldProps {
   label: string;
@@ -50,8 +50,10 @@ export function DatePickerField({
         <PopoverContent className="w-auto p-0">
           <Calendar
             mode="single"
-            selected={selectedDate}
+            selected={selectedDate as Date}
             onSelect={handleChange}
+            required
+            captionLayout="dropdown"
             initialFocus
           />
         </PopoverContent>

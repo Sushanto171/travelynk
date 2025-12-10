@@ -52,8 +52,8 @@ export function MultiSelectField({
   };
 
   return (
-    <div className="space-y-2">
-      <label className="text-sm font-medium">{label}</label>
+    <div className="flex flex-col gap-2">
+      <label className="text-md font-medium">{label}</label>
 
       {/* Hidden inputs for current selections */}
       {selected.map((id) => (

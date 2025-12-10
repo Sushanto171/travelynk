@@ -8,11 +8,12 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { updateTraveler } from "@/services/traveler/traveler.service";
 import { ICountry } from "@/types/country.interface";
 import { IInterest } from "@/types/interest.interface";
 import { ITraveler } from "@/types/user.interface";
 import { Edit } from "lucide-react";
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 
 interface UpdateTravelerDialogProps {
   traveler: ITraveler;
@@ -27,12 +28,12 @@ export default function UpdateTravelerDialog({
 }: UpdateTravelerDialogProps) {
 
   const [open, onClose] = useState<boolean>(false);
-  const [state, action, isPending] = useActionState((pre, formData) => {
+  const [state, action, isPending] = useActionState(updateTraveler, null);
 
-    const entries = Array.from(formData.entries())
-    const interest = formData.getAll("interests[]")
-    console.log({ entries, interest })
-  }, null);
+  useEffect(() => {
+    if (!state) return
+    console.log(state);
+  }, [state])
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
@@ -52,6 +53,9 @@ export default function UpdateTravelerDialog({
           <div className="max-h-[calc(100vh-200px)] overflow-y-auto px-6 pb-6 space-y-5">
 
             <FieldGroup className="gap-4">
+
+              {/* id */}
+          <input type="string" id="id" name="id" hidden={true} defaultValue={traveler?.id} />
 
               {/* Name */}
               <Field>

@@ -99,14 +99,14 @@ scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary/40
           <div className="pt-2 flex gap-2">
             <div className="flex items-center justify-center">
               <span className="w-10 h-10 rounded-full flex items-center justify-center border border-muted ">
-                {user?.name.slice(0, 1).toUpperCase()}
+                {user?.name?.slice(0, 1).toUpperCase()}
               </span>
             </div>
             <div>
               <p className="font-semibold opacity-80">{user?.name}</p>
               <p className="text-sm opacity-60">
-                {user?.role.slice(0, 1) +
-                  user?.role.slice(1).toLowerCase()}
+                {user?.role?.slice(0, 1) +
+                  user?.role?.slice(1).toLowerCase()}
               </p>
             </div>
           </div>
