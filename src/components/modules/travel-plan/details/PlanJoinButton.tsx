@@ -2,7 +2,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { planJoinRequest } from "@/services/traveler/travelPlan.service";
+import { planJoinRequest } from "@/services/travelPlan/travelPlan.service";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { toast } from "sonner";
@@ -33,9 +33,9 @@ export const PlanJoinButton = ({
     startTransition(async () => {
       try {
 
-       const result = await planJoinRequest(planId)
+        const result = await planJoinRequest(planId)
         toast.success(result.message)
-      } catch (err:any) {
+      } catch (err: any) {
         toast.error(err.message)
         console.error(err);
       }

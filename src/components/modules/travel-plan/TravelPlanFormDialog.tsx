@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { createTravelPlan, updateTravelPlan } from "@/services/traveler/travelPlan.service";
+import { createTravelPlan, updateTravelPlan } from "@/services/travelPlan/travelPlan.service";
 import { IPlanType, ITravelPlan } from "@/types/travelPlan.interface";
 import { Edit, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";

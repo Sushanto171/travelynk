@@ -1,6 +1,6 @@
 import { PlansViewLayout } from "@/components/modules/travel-plan/TravelPlansViewLayout";
 import { getUserAction } from "@/services/auth/getUser.service";
-import { getTravelPlans } from "@/services/traveler/travelPlan.service";
+import { getTravelPlans } from "@/services/travelPlan/travelPlan.service";
 
 export default async function TravelerMyPlanPage() {
 

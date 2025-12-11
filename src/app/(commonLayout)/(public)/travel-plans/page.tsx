@@ -1,5 +1,5 @@
 import { PlansViewLayout } from "@/components/modules/travel-plan/TravelPlansViewLayout";
-import { getTravelPlans } from "@/services/traveler/travelPlan.service";
+import { getTravelPlans } from "@/services/travelPlan/travelPlan.service";
 
 export default async function TravelPlansPage() {
   const plans = await getTravelPlans()

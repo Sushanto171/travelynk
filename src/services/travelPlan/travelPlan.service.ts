@@ -120,7 +120,7 @@ export const updateTravelPlanStatus = catchAsync(async (id: string, status: IPla
       `Status update failed: ${result?.message || "Unknown server error"}`
     );
   }
-  
+
   return result
 })
 
@@ -150,6 +150,20 @@ export const updateRequestStatus = catchAsync(async (payload: RequestUpdateStatu
   })
 
   const result = await res.json()
-    
+
+  return result
+})
+
+
+export const getJoinedPlans = catchAsync(async () => {
+  const res = await serverFetch.get(`/plan-join/my-requested`)
+  const result = await res.json()
+  return result.data ?? []
+
+})
+
+export const cancelJoinRequest = catchAsync(async (planId:string) => {
+  const res = await serverFetch.delete(`/plan-join/remove/${planId}`)
+  const result = await res.json()
   return result
 })

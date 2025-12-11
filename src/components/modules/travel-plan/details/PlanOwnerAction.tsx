@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
-import { ITravelPlan, IPlanStatus } from "@/types/travelPlan.interface";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import TravelPlanCreateUpdateDialog from "../TravelPlanFormDialog";
-import { toast } from "sonner"; // optional for feedback
-import { updateTravelPlanStatus } from "@/services/traveler/travelPlan.service";
+import { updateTravelPlanStatus } from "@/services/travelPlan/travelPlan.service";
+import { IPlanStatus, ITravelPlan } from "@/types/travelPlan.interface";
 import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
+import { toast } from "sonner"; // optional for feedback
+import TravelPlanCreateUpdateDialog from "../TravelPlanFormDialog";
 
 export const PlanOwnerActions = ({ plan }: { plan: ITravelPlan }) => {
   const [selectedStatus, setSelectedStatus] = useState<IPlanStatus>(plan.status as IPlanStatus);
@@ -18,10 +18,10 @@ export const PlanOwnerActions = ({ plan }: { plan: ITravelPlan }) => {
   const handleStatusUpdate = () => {
     startTransition(async () => {
       try {
-         await updateTravelPlanStatus(plan.id, selectedStatus)
+        await updateTravelPlanStatus(plan.id, selectedStatus)
         toast.success(`Plan status updated to ${selectedStatus}`);
         router.refresh()
-      } catch (err:any) {
+      } catch (err: any) {
         // console.error(err);
         toast.error(err.message);
       }

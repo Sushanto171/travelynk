@@ -64,13 +64,25 @@ const userNavItems: NavSection[] = [
       {
         title: "My Travel Plans",
         href: "/dashboard/my-travel-plans",
-        icon: "Map", // ✅ String
-        roles: [UserRole.USER]
+        icon: "Map",
+        roles: [UserRole.USER],
+      },
+      {
+        title: "Find Travel Plans",
+        href: "/travel-plans",
+        icon: "Search",
+        roles: [UserRole.USER],
+      },
+      {
+        title: "Joined Plans",
+        href: "/dashboard/joined-plans",
+        icon: "UsersRound",
+        roles: [UserRole.USER],
       },
     ],
   },
-
 ];
+
 
 const adminNavItems: NavSection[] = [
   {
