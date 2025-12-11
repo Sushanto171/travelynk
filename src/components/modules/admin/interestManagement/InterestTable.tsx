@@ -2,13 +2,13 @@
 
 import DeleteConfirmationDialog from "@/components/shared/DeleteConfirmationDialog";
 import { ManagementTable } from "@/components/shared/ManagementTable";
+import { deleteInterestById } from "@/services/admin/interestManagement";
 import { IInterest } from "@/types/interest.interface";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
+import { toast } from "sonner";
 import { interestColumns } from "./interestColumns";
 import InterestFormDialog from "./InterestFormDialog";
-import { toast } from "sonner";
-import { deleteInterestById } from "@/services/admin/interestManagement";
 
 export default function InterestTable({ interests }: { interests: IInterest[] }) {
   const [interest, setInterest] = useState<IInterest | null>(null)
@@ -27,7 +27,7 @@ export default function InterestTable({ interests }: { interests: IInterest[] })
     if (!deleteInterest || !deleteInterest.id) return
     setIsDeleting(true)
     const result = await deleteInterestById(deleteInterest.id)
-    console.log(result);
+      (result);
     if (result.success) {
       toast.success(result.message || "interest deleted successfully");
       handleRefresh();

@@ -7,12 +7,18 @@ import { UserRole } from "./types/user.interface";
 export const proxy = async (request: NextRequest) => {
   const { pathname, origin, searchParams } = request.nextUrl;
 
-    const ignoredPrefixes = ["/api", "/_next", "/favicon.ico", "/sitemap.xml", "/robots.txt", "/assets"];
+  const ignoredPrefixes = ["/api", "/_next", "/favicon.ico", "/sitemap.xml", "/robots.txt", "/assets"];
   if (ignoredPrefixes.some(p => pathname.startsWith(p))) {
     return NextResponse.next();
   }
 
-    if (request.method === "POST" && isAuthRoute(pathname)) {
+  // Skip Server Actions / mutation POSTs
+  if (request.method === "POST") {
+    return NextResponse.next();
+  }
+
+
+  if (request.method === "POST" && isAuthRoute(pathname)) {
     return NextResponse.next();
   }
 
@@ -21,7 +27,7 @@ export const proxy = async (request: NextRequest) => {
   let userRole: UserRole | null = null
 
 
-    if (pathname === "/verify") {
+  if (pathname === "/verify") {
     const email = searchParams.get("email");
 
     if (!email) {
@@ -59,7 +65,7 @@ export const proxy = async (request: NextRequest) => {
 
   // --- Route-level authorization (RBAC) ---
   if (routeOwner && userRole) {
-    // console.log(redirectTo ? redirectTo : new URL(getDefaultDashboardRoute(userRole), origin))
+    // (redirectTo ? redirectTo : new URL(getDefaultDashboardRoute(userRole), origin))
     // Open to all → allow
     if (routeOwner === "COMMON") return NextResponse.next()
 
@@ -69,7 +75,7 @@ export const proxy = async (request: NextRequest) => {
     const isAuthorized = (isAdminRoute && userRole === UserRole.ADMIN) || (isUserRoute && userRole === UserRole.USER)
 
     if (!isAuthorized) {
-        return NextResponse.redirect( new URL(getDefaultDashboardRoute(userRole), origin));
+      return NextResponse.redirect(new URL(getDefaultDashboardRoute(userRole), origin));
     }
     return NextResponse.next()
   }

@@ -6,8 +6,8 @@ import { ITraveler, IUser, UserRole } from "@/types/user.interface";
 import { useState } from "react";
 import { ProfileTabContent } from "./ProfileTabContent";
 import { AboutTab } from "./tabs/AboutTab";
-import { TrustTab } from "./tabs/TrustTab";
 import TravelPlanTab from "./tabs/TravelPlanTab";
+import { TrustTab } from "./tabs/TrustTab";
 
 export function ProfileTabs({ defaultTab = "about", user, traveler }: {
   defaultTab?: string
@@ -24,20 +24,20 @@ export function ProfileTabs({ defaultTab = "about", user, traveler }: {
         </TabsTrigger>
 
         {
-user.role === UserRole.USER && (
-<>
-  <TabsTrigger className="flex-1 md:flex-auto cursor-pointer text-center" value="trust">
-          Trust
-        </TabsTrigger>
-        <TabsTrigger className="flex-1 md:flex-auto cursor-pointer text-center" value="plans">
-          Travel Plans
-        </TabsTrigger>
-        <TabsTrigger className="flex-1 md:flex-auto cursor-pointer text-center" value="reviews">
-          Reviews
-        </TabsTrigger>
-</>
-)
-  
+          user.role === UserRole.USER && (
+            <>
+              <TabsTrigger className="flex-1 md:flex-auto cursor-pointer text-center" value="trust">
+                Trust
+              </TabsTrigger>
+              <TabsTrigger className="flex-1 md:flex-auto cursor-pointer text-center" value="plans">
+                Travel Plans
+              </TabsTrigger>
+              <TabsTrigger className="flex-1 md:flex-auto cursor-pointer text-center" value="reviews">
+                Reviews
+              </TabsTrigger>
+            </>
+          )
+
         }
       </TabsList>
 

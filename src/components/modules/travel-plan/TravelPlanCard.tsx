@@ -66,7 +66,10 @@ export const PlanCard = ({ plan }: { plan: ITravelPlan }) => {
 
         {/* Owner */}
         <div className="pt-3 border-t text-sm text-muted-foreground">
-          Hosted by <span className="font-medium">{plan.owner.name}</span>
+          Hosted by {" "}: {" "}  
+          <Link href={`/profile/${plan.owner_id}`}>
+          <span className="font-medium">{plan.owner.name}</span>
+          </Link>
         </div>
       </CardContent>
 

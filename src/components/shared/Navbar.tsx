@@ -48,7 +48,7 @@ export default async function PublicNavbar() {
               variant="secondary"
               className={` p-0 bg-transparent cursor-pointer text-2xl font-semibold text-primary`}
             >
-              Health-Care
+              Travelynk
             </Button>
           </Link>
 

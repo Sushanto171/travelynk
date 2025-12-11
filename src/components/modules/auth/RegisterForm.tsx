@@ -22,7 +22,6 @@ export default function RegisterForm() {
     if (!state.success && !Array.isArray(state.error)) {
       toast.error(state.message === "Duplicate key error" ? "This email already exist" : state.message)
     }
-console.log(state);
   }, [state])
 
   return (

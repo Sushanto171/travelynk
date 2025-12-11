@@ -1,6 +1,12 @@
+import { PlansViewLayout } from "@/components/modules/travel-plan/TravelPlansViewLayout";
+import { getTravelPlans } from "@/services/traveler/travelPlan.service";
 
-export default function TravelPlansPage() {
+export default async function TravelPlansPage() {
+  const plans = await getTravelPlans()
   return (
-    <div>This is TravelPlansPage Component.</div>
+    <div>
+
+      <PlansViewLayout plans={plans} />
+    </div>
   );
 }

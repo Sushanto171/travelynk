@@ -27,7 +27,7 @@ export default function CountryTable({ countries }: { countries: ICountry[] }) {
     if (!deleteCountry || !deleteCountry.id) return
     setIsDeleting(true)
     const result = await deleteCountryById(deleteCountry.id)
-    console.log(result);
+      (result);
     if (result.success) {
       toast.success(result.message || "Country deleted successfully");
       handleRefresh();

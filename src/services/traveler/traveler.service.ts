@@ -1,5 +1,6 @@
 "use server"
 
+import catchAsync from "@/lib/catchAsync";
 import { catchAsyncAction } from "@/lib/catchAsyncAction";
 import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";
@@ -8,24 +9,36 @@ import { UUID } from "crypto";
 import { revalidateTag } from "next/cache";
 
 export const updateTraveler = catchAsyncAction(async (pre, formData: FormData) => {
-  const id = formData.get("id")
+  const rawDob = formData.get("date_of_birth");
+
+  const parseDate = (value: FormDataEntryValue | null) => {
+    if (!value) return undefined;
+    if (typeof value !== "string" || value.trim() === "") return undefined;
+
+    const d = new Date(value);
+    return isNaN(d.getTime()) ? undefined : d;
+  };
+
   const payload: UpdateTravelerInput = {
     id: formData.get("id") as UUID,
-    name: formData.get("name") as string|| undefined,
-    bio: formData.get("bio") as string|| undefined,
+    name: formData.get("name") as string || undefined,
+    bio: formData.get("bio") as string || undefined,
     contact_number: formData.get("contact_number") as string || undefined,
-    date_of_birth: formData.get("date_of_birth")
-      ? new Date(formData.get("date_of_birth") as string) : undefined,
-    address: formData.get("address") as string|| undefined,
-    current_location: formData.get("current_location") as string|| undefined,
-    interests: formData.getAll("interests[]").map((v) => v.toString()),
-    remove_interests: formData.getAll("remove_interests[]").map((v) => v.toString()),
-    visited_countries: formData.getAll("visited_countries[]").map((v) => v.toString()),
+    date_of_birth: parseDate(rawDob),
+    address: formData.get("address") as string || undefined,
+    current_location: formData.get("current_location") as string || undefined,
+
+    interests: formData.getAll("interests[]").map(String),
+    remove_interests: formData.getAll("remove_interests[]").map(String),
+
+    visited_countries: formData.getAll("visited_countries[]").map(String),
     remove_visited_countries: formData
       .getAll("remove_visited_countries[]")
-      .map((v) => v.toString()),
-    profile_photo: formData.get("file") as File|| undefined
+      .map(String),
+
+    profile_photo: formData.get("file") as File || undefined,
   };
+
 
 
   const validate = zodValidator(payload, updateTravelerSchema)
@@ -34,17 +47,17 @@ export const updateTraveler = catchAsyncAction(async (pre, formData: FormData) =
     return validate
   }
 
-  const {profile_photo,...data} = validate.data
+  const { profile_photo, id, ...data } = validate.data
   const newFormData = new FormData()
 
   newFormData.append("data", JSON.stringify(data))
   newFormData.append("file", profile_photo as Blob)
 
-  const res = await serverFetch.patch(`/traveler/${id}`,{
+  const res = await serverFetch.patch(`/traveler/${id}`, {
     body: newFormData
   })
 
-   revalidateTag("user-info", {expire:0})
+  revalidateTag("user-info", { expire: 0 })
 
   const result = await res.json()
 
@@ -56,4 +69,10 @@ export const updateTraveler = catchAsyncAction(async (pre, formData: FormData) =
 
   return result
 
+})
+
+export const getTravelerById = catchAsync(async (id: string) => {
+  const res = await serverFetch.get(`/traveler/${id}`)
+  const result = await res.json()
+  return result.data
 })

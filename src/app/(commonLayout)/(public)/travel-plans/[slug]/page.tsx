@@ -7,6 +7,5 @@ export default async function PlanDetailPage({ params }: { params: { slug: strin
   const {slug} = await params
   const plan = await getBySlug(slug);
   const user = await getUserAction(); // fetch from auth
-  console.log(plan);
   return <PlanDetailsLayout plan={plan} currentUserId={user?.traveler?.id || ""} />;
 }

@@ -57,7 +57,6 @@ export default function CountryFormDialog({
       onClose()
       toast.success(state.message)
     } else {
-      console.log(state)
       toast.error(state.message)
     }
 
@@ -86,7 +85,7 @@ export default function CountryFormDialog({
                     <Input
                       id={`id`}
                       name={"id"}
-                      defaultValue={country?.id ||state?.FormData?.id }
+                      defaultValue={country?.id || state?.FormData?.id}
                       hidden={true}
                     />
                   )
@@ -103,7 +102,7 @@ export default function CountryFormDialog({
                   />
                   <GetFieldError
                     state={state}
-                    name={ "code"}
+                    name={"code"}
                   />
                 </Field>
 

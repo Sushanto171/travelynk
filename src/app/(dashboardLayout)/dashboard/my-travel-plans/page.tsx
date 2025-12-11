@@ -11,7 +11,6 @@ export default async function TravelerMyPlanPage() {
   return (
     <div>
       <PlansViewLayout plans={plans} />
-
     </div>
   );
 }

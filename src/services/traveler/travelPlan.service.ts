@@ -4,20 +4,21 @@ import catchAsync from "@/lib/catchAsync";
 import { catchAsyncAction } from "@/lib/catchAsyncAction";
 import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";
+import { IPlanStatus } from "@/types/travelPlan.interface";
 import { createPlanSchema, updatePlanSchema } from "@/zod/traveler/travelPlan.validation";
 
 export const getTravelPlans = catchAsync(async (query?: string) => {
 
   const res = await serverFetch.get(`/plan/${query ? `?${query}` : ""}`)
-  const result =await res.json()
-  return result.data ??[]
+  const result = await res.json()
+  return result.data ?? []
 })
 
 export const getBySlug = catchAsync(async (slug: string) => {
 
   const res = await serverFetch.get(`/plan/${slug}`)
-  const result =await res.json()
-  return result.data ??[]
+  const result = await res.json()
+  return result.data ?? []
 })
 
 
@@ -50,7 +51,7 @@ export const createTravelPlan = catchAsyncAction(async (pre, formData: FormData)
 
 
   const result = await res.json()
-  // console.log(result)
+  // (result)
 
   if (!result?.success) {
     throw new Error(
@@ -93,7 +94,7 @@ export const updateTravelPlan = catchAsyncAction(async (pre, formData: FormData)
 
 
   const result = await res.json()
-  // console.log(result)
+  // (result)
 
   if (!result?.success) {
     throw new Error(
@@ -102,4 +103,53 @@ export const updateTravelPlan = catchAsyncAction(async (pre, formData: FormData)
   }
 
   return result
-},)
+})
+
+
+export const updateTravelPlanStatus = catchAsync(async (id: string, status: IPlanStatus) => {
+
+  const res = await serverFetch.patch(`/plan/status/${id}`, {
+    body: JSON.stringify({ status }),
+    headers: { "Content-Type": "application/json" }
+  })
+
+  const result = await res.json()
+
+  if (!result?.success) {
+    throw new Error(
+      `Status update failed: ${result?.message || "Unknown server error"}`
+    );
+  }
+  
+  return result
+})
+
+
+export const planJoinRequest = catchAsync(async (plan_id: string) => {
+
+  const res = await serverFetch.post("/plan-join", {
+    body: JSON.stringify({ plan_id }),
+    headers: { "Content-Type": "application/json" }
+  })
+
+  const result = await res.json()
+  return result
+})
+
+interface RequestUpdateStatusProps {
+  plan_id: string,
+  traveler_id: string,
+  request_status: "ACCEPTED" | "REMOVE"
+}
+
+export const updateRequestStatus = catchAsync(async (payload: RequestUpdateStatusProps) => {
+
+  const res = await serverFetch.patch("/plan-join/status", {
+    body: JSON.stringify(payload),
+    headers: { "Content-Type": "application/json" }
+  })
+
+  const result = await res.json()
+    
+  return result
+})
