@@ -33,18 +33,17 @@ export default function UpdateTravelerDialog({
 
   useEffect(() => {
     if (!state) return
-    if(state.success){
+    if (state.success) {
       toast.success(state.message)
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setOpen(false)
-    }else{
+    } else {
       toast.error(state.message)
     }
-    // console.log(state);
   }, [state])
 
   return (
-    <Dialog open={open} onOpenChange={setOpen }>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" size="sm" className="w-full md:w-auto">
           <Edit className="w-4 h-4 mr-1" />
@@ -63,7 +62,7 @@ export default function UpdateTravelerDialog({
             <FieldGroup className="gap-4">
 
               {/* id */}
-          <input type="string" id="id" name="id" hidden={true} defaultValue={traveler?.id} />
+              <input type="string" id="id" name="id" hidden={true} defaultValue={traveler?.id} />
 
               {/* Name */}
               <Field>

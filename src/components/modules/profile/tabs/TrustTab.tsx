@@ -1,9 +1,8 @@
 // components/profile/tabs/TrustTab.tsx
 
-import { ProfileTabContent } from "../ProfileTabContent";
-import { KeyValueRow } from "../KeyValueRow";
 import { ITraveler, IUser } from "@/types/user.interface";
-import { Check } from "lucide-react";
+import { KeyValueRow } from "../KeyValueRow";
+import { ProfileTabContent } from "../ProfileTabContent";
 
 export function TrustTab({
   user,
@@ -36,7 +35,7 @@ export function TrustTab({
         />
 
         {/* Connected Providers */}
-        <div>
+        {/* <div>
           <span className="text-sm font-medium">Connected Providers</span>
           <div className="mt-1">
             {user?.auths?.map((a, i: number) => (
@@ -49,7 +48,7 @@ export function TrustTab({
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
     </ProfileTabContent>
   );

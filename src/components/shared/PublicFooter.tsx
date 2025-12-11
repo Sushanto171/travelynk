@@ -6,7 +6,7 @@ import { Input } from '../ui/input';
 
 
 
-const FooterLink = ({ href, children, icon: Icon }: { href: string; children: React.ReactNode; icon?: React.ElementType }) => (
+const FooterLink = ({  children, icon: Icon }: { href: string; children: React.ReactNode; icon?: React.ElementType }) => (
   <Link
     href={"/#"}
     className="hover:text-indigo-400 transition-colors flex items-center gap-2 py-1 text-sm"

@@ -12,8 +12,7 @@ export default async function MyProfilePage() {
   const user = await getUserAction()
   const interests = await getInterests()
   const countries = await getCountry()
-  if (!user) return redirect("/login")
-    console.log(user)
+  if (!user)  return redirect(`/login`);
   return (
     <ProfileLayout
       cover={<CoverPhoto src={"/cover.jpg"} />}

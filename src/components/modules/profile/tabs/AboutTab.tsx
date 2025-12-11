@@ -16,7 +16,7 @@ export function AboutTab({ traveler }: { traveler: ITraveler }) {
         <KeyValueRow label="Contact Number" value={traveler?.contact_number || null} />
         <KeyValueRow
           label="Date of Birth"
-          value={traveler?.date_of_birth ? formatTimeDate(traveler.date_of_birth) : null}
+          value={traveler?.date_of_birth ? formatTimeDate(traveler.date_of_birth, false) : null}
         />
         <KeyValueRow label="Address" value={traveler?.address || null} />
         <KeyValueRow label="Current Location" value={traveler?.current_location || null} />

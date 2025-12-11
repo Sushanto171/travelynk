@@ -1,5 +1,6 @@
 "use server";
 
+import catchAsync from "@/lib/catchAsync";
 import { serverFetch } from "@/lib/server-fetch";
 import { IUser, UserRole } from "@/types/user.interface";
 
@@ -25,9 +26,27 @@ export async function getUserAction(): Promise<IUser | null> {
       default:
         result.data.name = "Unknown User";
     }
-    
+
     return result.data
   } catch {
     return null;
   }
 }
+
+
+export const getUserById = catchAsync(async (id: string) => {
+  const res = await serverFetch.get(`/user/${id}`)
+  const result = await res.json()
+
+  switch (result.data.role as UserRole) {
+    case UserRole.ADMIN:
+      result.data.name = result.data?.admin?.name || "Unknown User";
+      break
+    case UserRole.USER:
+      result.data.name = result.data?.traveler?.name || "Unknown User";
+      break
+    default:
+      result.data.name = "Unknown User";
+  }
+  return result.data
+})

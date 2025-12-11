@@ -1,5 +1,5 @@
+import { IPlanType } from "@/types/travelPlan.interface";
 import z from "zod";
-import { IPlanStatus, IPlanType } from "@/types/travelPlan.interface";
 
 export const createPlanSchema = z.object({
   title: z.string("Title is required").nonempty("Title is required"),
@@ -23,6 +23,7 @@ export const createPlanSchema = z.object({
 );
 
 export const updatePlanSchema = z.object({
+  id: z.uuid(),
   title: z.string("Title is required").nonempty("Title is required").optional(),
   destination: z.string("Description is required").nonempty("Description is required").optional(),
   latitude: z.number("Latitude is required").optional(),

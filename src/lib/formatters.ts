@@ -1,10 +1,23 @@
-export const formatTimeDate = (date: string | Date) => {
-  return new Date(date).toLocaleString("en-us", {
+export const formatTimeDate = (
+  date: string | Date,
+  showTime: boolean = true
+) => {
+  const baseOptions: Intl.DateTimeFormatOptions = {
     month: "short",
     day: "numeric",
     year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
+  };
+
+  const timeOptions: Intl.DateTimeFormatOptions = showTime
+    ? {
+        hour: "2-digit",
+        minute: "2-digit",
+      }
+    : {};
+
+  return new Date(date).toLocaleString("en-US", {
+    ...baseOptions,
+    ...timeOptions,
   });
 };
 

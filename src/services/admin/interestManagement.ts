@@ -41,15 +41,15 @@ export const updateInterest = catchAsyncAction(async (pre, formData: FormData) =
   const id = formData.get("id")
   const name = formData.get("name")
 
-    if (!name) throw new Error("Interest name is required.")
+  if (!name) throw new Error("Interest name is required.")
 
   const res = await serverFetch.patch(`/interest/${id}`, {
-    body: JSON.stringify({name}),
+    body: JSON.stringify({ name }),
     headers: { "Content-Type": "application/json" }
   });
 
   const result = await res.json();
-  console.log({result})
+
   return result
 })
 

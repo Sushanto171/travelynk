@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 
 
 export const registerTraveler = catchAsyncAction(async (_pre, fromData: FormData) => {
-  // console.log(_pre, fromData);
+  // (_pre, fromData);
 
   const payload = {
     name: fromData.get("name"),

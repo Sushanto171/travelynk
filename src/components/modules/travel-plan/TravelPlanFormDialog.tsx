@@ -18,9 +18,10 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { createTravelPlan } from "@/services/traveler/travelPlan.service";
+import { createTravelPlan, updateTravelPlan } from "@/services/traveler/travelPlan.service";
 import { IPlanType, ITravelPlan } from "@/types/travelPlan.interface";
 import { Edit, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
 import { toast } from "sonner";
@@ -31,28 +32,29 @@ interface PlanDialogProps {
 
 export default function TravelPlanCreateUpdateDialog({ plan }: PlanDialogProps) {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
-  const [dateRange, ] = useState<DateRange | undefined>({
+  const [dateRange,] = useState<DateRange | undefined>({
     from: plan ? new Date(plan.start_date) : undefined,
     to: plan ? new Date(plan.end_date) : undefined,
   });
 
   const [state, action, isPending] = useActionState(
-    plan ? () => { } : createTravelPlan,
+    plan ? updateTravelPlan : createTravelPlan,
     null
   );
 
   useEffect(() => {
     if (!state) return;
-console.log(state)
     if (state.success) {
       toast.success(state.message);
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setOpen(false);
+      router.refresh()
     } else {
       toast.error(state.message);
     }
-  }, [state]);
+  }, [state, router]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

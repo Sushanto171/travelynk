@@ -1,17 +1,24 @@
-
 import { Card } from "@/components/ui/card";
-import { ReactNode } from "react";
+import { HTMLAttributes, ReactNode } from "react";
+import clsx from "clsx"; // optional for cleaner class merging
 
 interface ProfileLayoutProps {
   cover: ReactNode;
   profile: ReactNode;
   tabs: ReactNode;
   children?: ReactNode;
+  className?: HTMLAttributes<HTMLDivElement>["className"];
 }
 
-export default function ProfileLayout({ cover, profile, tabs, children }: ProfileLayoutProps) {
+export default function ProfileLayout({
+  cover,
+  profile,
+  tabs,
+  children,
+  className,
+}: ProfileLayoutProps) {
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-6">
+    <div className={clsx("w-full max-w-4xl mx-auto space-y-6", className)}>
       <Card className="overflow-hidden rounded-2xl shadow-sm pt-0">
         {/* COVER SECTION */}
         {cover}
