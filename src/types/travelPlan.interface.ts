@@ -13,11 +13,15 @@ export interface ITravelPlan {
   itinerary: string
   tag: string
   slug: string
-  tour_type: IPlanType
-  status: IPlanStatus
+  tour_type: string
+  status: string
   created_at: string
   updated_at: string
   owner: Owner
+  buddies: Buddy[]
+  reviews: Review[]
+  rating: Rating
+  total_joined: number
 }
 
 export interface Owner {
@@ -26,6 +30,38 @@ export interface Owner {
   email: string
 }
 
+export interface Buddy {
+  request_type: string
+  created_at: string
+  traveler: Traveler
+}
+
+export interface Traveler {
+  id: string
+  name: string
+  email: string
+  profile_photo: string
+}
+
+export interface Review {
+  id: string
+  rating: number
+  comment: string
+  created_at: string
+  reviewer: Reviewer
+}
+
+export interface Reviewer {
+  id: string
+  name: string
+  email: string
+  profile_photo: string
+}
+
+export interface Rating {
+  average: number
+  total: number
+}
 
 
 export enum IPlanStatus {
