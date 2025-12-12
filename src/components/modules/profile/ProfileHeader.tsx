@@ -13,6 +13,8 @@ import { BadgeCheck, Edit } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import UpdateTravelerDialog from "../traveler/TravelerFormDialog";
+import ProfilePhotoUpdateDialog from "../traveler/UpdateProfilePhoto";
+import ProfilePhoto from "./ProfilePhoto";
 
 interface Props {
   name: string;
@@ -38,21 +40,7 @@ export default function ProfileHeader({
     <div className="flex flex-col md:flex-row items-start md:items-end gap-4 relative w-full">
 
       {/* AVATAR */}
-      <div className="relative h-24 w-24 md:h-32 md:w-32 rounded-full ring-4 ring-background overflow-hidden bg-muted">
-        {avatar ? (
-          <Image
-            src={avatar}
-            alt="Profile"
-            fill
-            sizes="128px"
-            className="object-cover"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center " >
-            <span className="text-4xl">{getInitials(name)}</span>
-          </div>
-        )}
-      </div>
+    <ProfilePhoto profile_photo={avatar} name={name} />
 
       {/* TEXT BLOCK */}
       <div className="flex-1 w-full">

@@ -1,8 +1,10 @@
 "use server";
 
 import catchAsync from "@/lib/catchAsync";
+import { catchAsyncAction } from "@/lib/catchAsyncAction";
 import { serverFetch } from "@/lib/server-fetch";
 import { IUser, UserRole } from "@/types/user.interface";
+import { revalidateTag } from "next/cache";
 
 export async function getUserAction(): Promise<IUser | null> {
   try {
@@ -49,4 +51,21 @@ export const getUserById = catchAsync(async (id: string) => {
       result.data.name = "Unknown User";
   }
   return result.data
+})
+
+export const updateProfilePhoto = catchAsyncAction(async (pre, formData) => {
+  const res = await serverFetch.patch(`/user/update-profile-photo`, {
+    body: formData
+  })
+
+  const result = await res.json()
+
+  revalidateTag("user-info", { expire: 0 })
+  console.log(result);
+  if (!result?.success) {
+    throw new Error(
+      `Profile photo update failed: ${result?.message || "Unknown server error"}`
+    );
+  }
+  return result
 })

@@ -6,6 +6,7 @@ import { getCountry } from "@/services/admin/countryManagement";
 import { getInterests } from "@/services/admin/interestManagement";
 import { getUserAction, getUserById } from "@/services/auth/getUser.service";
 import { getReviewsByOwner } from "@/services/review/review.service";
+import { getTravelPlans } from "@/services/travelPlan/travelPlan.service";
 import { redirect } from "next/navigation";
 
 export default async function ShadowUserProfileDetails({ params }: { params: Promise<{ id: string }> }) {
@@ -16,6 +17,8 @@ export default async function ShadowUserProfileDetails({ params }: { params: Pro
   const countries = await getCountry()
   if (!user) return redirect(`/`);
   const reviews = await getReviewsByOwner(user?.traveler?.id)
+  const travelPlans = await getTravelPlans(`owner_id=${user?.traveler?.id}`);
+
 
   const isOwner = user.id === me?.id
   return (
@@ -35,7 +38,7 @@ export default async function ShadowUserProfileDetails({ params }: { params: Pro
             hasVerifyBadge={(user.admin ? true : user?.traveler?.has_verified_badge)}
           />
         }
-        tabs={<ProfileTabs user={user!} traveler={user.traveler!} reviews={reviews} />}
+        tabs={<ProfileTabs user={user!} traveler={user.traveler!} reviews={reviews} travelPlans={travelPlans} />}
       >
 
       </ProfileLayout>

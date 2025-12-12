@@ -25,7 +25,7 @@ export default async function JoinedPlansPage() {
               You haven&lsquo;t joined any travel plans. Explore available plans and request to join.
             </p>
 
-            <Link href="/dashboard/travel-plans">
+            <Link href="/travel-plans">
               <Button className="mt-2">Find Travel Plans</Button>
             </Link>
           </CardContent>

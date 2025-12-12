@@ -1,5 +1,6 @@
 "use client";
 
+import EmptyMassage from "@/components/shared/EmptyMassage";
 import { UserCard } from "@/components/shared/UserCard";
 import { TabsContent } from "@/components/ui/tabs";
 import { IReview } from "@/types/review.interface";
@@ -21,9 +22,7 @@ export const ReviewsTab: React.FC<ReviewsTabProps> = ({ reviews }) => {
       >
         <div className="space-y-4">
           {reviews.length === 0 ? (
-            <div className="text-center text-muted-foreground py-10">
-              No reviews available.
-            </div>
+            <EmptyMassage text=" No reviews available." />
           ) : (
             reviews.map((review) => (
               <UserCard

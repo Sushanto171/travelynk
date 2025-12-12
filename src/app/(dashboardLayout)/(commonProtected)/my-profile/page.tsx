@@ -6,6 +6,7 @@ import { getCountry } from "@/services/admin/countryManagement";
 import { getInterests } from "@/services/admin/interestManagement";
 import { getUserAction } from "@/services/auth/getUser.service";
 import { getReviewsByOwner } from "@/services/review/review.service";
+import { getTravelPlans } from "@/services/travelPlan/travelPlan.service";
 import { redirect } from "next/navigation";
 
 
@@ -15,6 +16,7 @@ export default async function MyProfilePage() {
   const countries = await getCountry()
   if (!user) return redirect(`/login`);
   const reviews = await getReviewsByOwner(user?.traveler?.id)
+  const travelPlans = await getTravelPlans(`owner_id=${user?.traveler?.id}`);
 
   return (
     <ProfileLayout
@@ -31,7 +33,7 @@ export default async function MyProfilePage() {
           hasVerifyBadge={(user.admin ? true : user?.traveler?.has_verified_badge)}
         />
       }
-      tabs={<ProfileTabs user={user!} traveler={user.traveler!} reviews={reviews} />}
+      tabs={<ProfileTabs user={user!} traveler={user.traveler!} reviews={reviews} travelPlans={travelPlans} />}
     >
 
     </ProfileLayout>
