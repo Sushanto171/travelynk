@@ -13,6 +13,7 @@ export interface IUser {
   updated_at: string
   admin?: Admin
   traveler?: ITraveler
+  profile_photo: string
 }
 
 export interface Admin {
@@ -49,7 +50,7 @@ export interface ITraveler {
   current_location?: string
   has_verified_badge: boolean
   interests: IInterest[] | []
-  visited_countries: ICountry[] |[]
+  visited_countries: ICountry[] | []
   last_active_at: string
   subscription_active: boolean
   created_at: string
