@@ -27,7 +27,6 @@ export default function InterestTable({ interests }: { interests: IInterest[] })
     if (!deleteInterest || !deleteInterest.id) return
     setIsDeleting(true)
     const result = await deleteInterestById(deleteInterest.id)
-      (result);
     if (result.success) {
       toast.success(result.message || "interest deleted successfully");
       handleRefresh();

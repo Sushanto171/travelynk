@@ -43,13 +43,8 @@ export default async function PublicNavbar() {
       <div className="max-w-7xl mx-auto ">
         <div className="flex items-center justify-between py-3">
           {/* Logo */}
-          <Link href="/">
-            <Button
-              variant="secondary"
-              className={` p-0 bg-transparent cursor-pointer text-2xl font-semibold text-primary`}
-            >
-              Travelynk
-            </Button>
+          <Link href="/" className="flex items-center text-2xl font-bold text-indigo-600">
+            TL<span className="text-gray-800">ynk</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -69,13 +64,8 @@ export default async function PublicNavbar() {
               <SheetContent>
                 <SheetHeader>
                   <SheetTitle>
-                    <Link href="/">
-                      <Button
-                        variant="secondary"
-                        className="p-0 bg-transparent text-lg font-semibold text-primary"
-                      >
-                        Health-Care
-                      </Button>
+                    <Link href="/" className="flex items-center text-2xl font-bold text-indigo-600">
+                      TL<span className="text-gray-800">ynk</span>
                     </Link>
                   </SheetTitle>
                   <SheetDescription className="sr-only"></SheetDescription>

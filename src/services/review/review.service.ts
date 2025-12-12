@@ -1,3 +1,4 @@
+"use server"
 import { catchAsyncAction } from "@/lib/catchAsyncAction";
 import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";

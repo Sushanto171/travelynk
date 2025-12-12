@@ -70,10 +70,10 @@ export default function DashboardNavbarContent({
 
       {/* Search input */}
       <div className="relative flex-1">
-        <Input className="w-full px-10" placeholder="Search...." />
+        {/* <Input className="w-full px-10" placeholder="Search...." />
         <Button className="absolute left-0" variant="ghost" size="icon">
           <Search />
-        </Button>
+        </Button> */}
       </div>
       {/* Notification Bell */}
       <div className="relative">
