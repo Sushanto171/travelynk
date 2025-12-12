@@ -2,8 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Bell, Menu, Search } from "lucide-react";
+import { Bell, Menu } from "lucide-react";
 
 import {
   Sheet,
@@ -14,10 +13,10 @@ import {
 } from "@/components/ui/sheet";
 import { getDefaultDashboardRoute } from "@/lib/authUtils";
 import { getDashboardNavItems } from "@/lib/dashboardNavItems.config";
+import { NavSection } from "@/types/sidebar";
+import { IUser } from "@/types/user.interface";
 import { useEffect, useState } from "react";
 import DashboardSidebarContent from "./DashboardSidebarContent";
-import { IUser } from "@/types/user.interface";
-import { NavSection } from "@/types/sidebar";
 import UserDropdown from "./UserDropdown";
 
 type DashboardNavbarContentProps = {
@@ -50,7 +49,7 @@ export default function DashboardNavbarContent({
       <div className="md:hidden">
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger>
-            <Button variant={"outline"} size="icon"  asChild >
+            <Button variant={"outline"} size="icon" asChild >
               <Menu />
             </Button>
           </SheetTrigger>

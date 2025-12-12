@@ -8,11 +8,14 @@ import { ProfileTabContent } from "./ProfileTabContent";
 import { AboutTab } from "./tabs/AboutTab";
 import TravelPlanTab from "./tabs/TravelPlanTab";
 import { TrustTab } from "./tabs/TrustTab";
+import { ReviewsTab } from "./tabs/ReviewsTab";
+import { IReview } from "@/types/review.interface";
 
-export function ProfileTabs({ defaultTab = "about", user, traveler }: {
+export function ProfileTabs({ defaultTab = "about", user, traveler ,reviews}: {
   defaultTab?: string
   user: IUser,
-  traveler: ITraveler
+  traveler: ITraveler,
+  reviews:IReview[]
 }) {
   const [tab, setTab] = useState(defaultTab);
 
@@ -57,25 +60,13 @@ export function ProfileTabs({ defaultTab = "about", user, traveler }: {
           description="Upcoming trips, destinations, and availability."
         >
 
-
-          <div className="text-sm">
-            Travel plan cards or schedule go here...
-          </div>
-
-          <TravelPlanTab />
+          <TravelPlanTab traveler={traveler} />
         </ProfileTabContent>
       </TabsContent>
 
       {/* REVIEWS */}
       <TabsContent value="reviews">
-        <ProfileTabContent
-          title="User Reviews"
-          description="Ratings and feedback from other users."
-        >
-          <div className="text-sm">
-            Review list goes here...
-          </div>
-        </ProfileTabContent>
+      <ReviewsTab reviews={reviews} />
       </TabsContent>
     </Tabs>
   );

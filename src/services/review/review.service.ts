@@ -1,4 +1,5 @@
 "use server"
+import catchAsync from "@/lib/catchAsync";
 import { catchAsyncAction } from "@/lib/catchAsyncAction";
 import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";
@@ -27,4 +28,11 @@ export const createReview = catchAsyncAction(async (prevState, formData: FormDat
 
   const result = await res.json()
   return result
+})
+
+
+export const getReviewsByOwner = catchAsync(async (ownerId: string) => {
+  const res = await serverFetch.get(`/review/${ownerId}`)
+  const result = await res.json()
+  return result?.data ?? []
 })

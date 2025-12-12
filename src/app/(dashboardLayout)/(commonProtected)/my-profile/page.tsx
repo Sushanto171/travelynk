@@ -5,6 +5,7 @@ import { ProfileTabs } from "@/components/modules/profile/ProfileTabs";
 import { getCountry } from "@/services/admin/countryManagement";
 import { getInterests } from "@/services/admin/interestManagement";
 import { getUserAction } from "@/services/auth/getUser.service";
+import { getReviewsByOwner } from "@/services/review/review.service";
 import { redirect } from "next/navigation";
 
 
@@ -12,7 +13,9 @@ export default async function MyProfilePage() {
   const user = await getUserAction()
   const interests = await getInterests()
   const countries = await getCountry()
-  if (!user)  return redirect(`/login`);
+  if (!user) return redirect(`/login`);
+  const reviews = await getReviewsByOwner(user?.traveler?.id)
+
   return (
     <ProfileLayout
       cover={<CoverPhoto src={"/cover.jpg"} />}
@@ -28,15 +31,9 @@ export default async function MyProfilePage() {
           hasVerifyBadge={(user.admin ? true : user?.traveler?.has_verified_badge)}
         />
       }
-      tabs={<ProfileTabs user={user!} traveler={user.traveler!} />}
+      tabs={<ProfileTabs user={user!} traveler={user.traveler!} reviews={reviews} />}
     >
-      {/* TAB CONTENT SLOTS (add real content later) */}
-      {/* <div className="p-6 bg-card border rounded-lg shadow-sm">
-        <h3 className="text-lg font-semibold">About Section</h3>
-        <p className="text-sm text-muted-foreground mt-1">
-          Add your content based on tab state...
-        </p>
-      </div> */}
+
     </ProfileLayout>
   );
 }
