@@ -11,14 +11,14 @@ export const getTravelPlans = catchAsync(async (query?: string) => {
 
   const res = await serverFetch.get(`/plan/${query ? `?${query}` : ""}`)
   const result = await res.json()
-  return result.data ?? []
+  return result.data 
 })
 
 export const getBySlug = catchAsync(async (slug: string) => {
 
   const res = await serverFetch.get(`/plan/${slug}`)
   const result = await res.json()
-  return result.data ?? []
+  return result.data 
 })
 
 

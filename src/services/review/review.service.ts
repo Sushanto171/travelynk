@@ -36,3 +36,9 @@ export const getReviewsByOwner = catchAsync(async (ownerId: string) => {
   const result = await res.json()
   return result?.data ?? []
 })
+
+export const getReviews = catchAsync(async (query?: string) => {
+  const res = await serverFetch.get(`/review/${query ? `?${query}` : ""}`)
+  const result = await res.json()
+  return result.data
+})

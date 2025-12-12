@@ -19,4 +19,5 @@ export interface Reviewer {
   id: string
   name: string
   profile_photo: string
+  email?:string
 }
