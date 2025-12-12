@@ -6,6 +6,7 @@ import Link from "next/link";
 interface UserCardProps {
   id: string;
   name: string;
+  email?: string,
   profile_photo?: string;
   subText?: string;
   linkToProfile?: boolean;
@@ -16,6 +17,7 @@ interface UserCardProps {
 export const UserCard = ({
   id,
   name,
+  email,
   profile_photo,
   subText,
   linkToProfile = true,
@@ -36,6 +38,7 @@ export const UserCard = ({
         </Avatar>
         <div className="flex flex-col text-sm">
           <span className="font-medium text-gray-800">{name}</span>
+          <span className="font-small text-gray-600">{email}</span>
           {subText && <span className="text-muted-foreground">{subText}</span>}
         </div>
       </div>

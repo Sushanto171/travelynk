@@ -8,7 +8,7 @@ export default function TravelPlanTab({ plans }: { plans: ITravelPlan[] }) {
 
 
   if (!plans.length) return (
-    <EmptyMassage text=" No Travel Plans Created Yet" />
+  <EmptyMassage text=" No Travel Plans Created Yet" />
   )
 
   return <PlansViewLayout plans={plans} />;

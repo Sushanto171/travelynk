@@ -33,7 +33,7 @@ export default async function MyProfilePage() {
           hasVerifyBadge={(user.admin ? true : user?.traveler?.has_verified_badge)}
         />
       }
-      tabs={<ProfileTabs user={user!} traveler={user.traveler!} reviews={reviews} travelPlans={travelPlans} />}
+      tabs={<ProfileTabs isOwner={true} user={user!} traveler={user.traveler!} reviews={reviews} travelPlans={travelPlans} />}
     >
 
     </ProfileLayout>

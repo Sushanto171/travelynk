@@ -1,11 +1,11 @@
 import { JoinedPlanCard } from "@/components/modules/traveler/JoinedPlanCard";
 import { ManagementPageHeader } from "@/components/shared/ManagementPageHeader";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { getJoinedPlans } from "@/services/travelPlan/travelPlan.service";
 import { IJoinedPlan } from "@/types/joinedPlan.interface";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { Inbox } from "lucide-react";
+import Link from "next/link";
 
 export default async function JoinedPlansPage() {
   const data = (await getJoinedPlans()) as IJoinedPlan[];

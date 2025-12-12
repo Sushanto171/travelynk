@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/set-state-in-effect */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { DateRangePickerField } from "@/components/shared/DateRangePickerField";
@@ -11,13 +13,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Field,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import GetFieldError from "@/lib/GetFieldError";
 import { createTravelPlan, updateTravelPlan } from "@/services/travelPlan/travelPlan.service";
 import { IPlanType, ITravelPlan } from "@/types/travelPlan.interface";
 import { Edit, Plus } from "lucide-react";
@@ -27,39 +26,52 @@ import { DateRange } from "react-day-picker";
 import { toast } from "sonner";
 
 interface PlanDialogProps {
-  plan?: ITravelPlan; // If provided → update, else → create
+  plan?: ITravelPlan;
+  
 }
 
 export default function TravelPlanCreateUpdateDialog({ plan }: PlanDialogProps) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
-  const [dateRange,] = useState<DateRange | undefined>({
-    from: plan ? new Date(plan.start_date) : undefined,
-    to: plan ? new Date(plan.end_date) : undefined,
-  });
-
   const [state, action, isPending] = useActionState(
     plan ? updateTravelPlan : createTravelPlan,
     null
   );
 
+  const [dateRange] = useState<DateRange | undefined>({
+    from:
+      state?.FormData?.start_date
+        ? new Date(state.FormData.start_date)
+        : plan
+          ? new Date(plan.start_date)
+          : undefined,
+    to:
+      state?.FormData?.end_date
+        ? new Date(state.FormData.end_date)
+        : plan
+          ? new Date(plan.end_date)
+          : undefined,
+  });
+
   useEffect(() => {
     if (!state) return;
     if (state.success) {
       toast.success(state.message);
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setOpen(false);
-      router.refresh()
+      router.refresh();
     } else {
+      if (state?.FormData) return;
       toast.error(state.message);
     }
   }, [state, router]);
 
+  const getValue = (field: string, fallback?: any) =>
+    state?.FormData?.[field] ?? fallback ?? "";
+
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-
-      {/* Trigger */}
       <DialogTrigger asChild>
         {plan ? (
           <Button variant="outline" size="sm" className="w-full md:w-auto">
@@ -74,15 +86,14 @@ export default function TravelPlanCreateUpdateDialog({ plan }: PlanDialogProps) 
         )}
       </DialogTrigger>
 
-      {/* Modal */}
       <DialogContent
         className="
           w-full 
-          max-w-4xl! 
+          max-w-3xl! 
           p-0 
           md:rounded-xl 
           rounded-none 
-          h-[100dvh] 
+          h-[9dvh] 
           md:h-auto
         "
       >
@@ -92,7 +103,6 @@ export default function TravelPlanCreateUpdateDialog({ plan }: PlanDialogProps) 
           </DialogTitle>
         </DialogHeader>
 
-        {/* Form */}
         <form action={action}>
           <div
             className="
@@ -106,8 +116,6 @@ export default function TravelPlanCreateUpdateDialog({ plan }: PlanDialogProps) 
             "
           >
             <FieldGroup className="gap-6">
-
-              {/* Hidden ID for update */}
               {plan && (
                 <input
                   type="string"
@@ -117,66 +125,56 @@ export default function TravelPlanCreateUpdateDialog({ plan }: PlanDialogProps) 
                 />
               )}
 
-              {/* Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                {/* Title */}
                 <Field>
-                  <FieldLabel htmlFor="title">
-                    Title <span className="text-xs text-muted-foreground">(optional)</span>
-                  </FieldLabel>
+                  <FieldLabel htmlFor="title">Title</FieldLabel>
                   <Input
                     id="title"
                     name="title"
                     placeholder="e.g., Bali Summer Trip"
-                    defaultValue={plan?.title || ""}
+                    defaultValue={getValue("title", plan?.title)}
                   />
+                  <GetFieldError state={state} name="title" />
                 </Field>
 
-                {/* Destination */}
                 <Field>
-                  <FieldLabel htmlFor="destination">
-                    Destination <span className="text-xs text-muted-foreground">(optional)</span>
-                  </FieldLabel>
+                  <FieldLabel htmlFor="destination">Destination</FieldLabel>
                   <Input
                     id="destination"
                     name="destination"
                     placeholder="e.g., Bali, Indonesia"
-                    defaultValue={plan?.destination || ""}
+                    defaultValue={getValue("destination", plan?.destination)}
                   />
+                  <GetFieldError state={state} name="destination" />
                 </Field>
 
-                {/* Latitude */}
                 <Field>
-                  <FieldLabel htmlFor="latitude">
-                    Latitude <span className="text-xs text-muted-foreground">(optional)</span>
-                  </FieldLabel>
+                  <FieldLabel htmlFor="latitude">Latitude</FieldLabel>
                   <Input
                     id="latitude"
                     name="latitude"
                     type="number"
                     step="any"
                     placeholder="e.g., -8.409518"
-                    defaultValue={plan?.latitude || ""}
+                    defaultValue={getValue("latitude", plan?.latitude)}
                   />
+                  <GetFieldError state={state} name="latitude" />
                 </Field>
 
-                {/* Longitude */}
                 <Field>
-                  <FieldLabel htmlFor="longitude">
-                    Longitude <span className="text-xs text-muted-foreground">(optional)</span>
-                  </FieldLabel>
+                  <FieldLabel htmlFor="longitude">Longitude</FieldLabel>
                   <Input
                     id="longitude"
                     name="longitude"
                     type="number"
                     step="any"
                     placeholder="e.g., 115.188919"
-                    defaultValue={plan?.longitude || ""}
+                    defaultValue={getValue("longitude", plan?.longitude)}
                   />
+                  <GetFieldError state={state} name="longitude" />
                 </Field>
 
-                {/* Google Place ID */}
                 <Field>
                   <FieldLabel htmlFor="place_id">
                     Google Place ID <span className="text-xs text-muted-foreground">(optional)</span>
@@ -185,11 +183,10 @@ export default function TravelPlanCreateUpdateDialog({ plan }: PlanDialogProps) 
                     id="place_id"
                     name="place_id"
                     placeholder="Place ID from Google Maps"
-                    defaultValue={plan?.place_id || ""}
+                    defaultValue={getValue("place_id", plan?.place_id)}
                   />
                 </Field>
 
-                {/* Map URL */}
                 <Field>
                   <FieldLabel htmlFor="map_url">
                     Map URL <span className="text-xs text-muted-foreground">(optional)</span>
@@ -198,46 +195,46 @@ export default function TravelPlanCreateUpdateDialog({ plan }: PlanDialogProps) 
                     id="map_url"
                     name="map_url"
                     placeholder="Direct Google Maps link"
-                    defaultValue={plan?.map_url || ""}
+                    defaultValue={getValue("map_url", plan?.map_url)}
                   />
                 </Field>
 
-                {/* Budget */}
                 <Field>
-                  <FieldLabel htmlFor="budget">
-                    Budget <span className="text-xs text-muted-foreground">(optional)</span>
-                  </FieldLabel>
+                  <FieldLabel htmlFor="budget">Budget</FieldLabel>
                   <Input
                     id="budget"
                     name="budget"
                     type="number"
                     placeholder="Estimated trip cost"
-                    defaultValue={plan?.budget || ""}
+                    defaultValue={getValue("budget", plan?.budget)}
                   />
+                  <GetFieldError state={state} name="budget" />
                 </Field>
               </div>
 
-              {/* Date Range Picker */}
               <DateRangePickerField
-                label="Trip Duration (optional)"
+                label="Trip Duration "
                 nameFrom="start_date"
                 nameTo="end_date"
                 placeholder="Select trip start and end dates"
                 defaultValue={dateRange}
               />
+              <div className="flex gap-4 item-start">
+                <GetFieldError state={state} name="start_date" />
+                <GetFieldError state={state} name="end_date" />
+              </div>
 
-              {/* Tour Type */}
               <SelectField
-                label="Tour Type (optional)"
+                label="Tour Type "
                 name="tour_type"
-                defaultValue={plan?.tour_type as unknown as string || undefined}
+                defaultValue={getValue("tour_type", plan?.tour_type)}
                 options={Object.values(IPlanType).map((type) => ({
                   value: type,
                   label: type,
-                })) as unknown as SelectOption[]}
+                })) as SelectOption[]}
               />
+              <GetFieldError state={state} name="tour_type" />
 
-              {/* Itinerary */}
               <Field>
                 <FieldLabel htmlFor="itinerary">
                   Itinerary <span className="text-xs text-muted-foreground">(optional)</span>
@@ -247,27 +244,26 @@ export default function TravelPlanCreateUpdateDialog({ plan }: PlanDialogProps) 
                   name="itinerary"
                   className="min-h-[120px]"
                   placeholder="Describe your day-by-day travel plan…"
-                  defaultValue={plan?.itinerary || ""}
+                  defaultValue={getValue("itinerary", plan?.itinerary)}
                 />
+                <GetFieldError state={state} name="itinerary" />
               </Field>
 
-              {/* Tag */}
               <Field>
                 <FieldLabel htmlFor="tag">
-                  Tag <span className="text-xs text-muted-foreground">(optional)</span>
+                  Tag 
                 </FieldLabel>
                 <Input
                   id="tag"
                   name="tag"
                   placeholder="e.g., Solo, Family, Adventure"
-                  defaultValue={plan?.tag || ""}
+                  defaultValue={getValue("tag", plan?.tag)}
                 />
+                <GetFieldError state={state} name="tag" />
               </Field>
-
             </FieldGroup>
           </div>
 
-          {/* Footer */}
           <div className="flex justify-end gap-3 border-t px-6 py-4 bg-background">
             <Button variant="outline" type="button" onClick={() => setOpen(false)}>
               Cancel

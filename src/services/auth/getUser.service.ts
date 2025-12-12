@@ -21,12 +21,15 @@ export async function getUserAction(): Promise<IUser | null> {
     switch (result.data.role as UserRole) {
       case UserRole.ADMIN:
         result.data.name = result.data?.admin?.name || "Unknown User";
+        result.data.profile_photo = result.data?.admin?.profile_photo || "Unknown User";
         break
       case UserRole.USER:
         result.data.name = result.data?.traveler?.name || "Unknown User";
+        result.data.profile_photo = result.data?.traveler?.profile_photo || "Unknown User";
         break
-      default:
-        result.data.name = "Unknown User";
+        default:
+          result.data.name = "Unknown User";
+          result.data.profile_photo = null
     }
 
     return result.data
@@ -61,7 +64,6 @@ export const updateProfilePhoto = catchAsyncAction(async (pre, formData) => {
   const result = await res.json()
 
   revalidateTag("user-info", { expire: 0 })
-  console.log(result);
   if (!result?.success) {
     throw new Error(
       `Profile photo update failed: ${result?.message || "Unknown server error"}`

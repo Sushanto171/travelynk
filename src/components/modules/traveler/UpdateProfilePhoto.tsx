@@ -37,8 +37,8 @@ export default function ProfilePhotoUpdateDialog({ profile_photo }: { profile_ph
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm" className="rounded-full p-0 md:w-auto absolute z-40 right-0">
-          <Camera className="w-4 h-4 mr-1" />
+        <Button variant="outline" size="sm" className="rounded-full p-0 md:w-auto absolute z-40 right-0 m-0">
+          <Camera className="w-4 h-4" />
         </Button>
       </DialogTrigger>
 

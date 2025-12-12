@@ -5,15 +5,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { firstLatterUppercase, getInitials } from "@/lib/formatters";
+import { firstLatterUppercase } from "@/lib/formatters";
 import { ICountry } from "@/types/country.interface";
 import { IInterest } from "@/types/interest.interface";
 import { ITraveler } from "@/types/user.interface";
 import { BadgeCheck, Edit } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import UpdateTravelerDialog from "../traveler/TravelerFormDialog";
-import ProfilePhotoUpdateDialog from "../traveler/UpdateProfilePhoto";
 import ProfilePhoto from "./ProfilePhoto";
 
 interface Props {
@@ -40,7 +38,7 @@ export default function ProfileHeader({
     <div className="flex flex-col md:flex-row items-start md:items-end gap-4 relative w-full">
 
       {/* AVATAR */}
-    <ProfilePhoto profile_photo={avatar} name={name} />
+      <ProfilePhoto isOwner={isOwner || false} profile_photo={avatar} name={name} />
 
       {/* TEXT BLOCK */}
       <div className="flex-1 w-full">

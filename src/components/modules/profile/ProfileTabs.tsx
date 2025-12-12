@@ -2,25 +2,26 @@
 "use client";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { IReview } from "@/types/review.interface";
+import { ITravelPlan } from "@/types/travelPlan.interface";
 import { ITraveler, IUser, UserRole } from "@/types/user.interface";
 import { useState } from "react";
 import { ProfileTabContent } from "./ProfileTabContent";
 import { AboutTab } from "./tabs/AboutTab";
+import { ReviewsTab } from "./tabs/ReviewsTab";
 import TravelPlanTab from "./tabs/TravelPlanTab";
 import { TrustTab } from "./tabs/TrustTab";
-import { ReviewsTab } from "./tabs/ReviewsTab";
-import { IReview } from "@/types/review.interface";
-import { ITravelPlan } from "@/types/travelPlan.interface";
+import TravelPlanCreateUpdateDialog from "../travel-plan/TravelPlanFormDialog";
 
-export function ProfileTabs({ defaultTab = "about", user, traveler ,reviews,travelPlans}: {
+export function ProfileTabs({ defaultTab = "about", user, traveler, reviews, travelPlans, isOwner }: {
   defaultTab?: string
   user: IUser,
   traveler: ITraveler,
-  reviews:IReview[],
-  travelPlans: ITravelPlan[]
+  reviews: IReview[],
+  travelPlans: ITravelPlan[],
+  isOwner: boolean
 }) {
   const [tab, setTab] = useState(defaultTab);
-
   return (
     <Tabs value={tab} onValueChange={setTab} className="w-full overflow-hidden">
       <TabsList className="flex md:grid md:grid-cols-4 w-full overflow-x-auto md:overflow-x-visible min-w-56 md:min-w-0">
@@ -60,7 +61,9 @@ export function ProfileTabs({ defaultTab = "about", user, traveler ,reviews,trav
         <ProfileTabContent
           title="Travel Plans"
           description="Upcoming trips, destinations, and availability."
+          action= {isOwner && <TravelPlanCreateUpdateDialog />}
         >
+         
 
           <TravelPlanTab plans={travelPlans} />
         </ProfileTabContent>
@@ -68,7 +71,7 @@ export function ProfileTabs({ defaultTab = "about", user, traveler ,reviews,trav
 
       {/* REVIEWS */}
       <TabsContent value="reviews">
-      <ReviewsTab reviews={reviews} />
+        <ReviewsTab reviews={reviews} />
       </TabsContent>
     </Tabs>
   );

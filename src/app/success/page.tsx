@@ -1,5 +1,6 @@
 "use client"
 import { Card, CardContent } from "@/components/ui/card";
+import { revalidateUserInfo } from "@/services/auth/revalidateUserInfo";
 import { CheckCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -38,7 +39,9 @@ export default function PaymentSuccessPage() {
     setTimeout(launchConfetti, 800);
 
     // Optional auto redirect callback
-    const t = setTimeout(() => {
+    const t = setTimeout(async () => {
+      await revalidateUserInfo()
+
       router.push("/my-profile")
     }, 2000);
     return () => clearTimeout(t);

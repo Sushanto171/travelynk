@@ -1,4 +1,5 @@
 import LogoutButton from "@/components/shared/LogoutButton";
+import { Avatar } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,7 +9,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { IUser } from "@/types/user.interface";
-import { Settings, User } from "lucide-react";
+import {  Settings, User } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 type UserDropdownProps = {
@@ -21,7 +23,11 @@ export default function UserDropdown({ user }: UserDropdownProps) {
       <DropdownMenuTrigger>
         <div className="flex items-center justify-center">
           <span className="w-10 h-10 rounded-full flex items-center justify-center border border-border">
-            {user.name.slice(0, 1).toUpperCase()}
+            {user?.profile_photo ? (
+              <Image src={user.profile_photo} alt={user.name.slice(0, 1).toUpperCase()} width={100} className="rounded-full" height= {200} />
+
+            ) : user.name.slice(0, 1).toUpperCase()
+            }
           </span>
         </div>
       </DropdownMenuTrigger>

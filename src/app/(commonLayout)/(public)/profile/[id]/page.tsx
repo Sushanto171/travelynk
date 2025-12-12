@@ -21,6 +21,7 @@ export default async function ShadowUserProfileDetails({ params }: { params: Pro
 
 
   const isOwner = user.id === me?.id
+  
   return (
     <div>
       <ProfileLayout
@@ -38,7 +39,7 @@ export default async function ShadowUserProfileDetails({ params }: { params: Pro
             hasVerifyBadge={(user.admin ? true : user?.traveler?.has_verified_badge)}
           />
         }
-        tabs={<ProfileTabs user={user!} traveler={user.traveler!} reviews={reviews} travelPlans={travelPlans} />}
+        tabs={<ProfileTabs isOwner={isOwner} user={user!} traveler={user.traveler!} reviews={reviews} travelPlans={travelPlans} />}
       >
 
       </ProfileLayout>
