@@ -7,7 +7,7 @@ type RouteConfig = {
 
 const commonProtectedRoutes: RouteConfig = {
   patterns: [],
-  exact: ["/my-profile", "/settings", "/change-password",],
+  exact: ["/my-profile", "/settings", "/change-password","/subscriptions"],
 };
 
 const adminProtectedRoutes: RouteConfig = {
