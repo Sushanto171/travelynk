@@ -11,6 +11,7 @@ import { IInterest } from "@/types/interest.interface";
 import { ITraveler } from "@/types/user.interface";
 import { BadgeCheck, Edit } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import UpdateTravelerDialog from "../traveler/TravelerFormDialog";
 
 interface Props {
@@ -86,14 +87,18 @@ export default function ProfileHeader({
         {isOwner ? (
           <>
             {/* Subscription Button */}
-            {!hasVerifyBadge && <Button
-              variant="outline"
-              size="sm"
-              className="relative animate-pulse shadow-[0_0_10px_rgba(0,150,255,0.6)] w-full md:w-auto"
-            >
-              <Edit className="w-4 h-4 mr-1" />
-              Premium Subscription
-            </Button>}
+            {!hasVerifyBadge &&
+              <Link href="/subscriptions">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="relative animate-pulse shadow-[0_0_10px_rgba(0,150,255,0.6)] w-full md:w-auto"
+                >
+                  <Edit className="w-4 h-4 mr-1" />
+                  Premium Subscription
+                </Button>
+              </Link>
+            }
             {
               traveler && (
 
