@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { LoadingButton } from "@/components/shared/LoadingButton";
 import {
   Field,
   FieldDescription,
@@ -73,12 +73,9 @@ export default function RegisterForm() {
           <GetFieldError state={state} name="confirmPassword" />
 
         </Field>
-        <Field>
-          <Button
-            disabled={isPending}
-            type="submit">
-            Register
-          </Button>
+        <Field>                  <LoadingButton type="submit" isLoading={isPending} loadingText="Registering..." >
+          Register
+        </LoadingButton>
 
           <FieldDescription className="text-center">
             Already have an account? <Link href="/login">Login</Link>

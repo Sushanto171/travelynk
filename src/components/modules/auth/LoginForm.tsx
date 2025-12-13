@@ -41,7 +41,7 @@ export default function LoginForm({ redirectTo }: { redirectTo?: string }) {
             name="email"
             type="text"
             placeholder="m@example.com"
-            defaultValue={"admin@example.com"}
+            // defaultValue={"admin@example.com"}
           />
           <GetFieldError state={state} name="email" />
         </Field>
@@ -60,7 +60,7 @@ export default function LoginForm({ redirectTo }: { redirectTo?: string }) {
               id="password"
               name="password"
               placeholder="Password"
-              defaultValue={"123456"}
+              // defaultValue={"123456"}
               type={isVisible ? "text" : "password"}
             />
 

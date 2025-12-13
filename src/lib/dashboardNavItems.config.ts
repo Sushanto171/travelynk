@@ -8,6 +8,12 @@ const getCommonNavItems = (role: UserRole): NavSection[] => {
     {
       items: [
         {
+          title: "Home",
+          href: "/",
+          icon: "Home",
+          roles: [UserRole.ADMIN, UserRole.USER],
+        },
+        {
           title: "Dashboard",
           href: defaultDashboard,
           icon: "LayoutDashboard",

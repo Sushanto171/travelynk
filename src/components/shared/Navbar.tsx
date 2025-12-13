@@ -15,6 +15,7 @@ import {
 import LogoutButton from "./LogoutButton";
 import NavAuthButton from "./NavAuthButton";
 import NavLinks from "./Navlinks";
+import { UserRole } from "@/types/user.interface";
 
 type ILink = {
   title: string;
@@ -31,6 +32,9 @@ export default async function PublicNavbar() {
     { title: "Home", href: "/" },
     ...(user
       ? [{ title: "Dashboard", href: getDefaultDashboardRoute(user.role) }]
+      : []),
+    ...(user && user.role === UserRole.USER
+      ? [{ title: "My travel plans", href: "/dashboard/my-travel-plans" }]
       : []),
     { title: "Find travel plans", href: "/travel-plans" },
     { title: "About us", href: "/about-us" },
