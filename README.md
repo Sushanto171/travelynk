@@ -154,23 +154,25 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A[Login] --> B[Navbar → My Travel Plans]
-    B --> C[Click "Create Plan"]
-    C --> D[Submit Plan Details] --> E[Plan Saved / Visible]
+    A[Login] --> B[Navbar My Travel Plans]
+    B --> C[Click Create Plan]
+    C --> D[Submit Plan Details]
+    D --> E[Plan Saved Visible]
     
-    F[Profile → Premium Subscription] --> G[Choose Plan & Payment]
+    F[Profile Premium Subscription] --> G[Choose Plan Payment]
     G --> H{Payment Result}
-    H -- Success --> I[/success → Redirect Profile]
-    H -- Cancel --> J[/cancel → Redirect Profile]
+    H -- Success --> I[Success Redirect Profile]
+    H -- Cancel --> J[Cancel Redirect Profile]
     
-    K[Find Travels → Select Plan] --> L[Plan Details]
-    L --> M[Click Join Request] --> N[Host Receives Request]
+    K[Find Travels Select Plan] --> L[Plan Details]
+    L --> M[Click Join Request]
+    M --> N[Host Receives Request]
     N --> O{Host Action}
     O -- Accept --> P[User Added to Plan]
     O -- Reject --> Q[User Notified]
     
-    R[Completed Plan → Dashboard → Joined Plans] --> S[Write Review]
-    S --> T[Review Saved & Displayed on Profiles]
+    R[Completed Plan Dashboard Joined Plans] --> S[Write Review]
+    S --> T[Review Saved Displayed on Profiles]
 ```
 
 ---
