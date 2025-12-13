@@ -1,5 +1,4 @@
 import LogoutButton from "@/components/shared/LogoutButton";
-import { Avatar } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { IUser } from "@/types/user.interface";
-import {  Settings, User } from "lucide-react";
+import { Settings, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -20,40 +19,55 @@ type UserDropdownProps = {
 export default function UserDropdown({ user }: UserDropdownProps) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <div className="flex items-center justify-center">
-          <span className="w-10 h-10 rounded-full flex items-center justify-center border border-border">
-            {user?.profile_photo ? (
-              <Image src={user.profile_photo} alt={user.name.slice(0, 1).toUpperCase()} width={100} className="rounded-full" height= {200} />
-
-            ) : user.name.slice(0, 1).toUpperCase()
-            }
-          </span>
-        </div>
+      <DropdownMenuTrigger asChild>
+        <button className="w-10 h-10 rounded-full border border-border overflow-hidden flex items-center justify-center bg-muted">
+          {user.profile_photo ? (
+            <Image
+              src={user.profile_photo}
+              alt={user.name}
+              width={40}
+              height={40}
+              className="w-full h-full object-cover"
+              priority
+            />
+          ) : (
+            <span className="text-sm font-medium">
+              {user.name.charAt(0).toUpperCase()}
+            </span>
+          )}
+        </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-44">
-        <DropdownMenuLabel className="font-bold">
-          {user?.name}
+
+      <DropdownMenuContent className="w-52">
+        <DropdownMenuLabel className="font-semibold">
+          {user.name}
         </DropdownMenuLabel>
-        <DropdownMenuLabel className="text-sm opacity-70">
+        <DropdownMenuLabel className="text-xs text-muted-foreground">
           {user.email}
         </DropdownMenuLabel>
-        <DropdownMenuLabel className="text-primary">
+        <DropdownMenuLabel className="text-xs text-primary uppercase">
           {user.role}
         </DropdownMenuLabel>
+
         <DropdownMenuSeparator />
+
         <Link href="/my-profile">
           <DropdownMenuItem>
-            <User className="text-foreground" /> Profile
+            <User className="mr-2 h-4 w-4" />
+            Profile
           </DropdownMenuItem>
         </Link>
+
         <Link href="/change-password">
           <DropdownMenuItem>
-            <Settings className="text-foreground" /> Change Password
+            <Settings className="mr-2 h-4 w-4" />
+            Change Password
           </DropdownMenuItem>
         </Link>
-        <DropdownMenuSeparator className="bg-red-400 opacity-70" />
-        <LogoutButton className="w-full border-red-400! bg-red-500!" />
+
+        <DropdownMenuSeparator />
+
+        <LogoutButton className="w-full" />
       </DropdownMenuContent>
     </DropdownMenu>
   );
