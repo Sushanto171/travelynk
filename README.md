@@ -1,17 +1,4 @@
-Absolutely. I’ll provide a **full, copy-paste ready README.md** for your **Travelynk project**, integrating:
 
-* Project overview
-* Objectives
-* Features (auth, profiles, travel plans, search, review, subscription)
-* Registration & OTP flow
-* User interaction flows (plan creation, subscription, join, host management, review)
-* Tech stack, environment variables, scripts, deployment
-
-This will be **enterprise-ready**.
-
----
-
-````markdown
 # 🌍 Travelynk – Social Travel & Meetup Platform
 
 [Frontend Live Demo](https://travelynk-mu.vercel.app) | [Frontend GitHub](https://github.com/Sushanto171/travelynk) | [Backend GitHub](https://github.com/Sushanto171/travelynk-server)
@@ -73,7 +60,7 @@ The system blends **social networking**, **travel discovery**, and **secure mone
 ### 6. Subscription & Payment
 - Premium access (monthly/yearly subscriptions)  
 - Verified badge purchase after subscription  
-- Payment gateway integration: Stripe / SSLCommerz  
+- Payment gateway integration: Stripe 
 - Webhook handling for secure payment confirmation  
 
 ---
