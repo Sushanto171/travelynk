@@ -114,6 +114,23 @@ const adminNavItems: NavSection[] = [
       },
     ],
   },
+  {
+    title: "Subscriptions & Billing",
+    items: [
+      {
+        title: "Subscription",
+        href: "/admin/dashboard/subscription-management",
+        icon: "Package",      // 📦 Subscription
+        roles: [UserRole.ADMIN],
+      },
+      // {
+      //   title: "Payment",
+      //   href: "/admin/dashboard/payment-management",
+      //   icon: "CreditCard",   // 💳 Payment
+      //   roles: [UserRole.ADMIN],
+      // },
+    ],
+  },
 
   {
     title: "System Configuration",
@@ -133,23 +150,7 @@ const adminNavItems: NavSection[] = [
     ],
   },
 
-  {
-    title: "Subscriptions & Billing",
-    items: [
-      {
-        title: "Subscription",
-        href: "/admin/dashboard/subscription-management",
-        icon: "Package",      // 📦 Subscription
-        roles: [UserRole.ADMIN],
-      },
-      {
-        title: "Payment",
-        href: "/admin/dashboard/payment-management",
-        icon: "CreditCard",   // 💳 Payment
-        roles: [UserRole.ADMIN],
-      },
-    ],
-  },
+
 ];
 
 

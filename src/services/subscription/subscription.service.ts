@@ -17,3 +17,11 @@ export const createSubscription = catchAsync(async (plan_type: SubscriptionPlan)
   }
   return result
 })
+
+
+export const getSubscriptions = catchAsync(async (query?: string) => {
+
+  const res = await serverFetch.get(`/subscription${query ? `?${query}` : ""}`)
+  const result = await res.json()
+  return result 
+})

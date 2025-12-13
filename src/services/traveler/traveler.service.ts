@@ -81,5 +81,5 @@ export const getTravelers = catchAsync(async (query?: string) => {
 
   const res = await serverFetch.get(`/traveler${query ? `?${query}` : ""}`)
   const result = await res.json()
-  return result?.data 
+  return result 
 })
