@@ -21,7 +21,7 @@ export default function UserDropdown({ user }: UserDropdownProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button className="w-10 h-10 rounded-full border border-border overflow-hidden flex items-center justify-center bg-muted">
-          {user.profile_photo ? (
+          {user?.profile_photo ? (
             <Image
               src={user.profile_photo}
               alt={user.name}

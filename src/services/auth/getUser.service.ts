@@ -21,15 +21,15 @@ export async function getUserAction(): Promise<IUser | null> {
     switch (result.data.role as UserRole) {
       case UserRole.ADMIN:
         result.data.name = result.data?.admin?.name || "Unknown User";
-        result.data.profile_photo = result.data?.admin?.profile_photo || "Unknown User";
+        result.data.profile_photo = result.data?.admin?.profile_photo || null;
         break
       case UserRole.USER:
         result.data.name = result.data?.traveler?.name || "Unknown User";
-        result.data.profile_photo = result.data?.traveler?.profile_photo || "Unknown User";
+        result.data.profile_photo = result.data?.traveler?.profile_photo || null;
         break
-        default:
-          result.data.name = "Unknown User";
-          result.data.profile_photo = null
+      default:
+        result.data.name = "Unknown User";
+        result.data.profile_photo = null
     }
 
     return result.data

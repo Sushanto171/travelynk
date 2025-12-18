@@ -15,8 +15,8 @@ export interface ISubscription {
   start_date: string
   end_date: string
   is_active: boolean
-  createdAt: string
-  updatedAt: string
+  created_at: string
+  updated_at: string
   payments: Payment[]
   subscriber: Subscriber
 }
@@ -27,8 +27,8 @@ export interface Payment {
   transactionId: string
   amount: number
   status: string
-  createdAt: string
-  updatedAt: string
+  created_at: string
+  updated_at: string
 }
 
 export interface Subscriber {

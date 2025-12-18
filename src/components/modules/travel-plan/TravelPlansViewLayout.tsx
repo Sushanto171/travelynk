@@ -6,13 +6,14 @@ import { ITravelPlan } from "@/types/travelPlan.interface";
 import { Inbox } from "lucide-react";
 import { PlanCard } from "./TravelPlanCard";
 import TravelPlanCreateUpdateDialog from "./TravelPlanFormDialog";
+import { cn } from "@/lib/utils";
 
-export const PlansViewLayout = ({ plans }: { plans: ITravelPlan[] }) => {
+export const PlansViewLayout = ({ plans, isTab= false }: { plans: ITravelPlan[], isTab?:boolean }) => {
   return (
     <div className="max-w-6xl mx-auto space-y-8">
       {/* Plans Grid or Empty State */}
       {plans.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className={ cn( `grid grid-cols-1 md:grid-cols-2  gap-6`, isTab? "lg:grid-cols-2" : "lg:grid-cols-3" )}>
           {plans.map((plan) => (
             <PlanCard key={plan.id} plan={plan} />
           ))}

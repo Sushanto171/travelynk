@@ -11,5 +11,5 @@ export default function TravelPlanTab({ plans }: { plans: ITravelPlan[] }) {
   <EmptyMassage text=" No Travel Plans Created Yet" />
   )
 
-  return <PlansViewLayout plans={plans} />;
+  return <PlansViewLayout plans={plans} isTab />;
 }

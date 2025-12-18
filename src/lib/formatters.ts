@@ -10,9 +10,9 @@ export const formatTimeDate = (
 
   const timeOptions: Intl.DateTimeFormatOptions = showTime
     ? {
-        hour: "2-digit",
-        minute: "2-digit",
-      }
+      hour: "2-digit",
+      minute: "2-digit",
+    }
     : {};
 
   return new Date(date).toLocaleString("en-US", {
@@ -31,4 +31,9 @@ export const getInitials = (name: string) => {
 
 export const firstLatterUppercase = (name: string) => {
   return name.charAt(0).toUpperCase() + name.slice(1);
+}
+
+export const formatAmountCentToTaka = (cent: string |number) => {
+  const tk = Number(cent) / 100
+  return tk.toLocaleString()
 }

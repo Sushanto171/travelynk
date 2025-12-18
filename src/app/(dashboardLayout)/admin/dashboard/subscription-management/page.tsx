@@ -7,7 +7,7 @@ export default async function AdminSubscriptionManagementPage() {
 
   const subscriptions = await getSubscriptions()
   return (
-    <div>
+    <div className={"space-y-6"}>
       <Suspense fallback={null} >
 
         <ManagementPageHeader title="All Subscription"
