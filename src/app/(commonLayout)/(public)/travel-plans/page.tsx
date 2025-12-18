@@ -8,7 +8,7 @@ export default async function TravelPlansPage() {
 
       <div></div>
 
-      <PlansViewLayout plans={plans} />
+      <PlansViewLayout plans={plans} isPublic />
     </div>
   );
 }
