@@ -28,7 +28,7 @@ export const PlansViewLayout = ({ plans, isTab = false, isPublic = false }: { pl
             <p className="text-sm text-muted-foreground max-w-md mx-auto">
               You haven’t joined any travel plans. Explore available plans and request to join trips that match your interests.
             </p>
-            {isPublic && <TravelPlanCreateUpdateDialog />}
+            {!isPublic && <TravelPlanCreateUpdateDialog />}
           </CardContent>
         </Card>
       )}
