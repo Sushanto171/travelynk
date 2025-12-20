@@ -49,7 +49,7 @@ export const PlanDetailsLayout = ({
         {isOwner && (
           <div className="lg:w-72 flex-shrink-0 space-y-6 sticky top-24 h-fit">
             <PlanOwnerActions plan={plan} />
-            <PlanRequestManager buddies={plan.buddies} planId={plan.id} />
+            <PlanRequestManager total_requested={plan.total_requested} buddies={plan.buddies} planId={plan.id} />
           </div>
         )}
       </div>

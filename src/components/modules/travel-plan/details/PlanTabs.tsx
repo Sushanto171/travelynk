@@ -9,6 +9,8 @@ import { PlanReviews } from "./PlanReview";
 export const PlanTabs = ({ plan }: { plan: ITravelPlan }) => {
   const tabs = ["Itinerary", "Participants", "Reviews"];
   const [activeTab, setActiveTab] = useState("Itinerary");
+    const joined = plan.buddies.filter((b) => b.request_type === "ACCEPTED");
+
 
   return (
     <div className="space-y-4">
@@ -31,7 +33,7 @@ export const PlanTabs = ({ plan }: { plan: ITravelPlan }) => {
       {/* Tab Panels */}
       <div className="mt-4 space-y-4">
         {activeTab === "Itinerary" && <PlanItinerary itinerary={plan.itinerary} />}
-        {activeTab === "Participants" && <PlanBuddies buddies={plan.buddies} />}
+        {activeTab === "Participants" && <PlanBuddies buddies={joined} />}
         {activeTab === "Reviews" && <PlanReviews reviews={plan.reviews} rating={plan.rating} />}
       </div>
     </div>

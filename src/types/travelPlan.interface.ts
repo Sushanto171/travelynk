@@ -22,6 +22,7 @@ export interface ITravelPlan {
   reviews: Review[]
   rating: Rating
   total_joined: number
+  total_requested: number
 }
 
 export interface Owner {
@@ -33,6 +34,7 @@ export interface Owner {
 export interface Buddy {
   request_type: string
   created_at: string
+  updated_at: string
   traveler: Traveler
 }
 
@@ -65,10 +67,10 @@ export interface Rating {
 
 
 export enum IPlanStatus {
-  PENDING= "PENDING",
-  ONGOING= "ONGOING",
-  COMPLETED= "COMPLETED",
-  CANCELLED= "CANCELLED",
+  PENDING = "PENDING",
+  ONGOING = "ONGOING",
+  COMPLETED = "COMPLETED",
+  CANCELLED = "CANCELLED",
 }
 export enum IPlanType {
   SOLO = "SOLO",

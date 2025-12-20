@@ -102,6 +102,7 @@ export const softDeleteTravelerById = catchAsync(async (id: string) => {
   return result
 
 })
+
 export const deleteTravelerById = catchAsync(async (id: string) => {
   if (!id) {
     throw new Error("Traveler ID is required")

@@ -1,4 +1,3 @@
-
 "use client"
 
 import DeleteConfirmationDialog from "@/components/shared/DeleteConfirmationDialog";
@@ -7,10 +6,13 @@ import { ITravelPlan } from "@/types/travelPlan.interface";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { travelPlansColumn } from "./travelPlansColumn";
+import TravelPlanCreateUpdateDialog from "../../travel-plan/TravelPlanFormDialog";
+import { toast } from "sonner";
+import { deleteTravelPlanById } from "@/services/travelPlan/travelPlan.service";
 
 export default function TravelPlansTable({ travelPlans }: { travelPlans: ITravelPlan[] }) {
-  const [interest, setInterest] = useState<ITravelPlan | null>(null)
-  const [deleteTravelPlans, setDeleteTravelPlans] = useState<ITravelPlan | null>(null)
+  const [plan, setPlan] = useState<ITravelPlan | null>(null)
+  const [deleteTravelPlan, setDeleteTravelPlan] = useState<ITravelPlan | null>(null)
   const [isPending, startTransition] = useTransition()
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -21,42 +23,48 @@ export default function TravelPlansTable({ travelPlans }: { travelPlans: ITravel
       router.refresh()
     })
   }
+
+  const handleView = (travelPlan: ITravelPlan) => {
+    router.push(`/travel-plans/${travelPlan.slug}`)
+  }
+
   const handleConfirm = async () => {
-    // if (!deleteTravelPlans || !deleteTravelPlans.id) return
-    // setIsDeleting(true)
-    // const result = await deleteTravelPlansById(deleteTravelPlans.id)
-    // if (result.success) {
-    //   toast.success(result.message || "interest deleted successfully");
-    //   handleRefresh();
-    //   setDeleteInterest(null);
-    // } else {
-    //   toast.error(result.message || "Failed to delete");
-    // }
-    // setIsDeleting(false);
+    if (!deleteTravelPlan || !deleteTravelPlan.id) return
+    setIsDeleting(true)
+    const result = await deleteTravelPlanById(deleteTravelPlan.id)
+    if (result.success) {
+      toast.success(result.message || "plan deleted successfully");
+      handleRefresh();
+      setDeleteTravelPlan(null);
+    } else {
+      toast.error(result.message || "Failed to delete");
+    }
+    setIsDeleting(false);
   }
   return (
     <div>
-      {/* <TravelPlanCreateUpdateDialog
-        open={!!interest}
-        interest={interest!}
-        onClose={() => setInterest(null)}
+      <TravelPlanCreateUpdateDialog
+      showButton={false}
+        plan={plan!}
+        onClose={() => setPlan(null)}
         onSuccess={handleRefresh}
-      /> */}
+      />
 
       <DeleteConfirmationDialog
-        open={!!deleteTravelPlans}
+        open={!!deleteTravelPlan}
         onConfirm={handleConfirm}
-        onOpenChange={(open) => !open && setDeleteTravelPlans(null)}
-        title="Delete interest"
-        description={`Are you sure you want to delete ${deleteTravelPlans?.title}? This action cannot be undone.`}
+        onOpenChange={(open) => !open && setDeleteTravelPlan(null)}
+        title="Delete plan"
+        description={`Are you sure you want to delete ${deleteTravelPlan?.title}? This action cannot be undone.`}
       />
 
       <ManagementTable
         data={travelPlans}
         columns={travelPlansColumn}
         getRowKey={(row) => row.id!}
-        onDelete={setDeleteTravelPlans}
-        onEdit={setInterest}
+        onDelete={setDeleteTravelPlan}
+        onEdit={setPlan}
+        onView={handleView}
         isRefreshing={isPending || isDeleting}
       />
     </div>

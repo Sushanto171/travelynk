@@ -4,6 +4,7 @@
 import { UserCard } from "@/components/shared/UserCard";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { timeAgo } from "@/lib/formatters";
 import { updateRequestStatus } from "@/services/travelPlan/travelPlan.service";
 import { ITravelPlan } from "@/types/travelPlan.interface";
 import { useRouter } from "next/navigation";
@@ -13,9 +14,11 @@ import { toast } from "sonner";
 export const PlanRequestManager = ({
   buddies,
   planId,
+  total_requested =0
 }: {
   buddies: ITravelPlan["buddies"];
   planId: string;
+  total_requested: number
 }) => {
   const router = useRouter();
   const [, startTransition] = useTransition();
@@ -43,6 +46,8 @@ export const PlanRequestManager = ({
           request_status: status,
         });
 
+        console.log(result);
+
         toast.success(result.message);
       } catch (err: any) {
         toast.error(err.message);
@@ -53,7 +58,7 @@ export const PlanRequestManager = ({
 
   return (
     <Card className="p-6 rounded-xl space-y-5 shadow-sm">
-      <h3 className="font-semibold text-lg">Join Requests</h3>
+      <h3 className="font-semibold text-lg">Join Requests ({total_requested})</h3>
 
       <div className="space-y-4">
         {pending.map((b) => (
@@ -67,6 +72,14 @@ export const PlanRequestManager = ({
               name={b.traveler.name}
               profile_photo={b.traveler.profile_photo}
             />
+
+            {/* show request time like * hrs * min ago */}
+            <div>
+
+              <p className="text-sm text-muted-foreground">
+                Requested on : {timeAgo(b.created_at)}
+              </p>
+            </div>
 
             {/* ACTIONS */}
             <div className="flex justify-end gap-2">

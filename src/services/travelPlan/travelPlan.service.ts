@@ -11,14 +11,14 @@ export const getTravelPlans = catchAsync(async (query?: string) => {
 
   const res = await serverFetch.get(`/plan/${query ? `?${query}` : ""}`)
   const result = await res.json()
-  return result.data 
+  return result.data
 })
 
 export const getBySlug = catchAsync(async (slug: string) => {
 
   const res = await serverFetch.get(`/plan/${slug}`)
   const result = await res.json()
-  return result.data 
+  return result.data
 })
 
 
@@ -151,7 +151,17 @@ export const updateRequestStatus = catchAsync(async (payload: RequestUpdateStatu
 
   const result = await res.json()
 
-  return result
+
+  if (!result?.success) {
+    throw new Error(
+      `Request status update failed: ${result?.message || "Unknown server error"}`
+    );
+  }
+
+  return {
+    message: payload.request_status === "ACCEPTED" ? "Join request accepted." : "Traveler removed from plan.",
+    // ...result
+  }
 })
 
 
@@ -162,8 +172,29 @@ export const getJoinedPlans = catchAsync(async () => {
 
 })
 
-export const cancelJoinRequest = catchAsync(async (planId:string) => {
+export const cancelJoinRequest = catchAsync(async (planId: string) => {
   const res = await serverFetch.delete(`/plan-join/remove/${planId}`)
   const result = await res.json()
   return result
+})
+
+
+export const deleteTravelPlanById = catchAsync(async (id: string) => {
+  if (!id) {
+    throw new Error("Travel Plan ID is required")
+  }
+
+  const res = await serverFetch.delete(`/plan/${id}`)
+
+
+  const result = await res.json()
+
+  if (!result?.success) {
+    throw new Error(
+      `Profile update failed: ${result?.message || "Unknown server error"}`
+    );
+  }
+
+  return result
+
 })

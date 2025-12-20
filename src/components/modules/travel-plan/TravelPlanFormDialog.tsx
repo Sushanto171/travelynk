@@ -1,4 +1,5 @@
-/* eslint-disable react-hooks/set-state-in-effect */
+/* eslint-disable react-hooks/exhaustive-deps */
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -21,15 +22,18 @@ import { createTravelPlan, updateTravelPlan } from "@/services/travelPlan/travel
 import { IPlanType, ITravelPlan } from "@/types/travelPlan.interface";
 import { Edit, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useMemo, useState } from "react";
 import { DateRange } from "react-day-picker";
 import { toast } from "sonner";
 
 interface PlanDialogProps {
   plan?: ITravelPlan;
+  onClose?: () => void;
+  onSuccess?: () => void;
+  showButton?: boolean
 }
 
-export default function TravelPlanCreateUpdateDialog({ plan }: PlanDialogProps) {
+export default function TravelPlanCreateUpdateDialog({ plan, onClose, onSuccess, showButton = true }: PlanDialogProps) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
@@ -38,20 +42,31 @@ export default function TravelPlanCreateUpdateDialog({ plan }: PlanDialogProps) 
     null
   );
 
-  const [dateRange] = useState<DateRange | undefined>({
-    from:
-      state?.FormData?.start_date
-        ? new Date(state.FormData.start_date)
-        : plan
-          ? new Date(plan.start_date)
-          : undefined,
-    to:
-      state?.FormData?.end_date
-        ? new Date(state.FormData.end_date)
-        : plan
-          ? new Date(plan.end_date)
-          : undefined,
-  });
+    useEffect(() => {
+    if (!showButton && plan) {
+      setOpen(true);
+    }
+  }, [plan, showButton]);
+
+  
+    const dateRange: DateRange | undefined = useMemo(() => {
+    if (state?.FormData?.start_date && state?.FormData?.end_date) {
+      return {
+        from: new Date(state.FormData.start_date),
+        to: new Date(state.FormData.end_date),
+      };
+    }
+
+    if (plan) {
+      return {
+        from: new Date(plan.start_date),
+        to: new Date(plan.end_date),
+      };
+    }
+
+    return undefined;
+  }, [state, plan]);
+
 
   useEffect(() => {
     if (!state) return;
@@ -59,11 +74,23 @@ export default function TravelPlanCreateUpdateDialog({ plan }: PlanDialogProps) 
       toast.success(state.message);
       setOpen(false);
       router.refresh();
+      if (onSuccess) {
+        onSuccess()
+      }
     } else {
       if (state?.FormData) return;
       toast.error(state.message);
     }
   }, [state, router]);
+
+  useEffect(() => {
+    if (!open && onClose) {
+      onClose()
+    }
+  }, [open])
+
+
+
 
   const getValue = (field: string, fallback?: any) =>
     state?.FormData?.[field] ?? fallback ?? "";
@@ -71,19 +98,21 @@ export default function TravelPlanCreateUpdateDialog({ plan }: PlanDialogProps) 
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        {plan ? (
-          <Button variant="outline" size="sm" className="w-full md:w-auto">
-            <Edit className="w-4 h-4 mr-1" />
-            Edit Plan
-          </Button>
-        ) : (
-          <Button size="sm" className="w-full md:w-auto">
-            <Plus className="w-4 h-4 mr-1" />
-            Create Plan
-          </Button>
+        {showButton && (
+          <DialogTrigger asChild>
+            {plan ? (
+              <Button variant="outline" size="sm" className="w-full md:w-auto">
+                <Edit className="w-4 h-4 mr-1" />
+                Edit Plan
+              </Button>
+            ) : (
+              <Button size="sm" className="w-full md:w-auto">
+                <Plus className="w-4 h-4 mr-1" />
+                Create Plan
+              </Button>
+            )}
+          </DialogTrigger>
         )}
-      </DialogTrigger>
 
       <DialogContent
         className="
@@ -250,7 +279,7 @@ export default function TravelPlanCreateUpdateDialog({ plan }: PlanDialogProps) 
 
               <Field>
                 <FieldLabel htmlFor="tag">
-                  Tag 
+                  Tag
                 </FieldLabel>
                 <Input
                   id="tag"
