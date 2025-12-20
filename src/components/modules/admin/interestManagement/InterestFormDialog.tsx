@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { LoadingButton } from "@/components/shared/LoadingButton";
@@ -61,7 +62,7 @@ export default function InterestFormDialog({
     } else {
       toast.error(state.message);
     }
-  }, [state, onClose, onSuccess]);
+  }, [state]);
 
   return (
     <Dialog open={open} onOpenChange={onClose}>

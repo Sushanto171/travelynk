@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 
 
 "use client";
@@ -60,7 +61,7 @@ export default function CountryFormDialog({
       toast.error(state.message)
     }
 
-  }, [state, onSuccess, onClose])
+  }, [state])
 
 
   return (
