@@ -15,7 +15,7 @@ interface DeleteConfirmDialogProps {
   onOpenChange: (open: boolean) => void;
   onConfirm: () => void;
   title?: string;
-  description?: string;
+  description?: string | React.ReactNode;
   itemName?: string;
   isDeleting?: boolean;
 }
@@ -48,7 +48,7 @@ const DeleteConfirmationDialog = ({
           <AlertDialogAction
             onClick={onConfirm}
             disabled={isDeleting}
-            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            className="bg-destructive  hover:bg-destructive/90"
           >
             {isDeleting ? "Deleting..." : "Delete"}
           </AlertDialogAction>

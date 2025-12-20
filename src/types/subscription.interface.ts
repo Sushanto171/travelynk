@@ -1,9 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export interface SubscriptionPlan {
-  WEEKLY: 'WEEKLY',
-  MONTHLY: 'MONTHLY',
-  YEARLY: 'YEARLY'
-}
+export type SubscriptionPlan = 'WEEKLY' | 'MONTHLY' | 'YEARLY'
+
 
 
 export interface ISubscription {

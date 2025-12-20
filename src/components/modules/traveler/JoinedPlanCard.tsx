@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { statusColor } from "@/constant/planStatus";
 import { cancelJoinRequest } from "@/services/travelPlan/travelPlan.service";
 import { IJoinedPlan } from "@/types/joinedPlan.interface";
 import { format } from "date-fns";
@@ -20,7 +21,7 @@ interface JoinedPlanCardProps {
 }
 
 export const JoinedPlanCard = ({ item }: JoinedPlanCardProps) => {
-  const { plan, request_type, created_at, } = item;
+  const { plan, created_at, } = item;
   const router = useRouter()
 
   const isCompleted = plan.status === "COMPLETED";
@@ -44,9 +45,9 @@ export const JoinedPlanCard = ({ item }: JoinedPlanCardProps) => {
     <Card className="rounded-2xl shadow-sm border">
       <CardHeader className="flex flex-row justify-between items-start">
         <CardTitle className="text-lg font-semibold">{plan.title}</CardTitle>
-
-        <Badge variant="outline" className="uppercase">
-          {request_type}
+        {/* Status Badge */}
+        <Badge className={statusColor[plan.status]}>
+          {plan.status}
         </Badge>
       </CardHeader>
 

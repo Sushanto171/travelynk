@@ -2,13 +2,13 @@
 
 import DeleteConfirmationDialog from "@/components/shared/DeleteConfirmationDialog";
 import { ManagementTable } from "@/components/shared/ManagementTable";
+import { deleteTravelPlanById } from "@/services/travelPlan/travelPlan.service";
 import { ITravelPlan } from "@/types/travelPlan.interface";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
-import { travelPlansColumn } from "./travelPlansColumn";
-import TravelPlanCreateUpdateDialog from "../../travel-plan/TravelPlanFormDialog";
 import { toast } from "sonner";
-import { deleteTravelPlanById } from "@/services/travelPlan/travelPlan.service";
+import TravelPlanCreateUpdateDialog from "../../travel-plan/TravelPlanFormDialog";
+import { travelPlansColumn } from "./travelPlansColumn";
 
 export default function TravelPlansTable({ travelPlans }: { travelPlans: ITravelPlan[] }) {
   const [plan, setPlan] = useState<ITravelPlan | null>(null)
@@ -44,7 +44,7 @@ export default function TravelPlansTable({ travelPlans }: { travelPlans: ITravel
   return (
     <div>
       <TravelPlanCreateUpdateDialog
-      showButton={false}
+        showButton={false}
         plan={plan!}
         onClose={() => setPlan(null)}
         onSuccess={handleRefresh}
@@ -55,7 +55,15 @@ export default function TravelPlansTable({ travelPlans }: { travelPlans: ITravel
         onConfirm={handleConfirm}
         onOpenChange={(open) => !open && setDeleteTravelPlan(null)}
         title="Delete plan"
-        description={`Are you sure you want to delete ${deleteTravelPlan?.title}? This action cannot be undone.`}
+        description={
+          <>
+            Are you sure you want to delete{" "}
+            <span className="font-semibold text-foreground">
+              {deleteTravelPlan?.title}
+            </span>
+            ? This action cannot be undone.
+          </>
+        }
       />
 
       <ManagementTable

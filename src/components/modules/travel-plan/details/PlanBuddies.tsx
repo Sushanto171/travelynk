@@ -31,7 +31,7 @@ export const PlanBuddies = ({ buddies }: PlanBuddiesProps) => {
               id={b.traveler.id}
               name={b.traveler.name}
               profile_photo={b.traveler.profile_photo}
-              subText={`${b.request_type} • ${timeAgo(
+              subText={`Accepted • ${timeAgo(
                 b.updated_at)}`}
             />
           ))}

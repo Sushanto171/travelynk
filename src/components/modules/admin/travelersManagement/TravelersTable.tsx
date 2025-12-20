@@ -2,17 +2,17 @@
 
 import DeleteConfirmationDialog from "@/components/shared/DeleteConfirmationDialog";
 import { ManagementTable } from "@/components/shared/ManagementTable";
+import { deleteTravelerById } from "@/services/traveler/traveler.service";
 import { ICountry } from "@/types/country.interface";
 import { IInterest } from "@/types/interest.interface";
 import { ITraveler } from "@/types/user.interface";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
+import { toast } from "sonner";
 import UpdateTravelerDialog from "../../traveler/TravelerFormDialog";
 import { travelersColumn } from './TravelersColumn';
-import { toast } from "sonner";
-import { deleteTravelerById } from "@/services/traveler/traveler.service";
 
-export default function TravelersTable({ travelers , countries,interests}: { travelers: ITraveler[], countries: ICountry[], interests: IInterest[] }) {
+export default function TravelersTable({ travelers, countries, interests }: { travelers: ITraveler[], countries: ICountry[], interests: IInterest[] }) {
   const [traveler, setTraveler] = useState<ITraveler | null>(null)
   const [deleteTraveler, setDeleteTraveler] = useState<ITraveler | null>(null)
   const [isPending, startTransition] = useTransition()
@@ -47,7 +47,15 @@ export default function TravelersTable({ travelers , countries,interests}: { tra
         onConfirm={handleConfirm}
         onOpenChange={(open) => !open && setDeleteTraveler(null)}
         title="Delete traveler"
-        description={`Are you sure you want to delete ${deleteTraveler?.name}? This action cannot be undone.`}
+                description={
+          <>
+            Are you sure you want to delete{" "}
+            <span className="font-semibold text-foreground">
+              {deleteTraveler?.name}
+            </span>
+            ? This action cannot be undone.
+          </>
+        }
       />
 
       <ManagementTable

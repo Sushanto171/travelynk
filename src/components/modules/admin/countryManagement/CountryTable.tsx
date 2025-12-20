@@ -50,7 +50,15 @@ export default function CountryTable({ countries }: { countries: ICountry[] }) {
         onConfirm={handleConfirm}
         onOpenChange={(open) => !open && setDeleteCountry(null)}
         title="Delete Country"
-        description={`Are you sure you want to delete ${deleteCountry?.name}? This action cannot be undone.`}
+        description={
+          <>
+            Are you sure you want to delete{" "}
+            <span className="font-semibold text-foreground">
+              {deleteCountry?.name}
+            </span>
+            ? This action cannot be undone.
+          </>
+        }
       />
 
       <ManagementTable

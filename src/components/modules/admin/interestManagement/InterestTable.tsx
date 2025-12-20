@@ -50,7 +50,15 @@ export default function InterestTable({ interests }: { interests: IInterest[] })
         onConfirm={handleConfirm}
         onOpenChange={(open) => !open && setDeleteInterest(null)}
         title="Delete interest"
-        description={`Are you sure you want to delete ${deleteInterest?.name}? This action cannot be undone.`}
+        description={
+          <>
+            Are you sure you want to delete{" "}
+            <span className="font-semibold text-foreground">
+              {deleteInterest?.name}
+            </span>
+            ? This action cannot be undone.
+          </>
+        }
       />
 
       <ManagementTable

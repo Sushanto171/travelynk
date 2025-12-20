@@ -1,7 +1,7 @@
 "use client";
 
 import { UserCard } from "@/components/shared/UserCard";
-import { formatTimeDate } from "@/lib/formatters";
+import { timeAgo } from "@/lib/formatters";
 import { Rating, Review } from "@/types/travelPlan.interface";
 import { Star } from "lucide-react";
 
@@ -16,7 +16,7 @@ export const PlanReviews = ({
     <div className="space-y-6">
       {/* Header */}
       <h2 className="text-lg font-semibold flex items-center gap-2">
-                <Star className="w-5 h-5 text-blue-500" />
+        <Star className="w-5 h-5 text-blue-500" />
 
         Reviews ({reviews.length})
         {reviews.length > 0 && (
@@ -37,7 +37,7 @@ export const PlanReviews = ({
               id={r.reviewer.id}
               name={r.reviewer.name}
               profile_photo={r.reviewer.profile_photo}
-              subText={`⭐ ${r.rating} • ${formatTimeDate(r.created_at, false)}`}
+              subText={`⭐ ${r.rating} • ${timeAgo(r.created_at)}`}
             >
               {r.comment}
 

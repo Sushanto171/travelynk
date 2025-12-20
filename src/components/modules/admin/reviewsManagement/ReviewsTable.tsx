@@ -1,15 +1,17 @@
 
 "use client"
 
+import DeleteConfirmationDialog from "@/components/shared/DeleteConfirmationDialog";
 import { ManagementTable } from "@/components/shared/ManagementTable";
+import { deleteReviewById } from "@/services/review/review.service";
 import { IReview } from "@/types/review.interface";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
+import { toast } from "sonner";
 import { reviewsColumn } from "./reviewsColumn";
 
 export default function ReviewsTable({ reviews }: { reviews: IReview[] }) {
-  const [review, setReview] = useState<IReview | null>(null)
-  const [deleteReviews, setDeleteReviews] = useState<IReview | null>(null)
+  const [deleteReview, setDeleteReview] = useState<IReview | null>(null)
   const [isPending, startTransition] = useTransition()
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -21,32 +23,42 @@ export default function ReviewsTable({ reviews }: { reviews: IReview[] }) {
     })
   }
   const handleConfirm = async () => {
-    // if (!deletereviews || !deletereviews.id) return
-    // setIsDeleting(true)
-    // const result = await deletereviewsById(deletereviews.id)
-    // if (result.success) {
-    //   toast.success(result.message || "review deleted successfully");
-    //   handleRefresh();
-    //   setDeletereview(null);
-    // } else {
-    //   toast.error(result.message || "Failed to delete");
-    // }
-    // setIsDeleting(false);
+    if (!deleteReview || !deleteReview.id) return
+    setIsDeleting(true)
+    const result = await deleteReviewById(deleteReview.id)
+    if (result.success) {
+      toast.success(result.message || "review deleted successfully");
+      handleRefresh();
+      setDeleteReview(null);
+    } else {
+      toast.error(result.message || "Failed to delete");
+    }
+    setIsDeleting(false);
   }
   return (
     <div>
-      {/* <TravelPlanCreateUpdateDialog
-        open={!!review}
-        review={review!}
-        onClose={() => setReview(null)}
-        onSuccess={handleRefresh}
-      /> */}
 
+      <DeleteConfirmationDialog
+        open={!!deleteReview}
+        onConfirm={handleConfirm}
+        onOpenChange={(open) => !open && setDeleteReview(null)}
+        title="Delete Review"
+        description={
+          <>
+            Are you sure you want to delete{" "}
+            <span className="font-semibold text-foreground">
+              {deleteReview?.comment}
+            </span>
+            ? This action cannot be undone.
+          </>
+        }
+      />
 
 
       <ManagementTable
         data={reviews}
         columns={reviewsColumn}
+        onDelete={setDeleteReview}
         getRowKey={(row) => row.id!}
         isRefreshing={isPending || isDeleting}
       />

@@ -2,6 +2,7 @@ import { Column } from "@/components/shared/ManagementTable";
 import { UserCard } from "@/components/shared/UserCard";
 import DateCell from "@/components/shared/cell/DateCell";
 import { Badge } from "@/components/ui/badge";
+import { statusColor } from "@/constant/planStatus";
 import { formatTimeDate } from "@/lib/formatters";
 import { ITravelPlan } from "@/types/travelPlan.interface";
 
@@ -60,15 +61,7 @@ export const travelPlansColumn: Column<ITravelPlan>[] = [
   {
     header: "Status",
     render: (row) => (
-      <Badge
-        variant={
-          row.status === "APPROVED"
-            ? "default"
-            : row.status === "REJECTED"
-              ? "destructive"
-              : "secondary"
-        }
-      >
+      <Badge className={statusColor[row.status]}>
         {row.status}
       </Badge>
     ),

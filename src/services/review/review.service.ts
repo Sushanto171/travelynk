@@ -42,3 +42,9 @@ export const getReviews = catchAsync(async (query?: string) => {
   const result = await res.json()
   return result.data
 })
+
+export const deleteReviewById = catchAsync(async (reviewId: string) => {
+  const res = await serverFetch.delete(`/review/${reviewId}`)
+  const result = await res.json()
+  return result
+})

@@ -1,17 +1,13 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
+import { statusColor } from "@/constant/planStatus";
 import { formatTimeDate } from "@/lib/formatters";
 import { ITravelPlan } from "@/types/travelPlan.interface";
 import { CalendarDays, MapPin, Star, Users } from "lucide-react";
 
 export const PlanHeader = ({ plan }: { plan: ITravelPlan }) => {
-  const statusColor: Record<string, string> = {
-    PENDING: "bg-amber-600",
-    ONGOING: "bg-green-600",
-    COMPLETED: "bg-blue-600",
-    CANCELLED: "bg-red-600",
-  };
+
 
   return (
     <div className="space-y-2">

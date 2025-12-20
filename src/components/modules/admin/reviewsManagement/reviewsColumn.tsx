@@ -3,6 +3,7 @@ import { UserCard } from "@/components/shared/UserCard";
 import DateCell from "@/components/shared/cell/DateCell";
 import { IReview } from "@/types/review.interface";
 import { Star } from "lucide-react";
+import Link from "next/link";
 
 export const reviewsColumn: Column<IReview>[] = [
   {
@@ -20,10 +21,9 @@ export const reviewsColumn: Column<IReview>[] = [
   {
     header: "Plan",
     render: (row) => (
-      <div className="flex flex-col">
-        <span className="font-medium text-sm">{row.plan.title}</span>
-        <span className="text-xs text-muted-foreground">{row.plan.slug}</span>
-      </div>
+      <Link href={`/travel-plans/${row?.plan?.slug}`}>
+        <span className="font-medium text-sm hover:underline truncate">{row.plan.title}</span>
+      </Link>
     ),
   },
 
