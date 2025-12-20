@@ -2,11 +2,14 @@ import TravelersTable from "@/components/modules/admin/travelersManagement/Trave
 import { ManagementPageHeader } from "@/components/shared/ManagementPageHeader";
 import { getTravelers } from "@/services/traveler/traveler.service";
 import { Suspense } from "react";
+import { getCountry } from "@/services/admin/countryManagement";
+import { getInterests } from "@/services/admin/interestManagement";
 
 export default async function AdminTravelPlansManagementPage() {
 
   const travelers = await getTravelers()
-
+ const interests = await getInterests()
+  const countries = await getCountry()
   return (
     <div className="space-y-6">
       <Suspense fallback={null} >
@@ -15,7 +18,7 @@ export default async function AdminTravelPlansManagementPage() {
           description="Manage travelers and update"
         />
 
-        <TravelersTable travelers={travelers?.data ?? []} />
+        <TravelersTable travelers={travelers?.data ?? []} countries={countries} interests={interests} />
       </Suspense>
 
     </div>

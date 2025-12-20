@@ -27,7 +27,6 @@ import { toast } from "sonner";
 
 interface PlanDialogProps {
   plan?: ITravelPlan;
-  
 }
 
 export default function TravelPlanCreateUpdateDialog({ plan }: PlanDialogProps) {

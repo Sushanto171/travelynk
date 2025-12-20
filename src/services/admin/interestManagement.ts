@@ -3,9 +3,13 @@ import catchAsync from "@/lib/catchAsync";
 import { catchAsyncAction } from "@/lib/catchAsyncAction";
 import { serverFetch } from "@/lib/server-fetch";
 import { IInterest } from "@/types/interest.interface";
+import { revalidateTag } from "next/cache";
 
 export const getInterests = catchAsync(async () => {
-  const res = await serverFetch.get("/interest")
+  const res = await serverFetch.get("/interest", {
+    cache: "force-cache",
+    next: { tags: ["interest-info"] },
+  })
   const result = await res.json()
   return result?.data || []
 })
@@ -32,6 +36,8 @@ export const createMultipleInterests = catchAsyncAction(async (pre, formData: Fo
       `Bulk interest creation failed: ${result?.message || "Unknown server error"}`
     );
   }
+
+  revalidateTag("interest-info", { expire: 0 });
   return result
 })
 
@@ -49,6 +55,7 @@ export const updateInterest = catchAsyncAction(async (pre, formData: FormData) =
   });
 
   const result = await res.json();
+  revalidateTag("interest-info", { expire: 0 });
 
   return result
 })
@@ -64,6 +71,7 @@ export const deleteInterestById = catchAsync(async (id: string) => {
       `Interest deletion failed: ${result?.message || "Unknown server error"}`
     )
   }
+  revalidateTag("interest-info", { expire: 0 });
 
   return result
 })

@@ -2,15 +2,17 @@
 
 import DeleteConfirmationDialog from "@/components/shared/DeleteConfirmationDialog";
 import { ManagementTable } from "@/components/shared/ManagementTable";
+import { ICountry } from "@/types/country.interface";
 import { IInterest } from "@/types/interest.interface";
 import { ITraveler } from "@/types/user.interface";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
+import UpdateTravelerDialog from "../../traveler/TravelerFormDialog";
 import { travelersColumn } from './TravelersColumn';
 
-export default function TravelersTable({ travelers }: { travelers: ITraveler[] }) {
-  const [interest, setInterest] = useState<IInterest | null>(null)
-  const [deleteInterest, setDeleteInterest] = useState<IInterest | null>(null)
+export default function TravelersTable({ travelers , countries,interests}: { travelers: ITraveler[], countries: ICountry[], interests: IInterest[] }) {
+  const [traveler, setTraveler] = useState<ITraveler | null>(null)
+  const [deleteTraveler, setDeleteTraveler] = useState<ITraveler | null>(null)
   const [isPending, startTransition] = useTransition()
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -36,27 +38,22 @@ export default function TravelersTable({ travelers }: { travelers: ITraveler[] }
   }
   return (
     <div>
-      {/* <TravelPlanCreateUpdateDialog
-        open={!!interest}
-        interest={interest!}
-        onClose={() => setInterest(null)}
-        onSuccess={handleRefresh}
-      /> */}
+      <UpdateTravelerDialog traveler={traveler!} interests={interests} countries={countries} showButton={false} handleRefresh={handleRefresh} />
 
       <DeleteConfirmationDialog
-        open={!!deleteInterest}
+        open={!!deleteTraveler}
         onConfirm={handleConfirm}
-        onOpenChange={(open) => !open && setDeleteInterest(null)}
-        title="Delete interest"
-        description={`Are you sure you want to delete ${deleteInterest?.name}? This action cannot be undone.`}
+        onOpenChange={(open) => !open && setDeleteTraveler(null)}
+        title="Delete traveler"
+        description={`Are you sure you want to delete ${deleteTraveler?.name}? This action cannot be undone.`}
       />
 
       <ManagementTable
         data={travelers}
         columns={travelersColumn}
         getRowKey={(row) => row.id!}
-        onDelete={setDeleteInterest}
-        onEdit={setInterest}
+        onDelete={setDeleteTraveler}
+        onEdit={setTraveler}
         isRefreshing={isPending || isDeleting}
       />
     </div>

@@ -7,11 +7,15 @@ import { serverFetch } from "@/lib/server-fetch"
 import { zodValidator } from "@/lib/zodValidator"
 import { ICountry } from "@/types/country.interface"
 import { createCountriesArraySchemaZod } from "@/zod/admin/country.validation"
+import { revalidateTag } from "next/cache"
 import { ZodObject } from "zod"
 import { transformEntriesToCountries } from './../../lib/transformEntriesToCountries'
 
 export const getCountry = catchAsync(async (params?: string) => {
-  const res = await serverFetch.get(`/country?${params ? `?searchTerm=${params}` : ""}`)
+  const res = await serverFetch.get(`/country?${params ? `?searchTerm=${params}` : ""}`, {
+    cache: "force-cache",
+    next: { tags: ["country-info"] },
+  })
   const result = await res.json()
   return result?.data ?? []
 })
@@ -49,6 +53,8 @@ export const createMultipleCountries = catchAsyncAction(async (_prev: any, formD
     );
   }
 
+  revalidateTag("country-info", { expire: 0 });
+
   return result;
 });
 
@@ -76,6 +82,9 @@ export const updateCountry = catchAsyncAction(async (_prev: any, formData: FormD
     )
   }
 
+  revalidateTag("country-info", { expire: 0 });
+
+
   return result
 })
 
@@ -89,6 +98,6 @@ export const deleteCountryById = catchAsync(async (id: string) => {
       `Country deletion failed: ${result?.message || "Unknown server error"}`
     )
   }
-
+  revalidateTag("country-info", { expire: 0 });
   return result
 })

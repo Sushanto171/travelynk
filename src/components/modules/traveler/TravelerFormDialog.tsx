@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import { BioField } from "@/components/shared/BioField";
@@ -5,7 +6,13 @@ import { DatePickerField } from "@/components/shared/DatePickerField";
 import { LoadingButton } from "@/components/shared/LoadingButton";
 import { MultiSelectField } from "@/components/shared/MultiSeceletFilter";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { updateTraveler } from "@/services/traveler/traveler.service";
@@ -17,52 +24,65 @@ import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 interface UpdateTravelerDialogProps {
-  traveler: ITraveler;
+  traveler?: ITraveler;
   interests: IInterest[];
   countries: ICountry[];
+  showButton?: boolean;
+  handleRefresh?: () => void
 }
 
 export default function UpdateTravelerDialog({
   traveler,
   interests,
   countries,
+  showButton = true,
+  handleRefresh
 }: UpdateTravelerDialogProps) {
-
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
   const [state, action, isPending] = useActionState(updateTraveler, null);
 
+  // Handle submit result ONLY
   useEffect(() => {
-    if (!state) return
-    if (state.success) {
-      toast.success(state.message)
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setOpen(false)
-    } else {
-      toast.error(state.message)
+    if (!state) return;
+    if (handleRefresh) {
+      handleRefresh()
     }
-  }, [state])
+    if (state.success) {
+      toast.success(state.message);
+      setOpen(false);
+    } else {
+      toast.error(state.message);
+    }
+  }, [state]);
+
+  useEffect(() => {
+    if (!showButton && traveler) {
+      setOpen(true);
+    }
+
+  }, [traveler, showButton,]);
+
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild hidden={!showButton}>
         <Button variant="outline" size="sm" className="w-full md:w-auto">
           <Edit className="w-4 h-4 mr-1" />
           Edit Profile
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="max-w-md p-0">
+      {/* key prevents stale form values */}
+      <DialogContent key={traveler?.id} className="max-w-md p-0">
         <DialogHeader className="p-6 pb-2">
           <DialogTitle>Update Profile Info</DialogTitle>
         </DialogHeader>
 
         <form action={action}>
           <div className="max-h-[calc(100vh-200px)] overflow-y-auto px-6 pb-6 space-y-5">
-
             <FieldGroup className="gap-4">
-
               {/* id */}
-              <input type="string" id="id" name="id" hidden={true} defaultValue={traveler?.id} />
+              <input type="hidden" name="id" defaultValue={traveler?.id} />
 
               {/* Name */}
               <Field>
@@ -73,14 +93,19 @@ export default function UpdateTravelerDialog({
                   defaultValue={traveler?.name || ""}
                 />
               </Field>
-              {/* Bio filed */}
 
-              <BioField name="bio" defaultValue={traveler?.bio} maxLength={255} />
-
+              {/* Bio */}
+              <BioField
+                name="bio"
+                defaultValue={traveler?.bio}
+                maxLength={255}
+              />
 
               {/* Contact Number */}
               <Field>
-                <FieldLabel htmlFor="contact_number">Contact Number</FieldLabel>
+                <FieldLabel htmlFor="contact_number">
+                  Contact Number
+                </FieldLabel>
                 <Input
                   id="contact_number"
                   name="contact_number"
@@ -92,9 +117,12 @@ export default function UpdateTravelerDialog({
               <DatePickerField
                 label="Date of Birth"
                 name="date_of_birth"
-                defaultValue={traveler?.date_of_birth ? new Date(traveler.date_of_birth) : null}
+                defaultValue={
+                  traveler?.date_of_birth
+                    ? new Date(traveler?.date_of_birth)
+                    : null
+                }
               />
-
 
               {/* Address */}
               <Field>
@@ -108,7 +136,9 @@ export default function UpdateTravelerDialog({
 
               {/* Current Location */}
               <Field>
-                <FieldLabel htmlFor="current_location">Current Location</FieldLabel>
+                <FieldLabel htmlFor="current_location">
+                  Current Location
+                </FieldLabel>
                 <Input
                   id="current_location"
                   name="current_location"
@@ -116,7 +146,7 @@ export default function UpdateTravelerDialog({
                 />
               </Field>
 
-              {/* Interests MultiSelect */}
+              {/* Interests */}
               <MultiSelectField
                 label="Interests"
                 name="interests[]"
@@ -125,10 +155,12 @@ export default function UpdateTravelerDialog({
                   value: i.id as string,
                   label: i.name,
                 }))}
-                defaultValues={traveler?.interests?.map((i) => i.id as string) || []}
+                defaultValues={
+                  traveler?.interests?.map((i) => i.id as string) || []
+                }
               />
 
-              {/* Visited Countries MultiSelect */}
+              {/* Visited Countries */}
               <MultiSelectField
                 label="Visited Countries"
                 name="visited_countries[]"
@@ -137,25 +169,34 @@ export default function UpdateTravelerDialog({
                   value: c.id as string,
                   label: c.name,
                 }))}
-                defaultValues={traveler?.visited_countries?.map(c => c.id as string) || []}
+                defaultValues={
+                  traveler?.visited_countries?.map(
+                    (c) => c.id as string
+                  ) || []
+                }
               />
-
             </FieldGroup>
-
           </div>
 
           {/* Footer */}
           <div className="flex justify-end gap-3 border-t px-6 py-4 bg-background">
-            <Button variant="outline" type="button" onClick={() => setOpen(false)}>
+            <Button
+              variant="outline"
+              type="button"
+              onClick={() => setOpen(false)}
+            >
               Cancel
             </Button>
 
-            <LoadingButton isLoading={isPending} type="submit" loadingText="Saving...">
+            <LoadingButton
+              isLoading={isPending}
+              type="submit"
+              loadingText="Saving..."
+            >
               Update
             </LoadingButton>
           </div>
         </form>
-
       </DialogContent>
     </Dialog>
   );
