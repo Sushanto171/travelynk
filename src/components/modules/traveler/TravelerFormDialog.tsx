@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/set-state-in-effect */
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { BioField } from "@/components/shared/BioField";
@@ -62,7 +62,8 @@ export default function UpdateTravelerDialog({
 
   }, [traveler, showButton,]);
 
-
+  console.log(traveler)
+ 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild hidden={!showButton}>
@@ -156,7 +157,7 @@ export default function UpdateTravelerDialog({
                   label: i.name,
                 }))}
                 defaultValues={
-                  traveler?.interests?.map((i) => i.id as string) || []
+                  traveler?.interests?.map((i) => i?.id as string ) || []
                 }
               />
 

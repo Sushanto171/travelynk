@@ -12,7 +12,7 @@ export const travelersColumn: Column<ITraveler>[] = [
     render: (row) => <UserCard email={row.email} name={row.name} id={row.id} profile_photo={row.profile_photo} />,
   },
   {
-    header: "Verified",
+    header: "Verified Badge",
     render: (row) => (
       <Badge variant={row.has_verified_badge ? "default" : "secondary"}>
         {row.has_verified_badge ? "Verified" : "Unverified"}

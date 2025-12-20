@@ -49,7 +49,6 @@ export const updateTraveler = catchAsyncAction(async (pre, formData: FormData) =
 
   const { profile_photo, id, ...data } = validate.data
   const newFormData = new FormData()
-
   newFormData.append("data", JSON.stringify(data))
   newFormData.append("file", profile_photo as Blob)
 
@@ -81,5 +80,44 @@ export const getTravelers = catchAsync(async (query?: string) => {
 
   const res = await serverFetch.get(`/traveler${query ? `?${query}` : ""}`)
   const result = await res.json()
-  return result 
+  return result
+})
+
+export const softDeleteTravelerById = catchAsync(async (id: string) => {
+  if (!id) {
+    throw new Error("Traveler ID is required")
+  }
+
+  const res = await serverFetch.delete(`/traveler/soft/${id}`)
+
+
+  const result = await res.json()
+
+  if (!result?.success) {
+    throw new Error(
+      `Profile update failed: ${result?.message || "Unknown server error"}`
+    );
+  }
+
+  return result
+
+})
+export const deleteTravelerById = catchAsync(async (id: string) => {
+  if (!id) {
+    throw new Error("Traveler ID is required")
+  }
+
+  const res = await serverFetch.delete(`/traveler/${id}`)
+
+
+  const result = await res.json()
+
+  if (!result?.success) {
+    throw new Error(
+      `Profile update failed: ${result?.message || "Unknown server error"}`
+    );
+  }
+
+  return result
+
 })

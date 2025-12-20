@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import UpdateTravelerDialog from "../../traveler/TravelerFormDialog";
 import { travelersColumn } from './TravelersColumn';
+import { toast } from "sonner";
+import { deleteTravelerById } from "@/services/traveler/traveler.service";
 
 export default function TravelersTable({ travelers , countries,interests}: { travelers: ITraveler[], countries: ICountry[], interests: IInterest[] }) {
   const [traveler, setTraveler] = useState<ITraveler | null>(null)
@@ -24,17 +26,17 @@ export default function TravelersTable({ travelers , countries,interests}: { tra
     })
   }
   const handleConfirm = async () => {
-    // if (!deleteInterest || !deleteInterest.id) return
-    // setIsDeleting(true)
-    // const result = await deleteInterestById(deleteInterest.id)
-    // if (result.success) {
-    //   toast.success(result.message || "interest deleted successfully");
-    //   handleRefresh();
-    //   setDeleteInterest(null);
-    // } else {
-    //   toast.error(result.message || "Failed to delete");
-    // }
-    // setIsDeleting(false);
+    if (!deleteTraveler || !deleteTraveler.id) return
+    setIsDeleting(true)
+    const result = await deleteTravelerById(deleteTraveler.id)
+    if (result.success) {
+      toast.success(result.message || "interest deleted successfully");
+      handleRefresh();
+      setDeleteTraveler(null);
+    } else {
+      toast.error(result.message || "Failed to delete");
+    }
+    setIsDeleting(false);
   }
   return (
     <div>

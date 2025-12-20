@@ -31,7 +31,6 @@ export function MultiSelectField({
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<string[]>(defaultValues);
   const [removed, setRemoved] = useState<string[]>([]);
-
   const toggleSelect = (value: string) => {
     setSelected((prev) => {
       const alreadySelected = prev.includes(value);
