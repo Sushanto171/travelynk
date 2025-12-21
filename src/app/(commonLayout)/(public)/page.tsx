@@ -13,12 +13,16 @@ export default function LandingPage() {
   return (
     <div className="flex flex-col ">
       <HeroSection />
+
+      <div className="mx-auto max-w-7xl">
+
       <HowItWorksSection />
       <PopularDestinationsSection />
       <TopTravelersSection />
       <FeaturedPlansSection />
       <WhyChooseUsSection />
       <TestimonialsSection />
+      </div>
       <CallToActionSection />
     </div>
   );

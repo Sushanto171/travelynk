@@ -10,7 +10,7 @@ export function HeroSection() {
       <div className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-indigo-300/30 rounded-full filter blur-3xl animate-blob"></div>
       <div className="absolute -bottom-40 -right-40 w-[500px] h-[500px] bg-pink-300/30 rounded-full filter blur-3xl animate-blob animation-delay-2000"></div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center relative z-10">
+      <div className=" mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center relative z-10">
         {/* Left Content */}
         <div className="space-y-6">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight tracking-tight">

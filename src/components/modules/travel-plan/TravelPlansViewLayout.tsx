@@ -10,7 +10,7 @@ import TravelPlanCreateUpdateDialog from "./TravelPlanFormDialog";
 
 export const PlansViewLayout = ({ plans, isTab = false, isPublic = false }: { plans: ITravelPlan[], isTab?: boolean, isPublic?: boolean }) => {
   return (
-    <div className="max-w-6xl mx-auto space-y-8">
+    <div className={cn("mx-auto max-w-7xl space-y-8", isPublic? "px-4 sm:px-6 lg:px-8 ":"")}>
       {/* Plans Grid or Empty State */}
       {plans.length > 0 ? (
         <div className={cn(`grid grid-cols-1 md:grid-cols-2  gap-6`, isTab ? "lg:grid-cols-2" : "lg:grid-cols-3")}>

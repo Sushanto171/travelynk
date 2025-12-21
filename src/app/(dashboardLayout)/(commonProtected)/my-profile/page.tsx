@@ -16,7 +16,7 @@ export default async function MyProfilePage() {
   const countries = await getCountry()
   if (!user) return redirect(`/login`);
   const reviews = await getReviewsByOwner(user?.traveler?.id)
-  const travelPlans = await getTravelPlans(`owner_id=${user?.traveler?.id}`);
+  const {data:travelPlans} = await getTravelPlans(`owner_id=${user?.traveler?.id}`);
 
   return (
     <ProfileLayout
@@ -33,7 +33,7 @@ export default async function MyProfilePage() {
           hasVerifyBadge={(user.admin ? true : user?.traveler?.has_verified_badge)}
         />
       }
-      tabs={<ProfileTabs isOwner={true} user={user!} traveler={user.traveler!} reviews={reviews} travelPlans={travelPlans} />}
+      tabs={<ProfileTabs isOwner={true} user={user!} traveler={user.traveler!} reviews={reviews} travelPlans={travelPlans ||[]} />}
     >
 
     </ProfileLayout>

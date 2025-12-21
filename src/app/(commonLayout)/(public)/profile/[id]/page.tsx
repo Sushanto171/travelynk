@@ -17,7 +17,7 @@ export default async function ShadowUserProfileDetails({ params }: { params: Pro
   const countries = await getCountry()
   if (!user) return redirect(`/`);
   const reviews = await getReviewsByOwner(user?.traveler?.id)
-  const travelPlans = await getTravelPlans(`owner_id=${user?.traveler?.id}`);
+  const {data:travelPlans} = await getTravelPlans(`owner_id=${user?.traveler?.id}`);
 
 
   const isOwner = user.id === me?.id
@@ -39,7 +39,7 @@ export default async function ShadowUserProfileDetails({ params }: { params: Pro
             hasVerifyBadge={(user.admin ? true : user?.traveler?.has_verified_badge)}
           />
         }
-        tabs={<ProfileTabs isOwner={isOwner} user={user!} traveler={user.traveler!} reviews={reviews} travelPlans={travelPlans} />}
+        tabs={<ProfileTabs isOwner={isOwner} user={user!} traveler={user.traveler!} reviews={reviews} travelPlans={travelPlans ||[]} />}
       >
 
       </ProfileLayout>

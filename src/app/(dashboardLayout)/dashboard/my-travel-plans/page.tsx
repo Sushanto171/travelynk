@@ -7,7 +7,7 @@ import { getTravelPlans } from "@/services/travelPlan/travelPlan.service";
 export default async function TravelerMyPlanPage() {
 
   const user = await getUserAction()
-  const plans = await getTravelPlans(`owner_id=${user!.traveler?.id}`)
+  const {data:plans} = await getTravelPlans(`owner_id=${user!.traveler?.id}`)
   // const plans = await getTravelPlans()
 
   return (
@@ -18,7 +18,7 @@ export default async function TravelerMyPlanPage() {
       </ManagementPageHeader>
 
 
-      <PlansViewLayout plans={plans} />
+      <PlansViewLayout plans={plans||[]} />
     </div>
   );
 }

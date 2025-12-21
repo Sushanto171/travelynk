@@ -71,3 +71,20 @@ export function timeAgo(date: string | Date) {
     : `${days} day${days > 1 ? "s" : ""} ago`;
 }
 
+
+export const queryStringFormatter = (query: {
+  [key: string]: string[] | string | undefined;
+}) => {
+  let queryString = "";
+  //[["searchTerm","john"],["page",1],["specialties","cardiology"]]
+  const queryArray = Object.entries(query).map(([key, value]) => {
+    if (Array.isArray(value)) {
+      return value.map((v) => `${key}=${encodeURIComponent(v)}`).join("&");
+    } else if (value !== undefined) {
+      return `${key}=${encodeURIComponent(value)}`;
+    }
+    return "";
+  });
+  queryString = queryArray.filter((q) => q !== "").join("&");
+  return queryString;
+};

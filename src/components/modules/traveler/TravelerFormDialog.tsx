@@ -4,7 +4,7 @@
 import { BioField } from "@/components/shared/BioField";
 import { DatePickerField } from "@/components/shared/DatePickerField";
 import { LoadingButton } from "@/components/shared/LoadingButton";
-import { MultiSelectField } from "@/components/shared/MultiSeceletFilter";
+import { MultiSelectField } from "@/components/shared/MultiSelectField";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -63,7 +63,7 @@ export default function UpdateTravelerDialog({
   }, [traveler, showButton,]);
 
   console.log(traveler)
- 
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild hidden={!showButton}>
@@ -157,7 +157,7 @@ export default function UpdateTravelerDialog({
                   label: i.name,
                 }))}
                 defaultValues={
-                  traveler?.interests?.map((i) => i?.id as string ) || []
+                  traveler?.interests?.map((i) => i?.id as string) || []
                 }
               />
 

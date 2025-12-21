@@ -11,7 +11,7 @@ export const getTravelPlans = catchAsync(async (query?: string) => {
 
   const res = await serverFetch.get(`/plan/${query ? `?${query}` : ""}`)
   const result = await res.json()
-  return result.data
+  return result
 })
 
 export const getBySlug = catchAsync(async (slug: string) => {

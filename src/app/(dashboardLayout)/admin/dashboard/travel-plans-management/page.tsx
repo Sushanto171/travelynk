@@ -5,7 +5,7 @@ import { Suspense } from "react";
 
 export default async function AdminTravelPlansManagementPage() {
 
-  const travelPlans = await getTravelPlans()
+  const {data:travelPlans} = await getTravelPlans()
   return (
     <main className="space-y-6">
       <Suspense fallback={null} >
