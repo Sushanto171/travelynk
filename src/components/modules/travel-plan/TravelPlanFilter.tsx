@@ -5,18 +5,20 @@ import { FilterContainer } from "@/components/shared/FilterContainer";
 import MultiSelectFilter from "@/components/shared/MultiSelectFilter";
 import SearchFilter from "@/components/shared/SearchFilter";
 import SelectFilter from "@/components/shared/SelectFilter";
+import { cn } from "@/lib/utils";
 import { useState } from "react";
 interface TravelPlanFilterProps {
   className?: string;
+  showPadding?:boolean
 }
 
-export default function TravelPlanFilter({ className }: TravelPlanFilterProps) {
+export default function TravelPlanFilter({ className , showPadding=true}: TravelPlanFilterProps) {
   const [key, setKey] = useState(1);
   const handleAfterClear = () => {
     setKey((prev) => prev + 1);
   }
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className={ cn("mx-auto max-w-7xl w-full ", showPadding?"px-4 sm:px-6 lg:px-8": "")}>
       <FilterContainer className={className}>
         <div className="w-full flex-1 min-w-[300px]">
           <SearchFilter

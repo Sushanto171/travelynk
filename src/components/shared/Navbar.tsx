@@ -1,5 +1,6 @@
 import { getDefaultDashboardRoute } from "@/lib/authUtils";
 import { getUserAction } from "@/services/auth/getUser.service";
+import { UserRole } from "@/types/user.interface";
 import { EllipsisVertical } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
@@ -13,9 +14,9 @@ import {
   SheetTrigger,
 } from "../ui/sheet";
 import LogoutButton from "./LogoutButton";
+import { ModeToggle } from "./ModeToggle";
 import NavAuthButton from "./NavAuthButton";
 import NavLinks from "./Navlinks";
-import { UserRole } from "@/types/user.interface";
 
 type ILink = {
   title: string;
@@ -47,12 +48,13 @@ export default async function PublicNavbar() {
       <div className="max-w-7xl mx-auto ">
         <div className="flex items-center justify-between py-3">
           {/* Logo */}
-          <Link href="/" className="flex items-center text-2xl font-bold text-indigo-600">
-            TL<span className="text-gray-800">ynk</span>
+          <Link href="/" className="flex items-center text-2xl font-bold ">
+            Travelynk
           </Link>
 
           {/* Desktop Navigation */}
           <NavLinks links={links} />
+          <ModeToggle />
 
           {/* Desktop Buttons */}
           {user ? <LogoutButton className="hidden md:block" /> : <NavAuthButton />}
@@ -68,15 +70,14 @@ export default async function PublicNavbar() {
               <SheetContent>
                 <SheetHeader>
                   <SheetTitle>
-                    <Link href="/" className="flex items-center text-2xl font-bold text-indigo-600">
-                      TL<span className="text-gray-800">ynk</span>
-                    </Link>
+                    <Link href="/" className="flex items-center text-2xl font-bold ">
+                      Travelynk                    </Link>
                   </SheetTitle>
                   <SheetDescription className="sr-only"></SheetDescription>
                 </SheetHeader>
 
                 <NavLinks isMobile={true} links={links} />
-
+                <ModeToggle />
                 <SheetFooter>
                   {user ? <LogoutButton /> : <NavAuthButton isMobile={true} />}
                 </SheetFooter>

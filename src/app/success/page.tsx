@@ -48,7 +48,7 @@ export default function PaymentSuccessPage() {
   }, [router]);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+    <div className="min-h-screen  flex items-center justify-center p-6">
       <Card className="max-w-xl w-full rounded-2xl shadow-2xl p-8 transform transition-all hover:scale-[1.01]">
         <CardContent className="text-center p-0">
           <div className="mx-auto w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mb-6 shadow-xl border-4 border-green-200 relative">
@@ -59,7 +59,7 @@ export default function PaymentSuccessPage() {
             </div>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-2">
+          <h2 className="text-3xl sm:text-4xl font-extrabold  mb-2">
             Payment Successful!
           </h2>
 

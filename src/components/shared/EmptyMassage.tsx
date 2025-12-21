@@ -6,7 +6,7 @@ export default function EmptyMassage({ text }: { text: string }) {
     <Card className="py-16 border-dashed shadow-none text-center">
       <CardContent className="space-y-4">
         <Inbox className="mx-auto h-12 w-12 text-muted-foreground" />
-        <div className="text-lg font-semibold text-gray-900">
+        <div className="text-lg font-semibold ">
           {text}
         </div>
       </CardContent>

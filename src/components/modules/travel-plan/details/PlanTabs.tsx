@@ -1,41 +1,35 @@
 "use client";
 
 import { ITravelPlan } from "@/types/travelPlan.interface";
-import { useState } from "react";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { PlanBuddies } from "./PlanBuddies";
 import { PlanItinerary } from "./PlanItinerary";
 import { PlanReviews } from "./PlanReview";
 
 export const PlanTabs = ({ plan }: { plan: ITravelPlan }) => {
-  const tabs = ["Itinerary", "Participants", "Reviews"];
-  const [activeTab, setActiveTab] = useState("Itinerary");
-    const joined = plan.buddies.filter((b) => b.request_type === "ACCEPTED");
-
+  const joined = plan.buddies.filter(
+    (b) => b.request_type === "ACCEPTED"
+  );
 
   return (
-    <div className="space-y-4">
-      {/* Tab Buttons */}
-      <div className="flex gap-4 border-b pb-2">
-        {tabs.map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`px-3 py-1 text-sm font-medium ${activeTab === tab
-                ? "border-b-2 border-primary text-primary"
-                : "text-muted-foreground hover:text-primary"
-              }`}
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
+    <Tabs defaultValue="itinerary" className="w-full space-y-4">
+      <TabsList className="flex md:grid md:grid-cols-4 w-full overflow-x-auto md:overflow-x-visible min-w-56 md:min-w-0">
+        <TabsTrigger className="cursor-pointer" value="itinerary">Itinerary</TabsTrigger>
+        <TabsTrigger className="cursor-pointer" value="participants">Participants</TabsTrigger>
+        <TabsTrigger className="cursor-pointer" value="reviews">Reviews</TabsTrigger>
+      </TabsList>
 
-      {/* Tab Panels */}
-      <div className="mt-4 space-y-4">
-        {activeTab === "Itinerary" && <PlanItinerary itinerary={plan.itinerary} />}
-        {activeTab === "Participants" && <PlanBuddies buddies={joined} />}
-        {activeTab === "Reviews" && <PlanReviews reviews={plan.reviews} rating={plan.rating} />}
-      </div>
-    </div>
+      <TabsContent value="itinerary">
+        <PlanItinerary itinerary={plan.itinerary} />
+      </TabsContent>
+
+      <TabsContent value="participants">
+        <PlanBuddies buddies={joined} />
+      </TabsContent>
+
+      <TabsContent value="reviews">
+        <PlanReviews reviews={plan.reviews} rating={plan.rating} />
+      </TabsContent>
+    </Tabs>
   );
 };

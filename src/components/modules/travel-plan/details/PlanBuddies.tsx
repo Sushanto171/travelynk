@@ -24,7 +24,7 @@ export const PlanBuddies = ({ buddies }: PlanBuddiesProps) => {
           No participants yet.
         </p>
       ) : (
-        <div className="border p-4 rounded-xl space-y-3 bg-white shadow-sm">
+        <div className="border p-4 rounded-xl space-y-3  shadow-sm">
           {buddies.map((b) => (
             <UserCard
               key={b.traveler.id}

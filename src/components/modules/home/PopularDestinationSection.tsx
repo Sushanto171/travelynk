@@ -1,80 +1,50 @@
+import { Card } from "@/components/ui/card";
+import { Users } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
-import { ArrowRight } from "lucide-react";
-import React from "react";
-
-// --- Mock Data ---
 const DESTINATIONS = [
-  { id: "paris", city: "Paris", country: "France", color: "#1e40af" },
-  { id: "tokyo", city: "Tokyo", country: "Japan", color: "#65a30d" },
-  { id: "bali", city: "Bali", country: "Indonesia", color: "#c026d3" },
-  { id: "newyork", city: "NYC", country: "USA", color: "#9d174d" },
+  { id: "paris", city: "Paris", country: "France", travelers: 98 },
+  { id: "tokyo", city: "Kyoto", country: "Japan", travelers: 124 },
+  { id: "bali", city: "Bali", country: "Indonesia", travelers: 76 },
+  { id: "nyc", city: "NYC", country: "USA", travelers: 63 },
 ];
-
-// --- PlaceholderImage Component ---
-const PlaceholderImage = ({
-  text,
-  bgColor,
-  width = "100%",
-  height = "12rem",
-}: {
-  text: string;
-  bgColor: string;
-  width?: string | number;
-  height?: string | number;
-}) => (
-  <div
-    className="flex items-center justify-center"
-    style={{
-      width,
-      height,
-      backgroundColor: bgColor,
-      color: "#ffffff",
-      fontSize: 72,
-      fontWeight: 600,
-      borderRadius: 16,
-      textAlign: "center",
-      paddingBottom: 30
-    }}
-  >
-    {text}
-  </div>
-);
 
 export function PopularDestinationsSection() {
   return (
-    <section id="destinations" className="py-16 sm:py-24 bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="flex justify-between items-end mb-10">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-            Popular Destinations
-          </h2>
+    <section className="py-16 sm:py-24">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-10">
+          Trending Now
+        </h2>
 
-          <a
-            href="#"
-            className="text-indigo-600 hover:text-indigo-700 font-medium flex items-center"
-          >
-            See all
-            <ArrowRight className="ml-1 h-4 w-4" />
-          </a>
-        </div>
-
-        {/* Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
           {DESTINATIONS.map((d) => (
-            <div
-              key={d.id}
-              className="relative group overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer"
-            >
-              {/* Placeholder Image */}
-              <PlaceholderImage text={d.city} bgColor={d.color} />
+            <Link key={d.id} href={`/travel-plans?searchTerm=${d.id}`}>
+              <Card className="p-0 h-fit relative group overflow-hidden rounded-2xl border-none shadow-lg">
+                <div className="relative h-78 w-full">
+                  <Image
+                    src={`/images/${d.id}.png`}
+                    alt={`${d.city}, ${d.country}`}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
 
-              {/* Gradient Content */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent p-4 flex flex-col justify-end">
-                <h3 className="text-xl font-semibold text-white">{d.city}</h3>
-                <p className="text-sm text-indigo-200">{d.country}</p>
-              </div>
-            </div>
+                  {/* Overlay INSIDE image */}
+                  <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/70 via-black/30 to-transparent p-4">
+                    <h3 className="text-lg font-semibold text-white">
+                      {d.city}, {d.country}
+                    </h3>
+
+                    <p className="mt-1 flex items-center gap-1 text-sm text-white/80">
+                      <Users className="h-4 w-4" />
+                      {d.travelers} travelers there
+                    </p>
+                  </div>
+                </div>
+              </Card>
+
+            </Link>
           ))}
         </div>
       </div>

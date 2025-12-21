@@ -1,10 +1,10 @@
 
-import { Users, MapPin, ArrowRight } from "lucide-react";
+import { ArrowRight, MapPin, Users } from "lucide-react";
 
-import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 const PLANS = [
   { id: "plan1", dest: "Lisbon, Portugal", dates: "Jun 10 - Jun 16", type: "Solo", buddies: 2, host: "Mateo" },
@@ -14,11 +14,11 @@ const PLANS = [
 
 export function FeaturedPlansSection() {
   return (
-    <section id="plans" className="bg-gray-50 py-16 sm:py-24">
+    <section id="plans" className=" py-16 sm:py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
 
         <div className="flex justify-between items-end mb-10">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">Active travel plans</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold ">Active travel plans</h2>
           <a href="#" className="text-indigo-600 hover:text-indigo-700 font-medium flex items-center">
             View all plans <ArrowRight className="ml-1 h-4 w-4" />
           </a>
@@ -34,7 +34,7 @@ export function FeaturedPlansSection() {
                   <span>{p.dest}</span>
                 </div>
 
-                <h3 className="text-xl font-bold text-gray-900">
+                <h3 className="text-xl font-bold ">
                   {p.dates} • {p.type} Trip
                 </h3>
 
@@ -51,7 +51,7 @@ export function FeaturedPlansSection() {
               <Separator className="my-4" />
 
               <div className="flex items-center justify-between">
-                <p className="text-sm text-gray-600">
+                <p className="text-sm ">
                   Hosted by{" "}
                   <span className="font-semibold text-gray-800">{p.host}</span>
                 </p>

@@ -37,11 +37,11 @@ const PlaceholderAvatar = ({
 
 export function TopTravelersSection() {
   return (
-    <section className="py-16 sm:py-24 bg-white">
+    <section className="py-16 sm:py-24 ">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex justify-between items-end mb-10">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">Top-rated travelers</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold ">Top-rated travelers</h2>
           <a className="text-indigo-600 hover:text-indigo-700 font-medium flex items-center" href="#">
             Browse profiles <ArrowRight className="ml-1 h-4 w-4" />
           </a>
@@ -55,7 +55,7 @@ export function TopTravelersSection() {
                 {/* Placeholder Avatar */}
                 <PlaceholderAvatar initials={t.initials} bgColor={t.color} size={80} />
 
-                <h3 className="text-xl font-semibold text-gray-900 mb-1">{t.name}</h3>
+                <h3 className="text-xl font-semibold  mb-1">{t.name}</h3>
                 <p className="text-sm text-gray-500 mb-3">{t.interests.join(" • ")}</p>
 
                 <Badge className="bg-yellow-100 text-yellow-700 border-yellow-300 flex items-center gap-1 mb-3">

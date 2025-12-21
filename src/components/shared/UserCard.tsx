@@ -26,7 +26,7 @@ export const UserCard = ({
 }: UserCardProps) => {
   const content = (
     <div
-      className={`flex flex-col gap-1 p-2 rounded-md hover:bg-gray-50 transition ${className}`}
+      className={`flex flex-col gap-1 p-2 rounded-md hover: transition ${className}`}
     >
       <div className="flex items-center gap-3">
         <Avatar className="h-12 w-12">
@@ -37,12 +37,12 @@ export const UserCard = ({
           )}
         </Avatar>
         <div className="flex flex-col text-sm">
-          <span className="font-medium text-gray-800">{name}</span>
-          <span className="font-small text-gray-600">{email}</span>
+          <span className="font-medium ">{name}</span>
+          <span className="font-small ">{email}</span>
           {subText && <span className="text-muted-foreground">{subText}</span>}
         </div>
       </div>
-      {children && <div className="pl-16 text-sm text-gray-700">{children}</div>}
+      {children && <div className="pl-16 text-sm text-opacity-7">{children}</div>}
     </div>
   );
 

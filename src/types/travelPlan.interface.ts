@@ -29,6 +29,7 @@ export interface Owner {
   id: string
   name: string
   email: string
+  profile_photo: string
 }
 
 export interface Buddy {

@@ -271,7 +271,17 @@ export default function TravelPlanCreateUpdateDialog({ plan, onClose, onSuccess,
                   id="itinerary"
                   name="itinerary"
                   className="min-h-[120px]"
-                  placeholder="Describe your day-by-day travel plan…"
+                 placeholder={`Format:
+
+Day 1 | Date | Title | Short description
+Day 2 | Date | Title | Short description
+
+Example:
+Day 1 | Oct 12 | Arrival in Kyoto | Check-in + Gion district walk
+Day 2 | Oct 13 | Fushimi Inari Visit | Shrine hike + temple garden tour
+
+`}
+
                   defaultValue={getValue("itinerary", plan?.itinerary)}
                 />
                 <GetFieldError state={state} name="itinerary" />
