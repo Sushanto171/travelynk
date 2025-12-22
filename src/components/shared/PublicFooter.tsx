@@ -1,12 +1,11 @@
 import { Compass, Facebook, Globe, Instagram, LogOut, Mail, MapPin, Plane, Twitter, Users } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
-import { Button } from '../ui/button';
-import { Input } from '../ui/input';
+import NewslatterForm from '../modules/admin/newslatterManagement/NewslatterForm';
 
 
 
-const FooterLink = ({  children, icon: Icon }: { href: string; children: React.ReactNode; icon?: React.ElementType }) => (
+const FooterLink = ({ children, icon: Icon }: { href: string; children: React.ReactNode; icon?: React.ElementType }) => (
   <Link
     href={"/#"}
     className="hover:text-indigo-400 transition-colors flex items-center gap-2 py-1 text-sm"
@@ -86,18 +85,7 @@ export const PublicFooter = () => {
         </div>
 
         {/* Optional: Newsletter Signup/CTA Section (Full Width) */}
-        <div className="mt-12 pt-8 border-t border-gray-800">
-          <h4 className="text-lg font-semibold  mb-4">
-            Stay Updated on New Destinations
-          </h4>
-          <div className="flex flex-col sm:flex-row gap-3 max-w-md">
-            {/* Replaced with mock Input and Button from shadcn */}
-            <Input placeholder="Enter your email address" className="flex-grow" />
-            <Button>
-              Subscribe
-            </Button>
-          </div>
-        </div>
+        <NewslatterForm />
 
         {/* Bottom Copyright Section */}
         <div className="mt-12 border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">

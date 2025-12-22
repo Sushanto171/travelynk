@@ -1,15 +1,11 @@
-"use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import ContactForm from "@/components/modules/contactUs/ContactForm";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Mail,
-  Phone,
   MapPin,
-  Send,
+  Phone
 } from "lucide-react";
 
 export default function ContactPage() {
@@ -24,7 +20,7 @@ export default function ContactPage() {
         </h1>
 
         <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-          Have questions, feedback, or need support?  
+          Have questions, feedback, or need support?
           Reach out — our team is here to help.
         </p>
       </section>
@@ -54,7 +50,7 @@ export default function ContactPage() {
 
           <Card className="bg-muted">
             <CardContent className="p-6 text-sm text-muted-foreground">
-              We typically respond within <strong>24 hours</strong>.  
+              We typically respond within <strong>24 hours</strong>.
               For billing or subscription issues, please include your account
               email for faster resolution.
             </CardContent>
@@ -62,29 +58,7 @@ export default function ContactPage() {
         </div>
 
         {/* -------- Contact Form -------- */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Send us a message</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-4">
-              <Input placeholder="Full name" />
-              <Input type="email" placeholder="Email address" />
-            </div>
-
-            <Input placeholder="Subject" />
-
-            <Textarea
-              placeholder="Write your message here..."
-              className="min-h-[140px]"
-            />
-
-            <Button className="w-full gap-2">
-              <Send className="w-4 h-4" />
-              Send Message
-            </Button>
-          </CardContent>
-        </Card>
+        <ContactForm />
       </section>
 
       {/* ---------------- TRUST ---------------- */}
