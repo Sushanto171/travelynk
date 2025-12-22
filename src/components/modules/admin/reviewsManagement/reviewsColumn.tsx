@@ -8,7 +8,7 @@ import Link from "next/link";
 export const reviewsColumn: Column<IReview>[] = [
   {
     header: "Reviewer",
-    render: (row) => (
+    accessor: (row) => (
       <UserCard
         id={row.reviewer.id}
         name={row.reviewer.name}
@@ -20,7 +20,7 @@ export const reviewsColumn: Column<IReview>[] = [
 
   {
     header: "Plan",
-    render: (row) => (
+    accessor: (row) => (
       <Link href={`/travel-plans/${row?.plan?.slug}`}>
         <span className="font-medium text-sm hover:underline truncate">{row.plan.title}</span>
       </Link>
@@ -29,17 +29,18 @@ export const reviewsColumn: Column<IReview>[] = [
 
   {
     header: "Rating",
-    render: (row) => (
+    accessor: (row) => (
       <div className="flex items-center gap-1">
         <Star className="w-4 h-4 fill-yellow-500 stroke-yellow-500" />
         <span className="font-medium">{row.rating}/5</span>
       </div>
     ),
+    sortKey: "rating"
   },
 
   {
     header: "Comment",
-    render: (row) => (
+    accessor: (row) => (
       <div className="max-w-xs truncate text-sm">
         {row.comment}
       </div>
@@ -48,12 +49,15 @@ export const reviewsColumn: Column<IReview>[] = [
 
   {
     header: "Created",
-    render: (row) => <DateCell date={row.created_at} />,
+    accessor: (row) => <DateCell date={row.created_at} />,
+    sortKey: "created_at"
   },
 
   {
     header: "Updated",
-    render: (row) => <DateCell date={row.updated_at} />,
+    accessor: (row) => <DateCell date={row.updated_at} />,
+    sortKey: "updated_at"
+
   },
 
 ];

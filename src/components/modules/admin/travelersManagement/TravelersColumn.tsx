@@ -9,11 +9,13 @@ import { ITraveler } from "@/types/user.interface";
 export const travelersColumn: Column<ITraveler>[] = [
   {
     header: "Traveler",
-    render: (row) => <UserCard email={row.email} name={row.name} id={row.id} profile_photo={row.profile_photo} />,
+    accessor: (row) => <UserCard email={row.email} name={row.name} id={row.id} profile_photo={row.profile_photo} />,
+    sortKey: "name"
+
   },
   {
     header: "Verified Badge",
-    render: (row) => (
+    accessor: (row) => (
       <Badge variant={row.has_verified_badge ? "default" : "secondary"}>
         {row.has_verified_badge ? "Verified" : "Unverified"}
       </Badge>
@@ -22,17 +24,18 @@ export const travelersColumn: Column<ITraveler>[] = [
 
   {
     header: "Date of birth",
-    render: (row) => <span>{row.date_of_birth ? formatTimeDate(row?.date_of_birth, false) : "Not Provided"} </span>
+    accessor: (row) => <span>{row.date_of_birth ? formatTimeDate(row?.date_of_birth, false) : "Not Provided"} </span>,
+    sortKey: "date_of_birth"
   },
   {
     header: "Contact",
-    render: (row) => row.contact_number ?? "—"
+    accessor: (row) => row.contact_number ?? "—"
   }
   ,
 
   {
     header: "Subscription",
-    render: (row) => (
+    accessor: (row) => (
       <Badge variant={row.subscription_active ? "default" : "secondary"}>
         {row.subscription_active ? "Active" : "Inactive"}
       </Badge>
@@ -41,12 +44,14 @@ export const travelersColumn: Column<ITraveler>[] = [
   ,
   {
     header: "Created",
-    render: (row) => <DateCell date={row.created_at!} />,
+    accessor: (row) => <DateCell date={row.created_at!} />,
+    sortKey: "created_at"
+
   },
 
   {
     header: "Status",
-    render: (row) => <StatusBadgeCell isDeleted={row.is_deleted} />
+    accessor: (row) => <StatusBadgeCell isDeleted={row.is_deleted} />
   }
 ]
 

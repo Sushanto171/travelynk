@@ -9,14 +9,16 @@ import { ITravelPlan } from "@/types/travelPlan.interface";
 export const travelPlansColumn: Column<ITravelPlan>[] = [
   {
     header: "Title",
-    render: (row) => (
+    accessor: (row) => (
       <div className="font-medium text-sm">{row.title}</div>
     ),
+    sortKey: "created_at"
+
   },
 
   {
     header: "Owner",
-    render: (row) => (
+    accessor: (row) => (
       <UserCard
         id={row.owner.id}
         name={row.owner.name}
@@ -27,14 +29,14 @@ export const travelPlansColumn: Column<ITravelPlan>[] = [
 
   {
     header: "Destination",
-    render: (row) => (
+    accessor: (row) => (
       <div className="text-sm">{row.destination}</div>
     ),
   },
 
   {
     header: "Tour Type",
-    render: (row) => (
+    accessor: (row) => (
       <Badge variant="outline" className="uppercase">
         {row.tour_type}
       </Badge>
@@ -43,14 +45,16 @@ export const travelPlansColumn: Column<ITravelPlan>[] = [
 
   {
     header: "Budget",
-    render: (row) => (
+    accessor: (row) => (
       <span>${row.budget}</span>
     ),
+    sortKey: "created_at"
+
   },
 
   {
     header: "Duration",
-    render: (row) => (
+    accessor: (row) => (
       <span>
         {formatTimeDate(row.start_date, false)} –{" "}
         {formatTimeDate(row.end_date, false)}
@@ -60,7 +64,7 @@ export const travelPlansColumn: Column<ITravelPlan>[] = [
 
   {
     header: "Status",
-    render: (row) => (
+    accessor: (row) => (
       <Badge className={statusColor[row.status]}>
         {row.status}
       </Badge>
@@ -69,12 +73,13 @@ export const travelPlansColumn: Column<ITravelPlan>[] = [
 
   {
     header: "Joined",
-    render: (row) => row.total_joined ?? 0,
+    accessor: (row) => row.total_joined ?? 0,
   },
 
   {
     header: "Created",
-    render: (row) => <DateCell date={row.created_at} />,
+    accessor: (row) => <DateCell date={row.created_at} />,
+    sortKey: "created_at"
   },
 
 

@@ -5,14 +5,16 @@ import { IInterest } from '@/types/interest.interface';
 export const interestColumns: Column<IInterest>[] = [
   {
     header: "Id",
-    render: (row) => row.id!.toString().slice(0, 7) + "...",
+    accessor: (row) => row.id!.toString().slice(0, 7) + "...",
   },
   {
     header: "Name",
-    render: (row) => row.name,
+    accessor: (row) => row.name,
+    sortKey: "name"
   },
   {
     header: "Created",
-    render: (row) => <DateCell date={row.created_at!} />,
+    accessor: (row) => <DateCell date={row.created_at!} />,
+    sortKey: "created_at"
   },
 ]

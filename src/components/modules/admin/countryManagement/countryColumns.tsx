@@ -5,14 +5,18 @@ import { ICountry } from '@/types/country.interface';
 export const countryColumns: Column<ICountry>[] = [
   {
     header: "Code",
-    render: (row) => row.code,
+    accessor: (row) => row.code,
+    sortKey: "code"
   },
   {
     header: "Name",
-    render: (row) => row.name,
+    accessor: (row) => row.name,
+    sortKey: "name"
   },
   {
     header: "Created",
-    render: (row) => <DateCell date={ row.created_at!} />,
+    accessor: (row) => <DateCell date={row.created_at!} />,
+    sortKey: "created_at"
+
   },
 ]

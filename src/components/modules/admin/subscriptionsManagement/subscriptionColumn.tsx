@@ -8,7 +8,7 @@ import { ISubscription } from "@/types/subscription.interface";
 export const subscriptionColumn: Column<ISubscription>[] = [
   {
     header: "Subscriber",
-    render: (row) => (
+    accessor: (row) => (
       <UserCard
         id={row.subscriber.id}
         name={row.subscriber.name}
@@ -20,7 +20,7 @@ export const subscriptionColumn: Column<ISubscription>[] = [
 
   {
     header: "Plan",
-    render: (row) => (
+    accessor: (row) => (
       <Badge variant="outline" className="uppercase">
         {row.plan_type as any}
       </Badge>
@@ -29,7 +29,7 @@ export const subscriptionColumn: Column<ISubscription>[] = [
 
   {
     header: "Status",
-    render: (row) => (
+    accessor: (row) => (
       <Badge
         variant={
           row.payment_status === "PAID"
@@ -46,7 +46,7 @@ export const subscriptionColumn: Column<ISubscription>[] = [
 
   {
     header: "Active",
-    render: (row) => (
+    accessor: (row) => (
       <Badge variant={row.is_active ? "default" : "secondary"}>
         {row.is_active ? "Yes" : "No"}
       </Badge>
@@ -55,17 +55,23 @@ export const subscriptionColumn: Column<ISubscription>[] = [
 
   {
     header: "Start Date",
-    render: (row) => <DateCell date={row.start_date} />,
+    accessor: (row) => <DateCell date={row.start_date} />,
+    sortKey: "start_date"
+
   },
 
   {
     header: "End Date",
-    render: (row) => <DateCell date={row.end_date} />,
+    accessor: (row) => <DateCell date={row.end_date} />,
+    sortKey: "end_date"
+
   },
 
   {
     header: "Created",
-    render: (row) => <DateCell date={row.created_at} />,
+    accessor: (row) => <DateCell date={row.created_at} />,
+    sortKey: "created_at"
+
   },
 
 ];
