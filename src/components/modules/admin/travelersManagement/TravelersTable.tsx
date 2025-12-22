@@ -1,7 +1,6 @@
 "use client"
 
 import DeleteConfirmationDialog from "@/components/shared/DeleteConfirmationDialog";
-import { ManagementTable } from "@/components/shared/ManagementTable";
 import { deleteTravelerById } from "@/services/traveler/traveler.service";
 import { ICountry } from "@/types/country.interface";
 import { IInterest } from "@/types/interest.interface";
@@ -11,6 +10,7 @@ import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import UpdateTravelerDialog from "../../traveler/TravelerFormDialog";
 import { travelersColumn } from './TravelersColumn';
+import ManagementTable from "@/components/shared/ManagementTable";
 
 export default function TravelersTable({ travelers, countries, interests }: { travelers: ITraveler[], countries: ICountry[], interests: IInterest[] }) {
   const [traveler, setTraveler] = useState<ITraveler | null>(null)

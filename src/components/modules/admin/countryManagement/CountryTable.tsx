@@ -1,7 +1,6 @@
 "use client"
 
 import DeleteConfirmationDialog from "@/components/shared/DeleteConfirmationDialog";
-import { ManagementTable } from "@/components/shared/ManagementTable";
 import { deleteCountryById } from "@/services/admin/countryManagement";
 import { ICountry } from "@/types/country.interface";
 import { useRouter } from "next/navigation";
@@ -9,6 +8,7 @@ import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import { countryColumns } from "./countryColumns";
 import CountryFormDialog from "./CountryFormDialog";
+import ManagementTable from "@/components/shared/ManagementTable";
 
 export default function CountryTable({ countries }: { countries: ICountry[] }) {
   const [country, setCountry] = useState<ICountry | null>(null)

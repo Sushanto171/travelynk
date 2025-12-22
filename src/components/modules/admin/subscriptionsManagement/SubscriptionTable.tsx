@@ -1,6 +1,6 @@
 "use client";
 
-import { ManagementTable } from "@/components/shared/ManagementTable";
+import ManagementTable from "@/components/shared/ManagementTable";
 import { ISubscription } from "@/types/subscription.interface";
 import { useState } from "react";
 import { subscriptionColumn } from "./subscriptionColumn";

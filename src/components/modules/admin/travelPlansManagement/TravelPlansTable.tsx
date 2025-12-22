@@ -1,7 +1,7 @@
 "use client"
 
 import DeleteConfirmationDialog from "@/components/shared/DeleteConfirmationDialog";
-import { ManagementTable } from "@/components/shared/ManagementTable";
+import ManagementTable from "@/components/shared/ManagementTable";
 import { deleteTravelPlanById } from "@/services/travelPlan/travelPlan.service";
 import { ITravelPlan } from "@/types/travelPlan.interface";
 import { useRouter } from "next/navigation";
