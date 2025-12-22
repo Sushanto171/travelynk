@@ -1,101 +1,134 @@
-import { Compass, Facebook, Globe, Instagram, LogOut, Mail, MapPin, Plane, Twitter, Users } from 'lucide-react';
-import Link from 'next/link';
-import React from 'react';
-import NewslatterForm from '../modules/admin/newslatterManagement/NewslatterForm';
+import {
+  Compass,
+  Facebook,
+  Globe,
+  Instagram,
+  LogOut,
+  Mail,
+  MapPin,
+  Plane,
+  Twitter,
+  Users,
+} from "lucide-react";
+import Link from "next/link";
+import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import NewslatterForm from "../modules/admin/newslatterManagement/NewslatterForm";
 
+function FooterColumn({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="space-y-3">
+      <h4 className="text-sm font-semibold text-foreground">
+        {title}
+      </h4>
+      <div className="flex flex-col gap-2">
+        {children}
+      </div>
+    </div>
+  );
+}
 
-
-const FooterLink = ({ children, icon: Icon }: { href: string; children: React.ReactNode; icon?: React.ElementType }) => (
+const FooterLink = ({
+  href,
+  icon: Icon,
+  children,
+}: {
+  href: string;
+  icon?: React.ElementType;
+  children: React.ReactNode;
+}) => (
   <Link
-    href={"/#"}
-    className="hover:text-indigo-400 transition-colors flex items-center gap-2 py-1 text-sm"
+    href={href}
+    className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
   >
-    {Icon && <Icon className="w-4 h-4" />}
+    {Icon && <Icon className="h-4 w-4" />}
     {children}
   </Link>
 );
 
-export const PublicFooter = () => {
-  const currentYear = new Date().getFullYear();
+export function PublicFooter() {
+  const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-gray-800 ">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+    <footer className="bg-background">
+      <Separator />
 
-        {/* Main Grid Layout for Desktop */}
-        {/* Mobile: 2 columns | Tablet/Desktop: 5 columns (Branding takes 2) */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+
+        {/* Top Grid */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
 
-          {/* Column 1: Branding and Mission (2/5 width on desktop) */}
-          <div className="col-span-2 md:col-span-2 space-y-4">
-            <div className="flex items-center space-x-2">
-              <Plane className="w-8 h-8 text-indigo-500" />
-              <h3 className="text-2xl font-bold tracking-tight ">
+          {/* Brand */}
+          <div className="col-span-2 space-y-4">
+            <div className="flex items-center gap-2">
+              <Plane className="h-7 w-7 text-primary" />
+              <span className="text-xl font-bold text-foreground">
                 Travelynk
-              </h3>
+              </span>
             </div>
-            <p className="text-sm max-w-xs">
-              Connect with fellow travelers, share your wanderlust, and co-create unforgettable journeys. Your next adventure starts here.
+
+            <p className="text-sm text-muted-foreground max-w-xs">
+              Connect with fellow travelers, share your wanderlust, and co-create
+              unforgettable journeys.
             </p>
-            <div className="flex space-x-4 pt-2">
-              <a href="#" aria-label="Twitter" className="transition-colors">
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" aria-label="Facebook" className="transition-colors">
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a href="#" aria-label="Instagram" className="transition-colors">
-                <Instagram className="w-5 h-5" />
-              </a>
+
+            <div className="flex gap-3">
+              <Button size="icon" variant="ghost">
+                <Twitter className="h-5 w-5" />
+              </Button>
+              <Button size="icon" variant="ghost">
+                <Facebook className="h-5 w-5" />
+              </Button>
+              <Button size="icon" variant="ghost">
+                <Instagram className="h-5 w-5" />
+              </Button>
             </div>
           </div>
 
-          {/* Column 2: Travelynk Features - Specific to your app's core value */}
-          <div className="space-y-4">
-            <h4 className="text-lg font-semibold  mb-2 border-b border-indigo-500/50 pb-1">Features</h4>
-            <nav className="flex flex-col space-y-2">
-              <FooterLink href="/plans" icon={MapPin}>Create a Plan</FooterLink>
-              <FooterLink href="/buddies" icon={Users}>Find Travel Buddies</FooterLink>
-              <FooterLink href="/discover" icon={Compass}>Discover Destinations</FooterLink>
-              <FooterLink href="/messages" icon={Mail}>Messaging</FooterLink>
-            </nav>
-          </div>
+          {/* Features */}
+          <FooterColumn title="Features">
+            <FooterLink href="/plans" icon={MapPin}>Create a Plan</FooterLink>
+            <FooterLink href="/buddies" icon={Users}>Find Buddies</FooterLink>
+            <FooterLink href="/discover" icon={Compass}>Discover</FooterLink>
+            <FooterLink href="/messages" icon={Mail}>Messaging</FooterLink>
+          </FooterColumn>
 
-          {/* Column 3: Company & Support */}
-          <div className="space-y-4">
-            <h4 className="text-lg font-semibold  mb-2 border-b border-indigo-500/50 pb-1">Company</h4>
-            <nav className="flex flex-col space-y-2">
-              <FooterLink href="/about" icon={Globe}>About Us</FooterLink>
-              <FooterLink href="/careers" icon={LogOut}>Careers (We&lsquo;re hiring!)</FooterLink>
-              <FooterLink href="/help" icon={Compass}>Help Center</FooterLink>
-              <FooterLink href="/contact" icon={Mail}>Contact Support</FooterLink>
-            </nav>
-          </div>
+          {/* Company */}
+          <FooterColumn title="Company">
+            <FooterLink href="/about" icon={Globe}>About</FooterLink>
+            <FooterLink href="/careers" icon={LogOut}>Careers</FooterLink>
+            <FooterLink href="/help" icon={Compass}>Help Center</FooterLink>
+            <FooterLink href="/contact" icon={Mail}>Contact</FooterLink>
+          </FooterColumn>
 
-          {/* Column 4: Legal & Policies */}
-          <div className="space-y-4">
-            <h4 className="text-lg font-semibold  mb-2 border-b border-indigo-500/50 pb-1">Legal</h4>
-            <nav className="flex flex-col space-y-2">
-              <FooterLink href="/terms">Terms of Service</FooterLink>
-              <FooterLink href="/privacy">Privacy Policy</FooterLink>
-              <FooterLink href="/cookies">Cookie Settings</FooterLink>
-              <FooterLink href="/security">Security</FooterLink>
-            </nav>
-          </div>
+          {/* Legal */}
+          <FooterColumn title="Legal">
+            <FooterLink href="/terms">Terms</FooterLink>
+            <FooterLink href="/privacy">Privacy</FooterLink>
+            <FooterLink href="/cookies">Cookies</FooterLink>
+            <FooterLink href="/security">Security</FooterLink>
+          </FooterColumn>
         </div>
 
-        {/* Optional: Newsletter Signup/CTA Section (Full Width) */}
+        {/* Newsletter */}
         <NewslatterForm />
 
-        {/* Bottom Copyright Section */}
-        <div className="mt-12 border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
-          <p>&copy; {currentYear} Travelynk. All rights reserved.</p>
-          <p className="mt-4 md:mt-0">
-            Made for travelers, by travelers.
-          </p>
+        <Separator />
+
+        {/* Bottom */}
+        <div className="flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground gap-4">
+          <span>© {year} Travelynk. All rights reserved.</span>
+          <span>Built for travelers, by travelers.</span>
         </div>
       </div>
     </footer>
   );
-};
+}
+
 

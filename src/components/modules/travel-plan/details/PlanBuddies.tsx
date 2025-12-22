@@ -4,39 +4,48 @@ import { UserCard } from "@/components/shared/UserCard";
 import { timeAgo } from "@/lib/formatters";
 import { Buddy } from "@/types/travelPlan.interface";
 import { Users } from "lucide-react";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+} from "@/components/ui/card";
 
 interface PlanBuddiesProps {
   buddies: Buddy[];
 }
 
-export const PlanBuddies = ({ buddies }: PlanBuddiesProps) => {
+export function PlanBuddies({ buddies }: PlanBuddiesProps) {
   return (
-    <div className="space-y-6">
+    <Card>
       {/* Header */}
-      <h2 className="text-lg font-semibold flex items-center gap-2">
-        <Users className="w-5 h-5 text-blue-500" />
-        Participants ({buddies.length})
-      </h2>
+      <CardHeader className="pb-3">
+        <CardTitle className="text-lg font-semibold flex items-center gap-2">
+          <Users className="w-5 h-5 text-blue-500" />
+          Participants ({buddies.length})
+        </CardTitle>
+      </CardHeader>
 
-      {/* Empty State */}
-      {buddies.length === 0 ? (
-        <p className="text-sm text-muted-foreground italic">
-          No participants yet.
-        </p>
-      ) : (
-        <div className="border p-4 rounded-xl space-y-3  shadow-sm">
-          {buddies.map((b) => (
-            <UserCard
-              key={b.traveler.id}
-              id={b.traveler.id}
-              name={b.traveler.name}
-              profile_photo={b.traveler.profile_photo}
-              subText={`Accepted • ${timeAgo(
-                b.updated_at)}`}
-            />
-          ))}
-        </div>
-      )}
-    </div>
+      {/* Content */}
+      <CardContent>
+        {buddies.length === 0 ? (
+          <p className="text-sm text-muted-foreground italic">
+            No participants yet.
+          </p>
+        ) : (
+          <div className="space-y-3">
+            {buddies.map((b) => (
+              <UserCard
+                key={b.traveler.id}
+                id={b.traveler.id}
+                name={b.traveler.name}
+                profile_photo={b.traveler.profile_photo}
+                subText={`Accepted • ${timeAgo(b.updated_at)}`}
+              />
+            ))}
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
-};
+}

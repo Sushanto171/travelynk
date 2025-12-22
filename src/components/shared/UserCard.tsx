@@ -26,7 +26,7 @@ export const UserCard = ({
 }: UserCardProps) => {
   const content = (
     <div
-      className={`flex flex-col gap-1 p-2 rounded-md hover: transition ${className}`}
+      className={`flex flex-col gap-1 p-2 pl-0 rounded-md hover: transition ${className}`}
     >
       <div className="flex items-center gap-3">
         <Avatar className="h-12 w-12">

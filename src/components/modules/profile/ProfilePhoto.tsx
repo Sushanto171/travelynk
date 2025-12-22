@@ -7,7 +7,7 @@ export default function ProfilePhoto({ profile_photo, name, isOwner }: { profile
     <div className="relative">
       {
         isOwner &&
-        <ProfilePhotoUpdateDialog profile_photo={profile_photo} />
+        <ProfilePhotoUpdateDialog profile_photo={profile_photo} name={name} />
       }
 
       <div className="relative h-24 w-24 md:h-32 md:w-32 rounded-full ring-4 ring-background overflow-hidden bg-muted">

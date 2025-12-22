@@ -6,12 +6,12 @@ import { IReview } from "@/types/review.interface";
 import { ITravelPlan } from "@/types/travelPlan.interface";
 import { ITraveler, IUser, UserRole } from "@/types/user.interface";
 import { useState } from "react";
+import TravelPlanCreateUpdateDialog from "../travel-plan/TravelPlanFormDialog";
 import { ProfileTabContent } from "./ProfileTabContent";
 import { AboutTab } from "./tabs/AboutTab";
 import { ReviewsTab } from "./tabs/ReviewsTab";
 import TravelPlanTab from "./tabs/TravelPlanTab";
 import { TrustTab } from "./tabs/TrustTab";
-import TravelPlanCreateUpdateDialog from "../travel-plan/TravelPlanFormDialog";
 
 export function ProfileTabs({ defaultTab = "about", user, traveler, reviews, travelPlans, isOwner }: {
   defaultTab?: string
@@ -61,11 +61,9 @@ export function ProfileTabs({ defaultTab = "about", user, traveler, reviews, tra
         <ProfileTabContent
           title="Travel Plans"
           description="Upcoming trips, destinations, and availability."
-          action= {isOwner && <TravelPlanCreateUpdateDialog />}
+          action={isOwner && <TravelPlanCreateUpdateDialog />}
         >
-         
-
-          <TravelPlanTab plans={travelPlans} />
+          <TravelPlanTab isOwner={isOwner} plans={travelPlans} />
         </ProfileTabContent>
       </TabsContent>
 

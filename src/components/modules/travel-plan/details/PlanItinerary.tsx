@@ -1,9 +1,7 @@
 "use client";
 
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { List } from "lucide-react";
 
 type DayItem = {
   day: string;
@@ -24,7 +22,10 @@ export function PlanItinerary({ itinerary }: { itinerary: string }) {
   return (
     <Card className="p-4">
       <CardHeader>
-        <CardTitle className="text-lg font-semibold">Itinerary</CardTitle>
+        <CardTitle className="text-lg font-semibold flex items-center gap-2">
+          <List className="w-5 h-5 text-blue-500" />
+          Itinerary
+        </CardTitle>
       </CardHeader>
 
       <CardContent className="pt-2 space-y-6 relative">

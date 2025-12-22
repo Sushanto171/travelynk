@@ -38,7 +38,7 @@ export const ReviewsTab: React.FC<ReviewsTabProps> = ({ reviews }) => {
                   {"★".repeat(review.rating)}
                   {"☆".repeat(5 - review.rating)}
                 </div>
-                <div className="text-gray-700">{review.comment}</div>
+                <div >{review.comment}</div>
               </UserCard>
             ))
           )}

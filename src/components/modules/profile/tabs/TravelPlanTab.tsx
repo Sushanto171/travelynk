@@ -4,12 +4,17 @@ import { PlansViewLayout } from '../../travel-plan/TravelPlansViewLayout';
 
 import { ITravelPlan } from "@/types/travelPlan.interface";
 
-export default function TravelPlanTab({ plans }: { plans: ITravelPlan[] }) {
+export default function TravelPlanTab({ plans, isOwner }: { plans: ITravelPlan[], isOwner: boolean }) {
 
 
   if (!plans.length) return (
-  <EmptyMassage text=" No Travel Plans Created Yet" />
+    <EmptyMassage text=" No Travel Plans Created Yet" />
   )
 
-  return <PlansViewLayout plans={plans} isTab />;
+  return (
+    <>
+      {/* <TravelPlanFilter /> */}
+      <PlansViewLayout plans={plans} isTab={isOwner ? true : false} />
+    </>
+  )
 }

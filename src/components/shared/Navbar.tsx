@@ -1,7 +1,7 @@
 import { getDefaultDashboardRoute } from "@/lib/authUtils";
 import { getUserAction } from "@/services/auth/getUser.service";
 import { UserRole } from "@/types/user.interface";
-import { EllipsisVertical } from "lucide-react";
+import { EllipsisVertical, Plane } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import {
@@ -49,16 +49,20 @@ export default async function PublicNavbar() {
         <div className="flex items-center justify-between py-3">
           {/* Logo */}
           <Link href="/" className="flex items-center text-2xl font-bold ">
-            Travelynk
+            <Plane className="h-7 w-7 text-primary mr-1" />
+            <span className="text-xl font-bold text-foreground">
+              Travelynk
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
           <NavLinks links={links} />
+          
+          <div className="flex gap-2">
           <ModeToggle />
-
           {/* Desktop Buttons */}
           {user ? <LogoutButton className="hidden md:block" /> : <NavAuthButton />}
-
+          </div>
           {/* Mobile Menu */}
           <div className="md:hidden">
             <Sheet>
@@ -71,7 +75,11 @@ export default async function PublicNavbar() {
                 <SheetHeader>
                   <SheetTitle>
                     <Link href="/" className="flex items-center text-2xl font-bold ">
-                      Travelynk                    </Link>
+                      <Plane className="h-7 w-7 text-primary mr-1" />
+                      <span className="text-xl font-bold text-foreground">
+                        Travelynk
+                      </span>
+                    </Link>
                   </SheetTitle>
                   <SheetDescription className="sr-only"></SheetDescription>
                 </SheetHeader>

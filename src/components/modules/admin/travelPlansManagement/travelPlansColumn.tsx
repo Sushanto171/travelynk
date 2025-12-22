@@ -2,7 +2,7 @@ import { Column } from "@/components/shared/ManagementTable";
 import { UserCard } from "@/components/shared/UserCard";
 import DateCell from "@/components/shared/cell/DateCell";
 import { Badge } from "@/components/ui/badge";
-import { statusColor } from "@/constant/planStatus";
+import { planStatusVariant } from "@/constant/planStatus";
 import { formatTimeDate } from "@/lib/formatters";
 import { ITravelPlan } from "@/types/travelPlan.interface";
 
@@ -23,6 +23,7 @@ export const travelPlansColumn: Column<ITravelPlan>[] = [
         id={row.owner.id}
         name={row.owner.name}
         email={row.owner.email}
+        profile_photo={row.owner.profile_photo}
       />
     ),
   },
@@ -65,7 +66,7 @@ export const travelPlansColumn: Column<ITravelPlan>[] = [
   {
     header: "Status",
     accessor: (row) => (
-      <Badge className={statusColor[row.status]}>
+      <Badge variant={planStatusVariant[row.status]}>
         {row.status}
       </Badge>
     ),

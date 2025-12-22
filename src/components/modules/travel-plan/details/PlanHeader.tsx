@@ -1,12 +1,12 @@
 "use client";
 
+import { UserCard } from "@/components/shared/UserCard";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { statusColor } from "@/constant/planStatus";
+import { planStatusVariant } from "@/constant/planStatus";
 import { formatTimeDate, timeAgo } from "@/lib/formatters";
 import { ITravelPlan } from "@/types/travelPlan.interface";
-import { CalendarDays, MapPin, Star, Users, Clock } from "lucide-react";
-import { UserCard } from "@/components/shared/UserCard";
+import { CalendarDays, Clock, MapPin, Star, Users } from "lucide-react";
 
 export const PlanHeader = ({ plan }: { plan: ITravelPlan }) => {
   return (
@@ -23,14 +23,16 @@ export const PlanHeader = ({ plan }: { plan: ITravelPlan }) => {
 
         <div className="flex items-center gap-2">
           <Badge variant="secondary">{plan.tour_type}</Badge>
-          <Badge className={statusColor[plan.status]}>{plan.status}</Badge>
-        </div>
+          <Badge variant={planStatusVariant[plan.status]}>
+            {plan.status}
+          </Badge>        </div>
       </div>
 
-    {/* Host Section */}
+      {/* Host Section */}
       <UserCard
         id={plan.owner.id}
         name={plan.owner.name}
+        profile_photo={plan.owner.profile_photo}
         // email={plan.owner.email}
         // subText={`Created ${timeAgo(plan.created_at)}`}
         linkToProfile
@@ -71,7 +73,7 @@ export const PlanHeader = ({ plan }: { plan: ITravelPlan }) => {
 
       <Separator />
 
-  
+
     </div>
   );
 };
