@@ -1,17 +1,17 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ChevronLeft, ChevronRight ,Annoyed} from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowRight, Users2 } from "lucide-react";
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useState } from "react";
 import { TravelerProfileCard } from "./TravelerProfileCard";
-import { motion } from 'framer-motion';
 
 interface Traveler {
   id: string;
   name: string;
-  current_location?: string;
-  rating?: number;
+  rating: number;
+  current_location: string;
   profile_photo?: string | null;
 }
 
@@ -19,84 +19,155 @@ interface TopTravelersSectionProps {
   travelers?: Traveler[];
 }
 
-const DEFAULT_TRAVELERS = [
-  { id: "1", name: "Imelda Meyers", rating: 4.8, current_location: "Barcelona", profile_photo: null },
-  { id: "2", name: "Anamika", rating: 4.9, current_location: "Dubai", profile_photo: null },
-  { id: "3", name: "Sushanto kumar", rating: 4.7, current_location: "Paris", profile_photo: null },
-  { id: "4", name: "Sushanto kumar", rating: 4.8, current_location: "Tokyo", profile_photo: null },
-  { id: "5", name: "Sushanto kumar", rating: 4.9, current_location: "London", profile_photo: null },
-  { id: "6", name: "Sushanto kumar", rating: 4.6, current_location: "Sydney", profile_photo: null },
+const DEFAULT_TRAVELERS: Traveler[] = [
+  { id: "1", name: "Imelda Meyers", rating: 4.8, current_location: "Barcelona" },
+  { id: "2", name: "Anamika Sharma", rating: 4.9, current_location: "Dubai" },
+  { id: "3", name: "Sushanto Kumar", rating: 4.7, current_location: "Paris" },
+  { id: "4", name: "Emma Wilson", rating: 4.8, current_location: "Tokyo" },
+  { id: "5", name: "James Chen", rating: 4.9, current_location: "London" },
+  { id: "6", name: "Sofia Rodriguez", rating: 4.6, current_location: "Sydney" },
 ];
 
 export function TopTravelersSection({ travelers }: TopTravelersSectionProps) {
-  const displayTravelers = travelers && travelers.length > 0 ? travelers : DEFAULT_TRAVELERS;
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const data = travelers?.length ? travelers : DEFAULT_TRAVELERS;
+  const totalSlides = data.length;
 
-  const scroll = (direction: 'left' | 'right') => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = 300;
-      scrollContainerRef.current.scrollBy({
-        left: direction === 'right' ? scrollAmount : -scrollAmount,
-        behavior: 'smooth'
-      });
-    }
+  const [activeIndex, setActiveIndex] = useState(Math.floor(totalSlides / 2));
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Auto slide
+  useEffect(() => {
+    if (isHovered) return;
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % totalSlides);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [isHovered, totalSlides]);
+
+  // Circular offset
+  const circularOffset = (index: number) => {
+    const raw = index - activeIndex;
+    if (raw > totalSlides / 2) return raw - totalSlides;
+    if (raw < -totalSlides / 2) return raw + totalSlides;
+    return raw;
   };
 
   return (
-    <section className="py-16 sm:py-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center mb-8">
+    <section className="overflow-hidden">
+      <div className="container mx-auto px-4 py-12">
+
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:justify-between gap-6 mb-12">
           <div>
-            <motion.div
-              initial={{ opacity: 0, scale: 0 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2, type: "spring" }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-4"
-            >
-              <Annoyed className="w-4 h-4 text-blue-500" />
-              <span className="text-sm font-semibold text-blue-600 dark:text-blue-400">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4">
+              <Users2 className="w-4 h-4 text-primary" />
+              <span className="text-sm font-semibold text-primary">
                 Our Community
               </span>
-            </motion.div>
+            </div>
 
-            <h2 className="text-3xl sm:text-5xl font-bold">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold">
               Top-rated <span className="text-primary">travelers</span>
             </h2>
-            <p className="text-muted-foreground mt-2 text-lg">
-               Meet verified travelers with excellent reviews
+
+            <p className="mt-2 text-base sm:text-lg text-muted-foreground">
+              Meet verified travelers with excellent reviews
             </p>
           </div>
+
           <Link href="/explore">
-            <Button variant="ghost" className="text-primary">
-              View All <ArrowRight className="ml-2 h-4 w-4" />
+            <Button variant="ghost" className="text-primary group">
+              View All
+              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Link>
         </div>
 
-        <div className="relative">
-          <button onClick={() => scroll('left')} className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-10 h-10 rounded-full bg-background border shadow-lg flex items-center justify-center hover:bg-primary hover:text-primary-foreground hidden md:flex">
-            <ChevronLeft className="w-5 h-5" />
-          </button>
+        {/* Coverflow */}
+        <section
+          className="relative h-[320px] sm:h-[380px] md:h-[440px] flex items-center justify-center"
+          style={{ perspective: "1200px" }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          {data.map((traveler, index) => {
+            const offset = circularOffset(index);
+            const isActive = offset === 0;
 
-          <button onClick={() => scroll('right')} className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-10 h-10 rounded-full bg-background border shadow-lg flex items-center justify-center hover:bg-primary hover:text-primary-foreground hidden md:flex">
-            <ChevronRight className="w-5 h-5" />
-          </button>
+            // Responsive spacing
+            const x =
+              offset *
+              (typeof window !== "undefined" && window.innerWidth < 640
+                ? 120
+                : window.innerWidth < 1024
+                ? 180
+                : 240);
 
-          <div ref={scrollContainerRef} className="flex gap-8 overflow-x-auto pb-4 scrollbar-hide">
-            {displayTravelers.map((traveler, index) => (
-              <div key={traveler.id} className="flex-shrink-0">
-                <TravelerProfileCard {...traveler} index={index} />
-              </div>
-            ))}
-          </div>
-        </div>
+            const z = isActive ? 60 : -120;
+            const rotateY = isActive ? 0 : offset < 0 ? 30 : -30;
+
+            // Scale rules
+            let scaleX = 1;
+            let scaleY = 1;
+
+            if (isActive) {
+              scaleX = 1.05;
+              scaleY = 1.1;
+            } else if (Math.abs(offset) === 1) {
+              scaleX = 0.9;
+              scaleY = 1.05;
+            } else {
+              scaleX = 0.8;
+              scaleY = 0.9;
+            }
+
+            const opacity =
+              Math.abs(offset) > 2 ? 0 : 1 - Math.abs(offset) * 0.25;
+
+            return (
+              <motion.div
+                key={traveler.id}
+                className="absolute"
+                style={{
+                  zIndex: 50 - Math.abs(offset),
+                  transformStyle: "preserve-3d",
+                }}
+                animate={{
+                  x,
+                  rotateY,
+                  z,
+                  scaleX,
+                  scaleY,
+                  opacity,
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 160,
+                  damping: 22,
+                }}
+                onClick={() => setActiveIndex(index)}
+              >
+                <div
+                  className={`
+                    w-[140px] 
+                    sm:w-[220px]
+                    md:w-[320px]
+                    lg:w-[380px]
+                    rounded-2xl overflow-hidden cursor-pointer
+                    ${isActive ? "bg-primary shadow-xl" : "bg-card border shadow-xl"}
+                  `}
+                >
+                  <TravelerProfileCard
+                    traveler={traveler}
+                    index={index}
+                    isStacked
+                  />
+                </div>
+              </motion.div>
+            );
+          })}
+        </section>
       </div>
-
-      <style jsx>{`
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
-        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-      `}</style>
     </section>
   );
 }
