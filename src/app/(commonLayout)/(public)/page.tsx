@@ -12,6 +12,9 @@ import {
   getHomePageStats,
   getPopularDestinations
 } from "@/services/home/home.service";
+import TravelLoading from "@/components/shared/TravelLoading";
+import { Suspense } from "react";
+
 
 /**
  * Landing Page - Main entry point
@@ -26,6 +29,7 @@ export default async function LandingPage() {
   ]);
 
   return (
+      <Suspense fallback={<TravelLoading />} >
     <div className="flex flex-col">
       <HeroSection stats={stats} />
 
@@ -40,5 +44,6 @@ export default async function LandingPage() {
 
       <CallToActionSection />
     </div>
+    </Suspense>
   );
 }
