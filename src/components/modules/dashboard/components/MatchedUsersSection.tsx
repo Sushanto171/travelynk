@@ -23,7 +23,7 @@ const fadeUp = {
   visible: (i = 1) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.1, duration: 0.5, ease: [0.4, 0, 0.2, 1] }
+    transition: { delay: i * 0.1, duration: 0.5, ease: [0.4, 0, 0.2, 1] as [number, number, number, number] }
   })
 };
 
@@ -37,7 +37,7 @@ export function MatchedUsersSection({ matchedUsers }: MatchedUsersSectionProps) 
   }
 
   return (
-    <motion.section variants={fadeUp} custom={5}>
+    <motion.section variants={fadeUp!} custom={5}>
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <Globe className="text-primary" size={20} />
