@@ -18,6 +18,8 @@ export const updateTraveler = catchAsyncAction(async (pre, formData: FormData) =
     const d = new Date(value);
     return isNaN(d.getTime()) ? undefined : d;
   };
+  const remove_interests =new Set(formData.getAll("remove_interests[]").map(String))
+  const remove_visited_countries =new Set(formData.getAll("remove_visited_countries[]").map(String))
 
   const payload: UpdateTravelerInput = {
     id: formData.get("id") as UUID,
@@ -29,12 +31,10 @@ export const updateTraveler = catchAsyncAction(async (pre, formData: FormData) =
     current_location: formData.get("current_location") as string || undefined,
 
     interests: formData.getAll("interests[]").map(String),
-    remove_interests: formData.getAll("remove_interests[]").map(String),
+    remove_interests: [...remove_interests],
 
     visited_countries: formData.getAll("visited_countries[]").map(String),
-    remove_visited_countries: formData
-      .getAll("remove_visited_countries[]")
-      .map(String),
+    remove_visited_countries: [...remove_visited_countries] ,
 
     profile_photo: formData.get("file") as File || undefined,
   };
@@ -48,6 +48,7 @@ export const updateTraveler = catchAsyncAction(async (pre, formData: FormData) =
   }
 
   const { profile_photo, id, ...data } = validate.data
+
   const newFormData = new FormData()
   newFormData.append("data", JSON.stringify(data))
   newFormData.append("file", profile_photo as Blob)

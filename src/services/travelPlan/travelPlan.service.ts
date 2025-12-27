@@ -8,8 +8,11 @@ import { IPlanStatus } from "@/types/travelPlan.interface";
 import { createPlanSchema, updatePlanSchema } from "@/zod/traveler/travelPlan.validation";
 
 export const getTravelPlans = catchAsync(async (query?: string) => {
-
-  const res = await serverFetch.get(`/plan/${query ? `?${query}` : ""}`)
+  if(query && !query.includes("limit")){
+    query = `${query}&limit=9`
+  }
+  
+  const res = await serverFetch.get(`/plan/${query ? `?${query}` : "?limit=9"}`)
   const result = await res.json()
   return result
 })

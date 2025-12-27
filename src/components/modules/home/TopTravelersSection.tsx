@@ -1,76 +1,102 @@
+"use client";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { ArrowRight, Star } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight ,Annoyed} from "lucide-react";
+import Link from "next/link";
+import { useRef } from "react";
+import { TravelerProfileCard } from "./TravelerProfileCard";
+import { motion } from 'framer-motion';
 
-// Replace with external data source as needed
-const TRAVELERS = [
-  { id: 1, name: "Ariana", interests: ["hiking", "food"], rating: 4.8, color: "#3b82f6", initials: "A" },
-  { id: 2, name: "Mateo", interests: ["photography", "culture"], rating: 4.6, color: "#10b981", initials: "M" },
-  { id: 3, name: "Sana", interests: ["beaches", "diving"], rating: 4.9, color: "#f97316", initials: "S" },
-  { id: 4, name: "Leo", interests: ["roadtrips", "coffee"], rating: 4.7, color: "#8b5cf6", initials: "L" },
+interface Traveler {
+  id: string;
+  name: string;
+  current_location?: string;
+  rating?: number;
+  profile_photo?: string | null;
+}
+
+interface TopTravelersSectionProps {
+  travelers?: Traveler[];
+}
+
+const DEFAULT_TRAVELERS = [
+  { id: "1", name: "Imelda Meyers", rating: 4.8, current_location: "Barcelona", profile_photo: null },
+  { id: "2", name: "Anamika", rating: 4.9, current_location: "Dubai", profile_photo: null },
+  { id: "3", name: "Sushanto kumar", rating: 4.7, current_location: "Paris", profile_photo: null },
+  { id: "4", name: "Sushanto kumar", rating: 4.8, current_location: "Tokyo", profile_photo: null },
+  { id: "5", name: "Sushanto kumar", rating: 4.9, current_location: "London", profile_photo: null },
+  { id: "6", name: "Sushanto kumar", rating: 4.6, current_location: "Sydney", profile_photo: null },
 ];
 
-// --- PlaceholderAvatar Component ---
-const PlaceholderAvatar = ({
-  initials,
-  bgColor,
-  size = 80,
-}: {
-  initials: string;
-  bgColor: string;
-  size?: number;
-}) => (
-  <div
-    className="flex items-center justify-center rounded-full text-white font-semibold"
-    style={{
-      width: size,
-      height: size,
-      backgroundColor: bgColor,
-      fontSize: size / 2,
-    }}
-  >
-    {initials}
-  </div>
-);
+export function TopTravelersSection({ travelers }: TopTravelersSectionProps) {
+  const displayTravelers = travelers && travelers.length > 0 ? travelers : DEFAULT_TRAVELERS;
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-export function TopTravelersSection() {
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 300;
+      scrollContainerRef.current.scrollBy({
+        left: direction === 'right' ? scrollAmount : -scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
-    <section className="py-16 sm:py-24 ">
+    <section className="py-16 sm:py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="flex justify-between items-end mb-10">
-          <h2 className="text-3xl sm:text-4xl font-bold ">Top-rated travelers</h2>
-          <a className="text-indigo-600 hover:text-indigo-700 font-medium flex items-center" href="#">
-            Browse profiles <ArrowRight className="ml-1 h-4 w-4" />
-          </a>
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, type: "spring" }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-4"
+            >
+              <Annoyed className="w-4 h-4 text-blue-500" />
+              <span className="text-sm font-semibold text-blue-600 dark:text-blue-400">
+                Our Community
+              </span>
+            </motion.div>
+
+            <h2 className="text-3xl sm:text-5xl font-bold">
+              Top-rated <span className="text-primary">travelers</span>
+            </h2>
+            <p className="text-muted-foreground mt-2 text-lg">
+               Meet verified travelers with excellent reviews
+            </p>
+          </div>
+          <Link href="/explore">
+            <Button variant="ghost" className="text-primary">
+              View All <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </Link>
         </div>
 
-        {/* Travelers Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {TRAVELERS.map((t) => (
-            <Card key={t.id} className="p-6 text-center hover:scale-[1.02] transition-transform duration-300">
-              <div className="flex flex-col items-center">
-                {/* Placeholder Avatar */}
-                <PlaceholderAvatar initials={t.initials} bgColor={t.color} size={80} />
+        <div className="relative">
+          <button onClick={() => scroll('left')} className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-10 h-10 rounded-full bg-background border shadow-lg flex items-center justify-center hover:bg-primary hover:text-primary-foreground hidden md:flex">
+            <ChevronLeft className="w-5 h-5" />
+          </button>
 
-                <h3 className="text-xl font-semibold  mb-1">{t.name}</h3>
-                <p className="text-sm text-gray-500 mb-3">{t.interests.join(" • ")}</p>
+          <button onClick={() => scroll('right')} className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-10 h-10 rounded-full bg-background border shadow-lg flex items-center justify-center hover:bg-primary hover:text-primary-foreground hidden md:flex">
+            <ChevronRight className="w-5 h-5" />
+          </button>
 
-                <Badge className="bg-yellow-100 text-yellow-700 border-yellow-300 flex items-center gap-1 mb-3">
-                  <Star className="h-3 w-3 fill-current" />
-                  {t.rating}
-                </Badge>
-
-                <Button variant="outline" size="sm" className="w-full">
-                  View
-                </Button>
+          <div ref={scrollContainerRef} className="flex gap-8 overflow-x-auto pb-4 scrollbar-hide">
+            {displayTravelers.map((traveler, index) => (
+              <div key={traveler.id} className="flex-shrink-0">
+                <TravelerProfileCard {...traveler} index={index} />
               </div>
-            </Card>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
+
+      <style jsx>{`
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+      `}</style>
     </section>
   );
 }

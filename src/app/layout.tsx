@@ -78,7 +78,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Toaster richColors position="top-right" />
-                 <ThemeProvider
+         <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem

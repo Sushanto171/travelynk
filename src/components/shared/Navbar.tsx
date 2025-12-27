@@ -45,23 +45,23 @@ export default async function PublicNavbar() {
 
   return (
     <header>
-      <div className="max-w-7xl mx-auto ">
-        <div className="flex items-center justify-between py-3">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between py-4">
           {/* Logo */}
-          <Link href="/" className="flex items-center text-2xl font-bold ">
-            <Plane className="h-7 w-7 text-primary mr-1" />
-            <span className="text-xl font-bold text-foreground">
+          <Link href="/" className="flex items-center text-2xl font-bold hover:opacity-80 transition-opacity">
+            <Plane className="h-7 w-7 text-primary mr-2" />
+            <span className="text-xl font-bold bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
               Travelynk
             </span>
           </Link>
 
           {/* Desktop Navigation */}
           <NavLinks links={links} />
-          
+
           <div className="flex gap-2">
-          <ModeToggle />
-          {/* Desktop Buttons */}
-          {user ? <LogoutButton className="hidden md:block" /> : <NavAuthButton />}
+            <ModeToggle />
+            {/* Desktop Buttons */}
+            {user ? <LogoutButton className="hidden md:block" /> : <NavAuthButton />}
           </div>
           {/* Mobile Menu */}
           <div className="md:hidden">
