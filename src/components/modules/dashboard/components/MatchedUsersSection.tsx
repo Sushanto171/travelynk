@@ -37,7 +37,7 @@ export function MatchedUsersSection({ matchedUsers }: MatchedUsersSectionProps) 
   }
 
   return (
-    <motion.section variants={fadeUp!} custom={5}>
+    <motion.section variants={fadeUp} custom={5}>
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <Globe className="text-primary" size={20} />
