@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import Link from "next/link"
 import {
   Route,
   Users,
@@ -115,8 +116,9 @@ export default function ServicesPage() {
         <p className="text-muted-foreground">
           Start planning smarter and managing trips with confidence.
         </p>
-
+        <Link href="/subscriptions">
         <Button size="lg">View Pricing</Button>
+        </Link>
       </section>
     </div>
   );

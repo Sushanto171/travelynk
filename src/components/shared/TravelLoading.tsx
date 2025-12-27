@@ -1,23 +1,34 @@
+import { Plane } from "lucide-react";
+
 export default function TravelLoading() {
   return (
     <div className="flex h-screen w-full items-center justify-center bg-background">
       <div className="relative w-64 h-64">
-
         {/* SVG Path */}
         <svg viewBox="0 0 200 200" className="absolute inset-0">
           <path
             d="M20 160 C 80 40, 120 40, 180 160"
             fill="none"
-            stroke="hsl(var(--muted-foreground))"
-            strokeWidth="2"
-            strokeDasharray="6 6"
+            stroke="hsl(var(--primary))"
+            strokeWidth="3"
+            strokeDasharray="8 8"
             className="route-path"
           />
         </svg>
 
-        {/* Plane */}
+        {/* Animated Plane Icon */}
         <div className="plane-wrapper">
-          ✈️
+          <Plane className="w-8 h-8 text-primary" />
+        </div>
+
+        {/* Brand */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <div className="flex items-center gap-2">
+            {/* <Plane className="w-8 h-8 text-primary" /> */}
+            <span className="text-2xl font-bold bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
+              Travelynk
+            </span>
+          </div>
         </div>
 
         {/* Status */}
@@ -33,7 +44,6 @@ export default function TravelLoading() {
             offset-path: path("M20 160 C 80 40, 120 40, 180 160");
             offset-distance: 0%;
             animation: fly 2.6s ease-in-out infinite;
-            font-size: 30px;
           }
 
           @keyframes fly {
@@ -68,5 +78,5 @@ export default function TravelLoading() {
         `}</style>
       </div>
     </div>
-  )
+  );
 }

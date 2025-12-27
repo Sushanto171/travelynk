@@ -1,6 +1,9 @@
+import ChangePasswordForm from "@/components/modules/auth/ChangePasswordForm";
 
 export default function ChangePasswordPage() {
   return (
-    <div>This is ChangePasswordPage Component.</div>
+    <div>
+      <ChangePasswordForm />
+    </div>
   );
 }

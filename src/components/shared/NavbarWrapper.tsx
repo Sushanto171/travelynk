@@ -27,7 +27,7 @@ export default function NavbarWrapper({ children }: { children: ReactNode }) {
       className={`sticky top-0 left-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-border/50 shadow-sm transition-all duration-300  ${isVisible ? "translate-y-0" : "-translate-y-full"
         }`}
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="">
         {children}
       </div>
     </div>

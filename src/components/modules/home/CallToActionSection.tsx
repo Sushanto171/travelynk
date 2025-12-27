@@ -2,12 +2,12 @@
 
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { ArrowRight, Compass, Globe, Sparkles, Star, Users } from "lucide-react";
+import { ArrowRight, Compass, Globe, Plane, Star, Users } from "lucide-react";
 import Link from "next/link";
 
 export function CallToActionSection() {
   return (
-    <section className="relative overflow-hidden py-24 sm:py-32 bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900">
+    <section className="relative overflow-hidden py-16 sm:py-20 bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900">
       {/* Background image overlay */}
       <div
         className="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-overlay"
@@ -55,12 +55,12 @@ export function CallToActionSection() {
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 border border-primary/30 backdrop-blur-sm mb-8"
           >
-            <Sparkles className="w-4 h-4 text-primary" />
+            <Plane className="w-4 h-4 text-primary" />
             <span className="text-sm font-semibold text-white">Start Your Adventure</span>
           </motion.div>
 
           {/* Heading */}
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-6">
             Ready to Find Your{" "}
             <span className="bg-gradient-to-r from-primary via-emerald-400 to-cyan-400 bg-clip-text text-transparent">
               Travel Companion?
@@ -68,7 +68,7 @@ export function CallToActionSection() {
           </h2>
 
           {/* Description */}
-          <p className="text-lg sm:text-xl text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-md sm:text-lg text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed">
             Join thousands of travelers who have already found their perfect travel buddies.
             Your next adventure awaits!
           </p>
@@ -95,7 +95,7 @@ export function CallToActionSection() {
               <Button
                 size="lg"
                 variant="outline"
-                className="px-10 py-6 text-lg font-semibold border-2 border-white/30 text-white hover:bg-white/10 backdrop-blur-sm hover:scale-105 transition-all"
+                className="px-10 py-6 text-lg font-semibold border-2 border-white/30 text-white hover:bg-white/10 backdrop-blur-sm hover:scale-105 transition-all bg-transparent"
               >
                 Browse Travel Plans
               </Button>
@@ -111,17 +111,17 @@ export function CallToActionSection() {
             className="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-12 border-t border-white/20"
           >
             <StatCard
-              icon={<Users className="w-7 h-7 text-primary" />}
+              icon={<Users className="w-5 h-5 text-primary" />}
               value="1200+"
               label="Active Travelers"
             />
             <StatCard
-              icon={<Globe className="w-7 h-7 text-emerald-400" />}
+              icon={<Globe className="w-5 h-5 text-emerald-400" />}
               value="450+"
               label="Trips Organized"
             />
             <StatCard
-              icon={<Star className="w-7 h-7 text-yellow-400 fill-yellow-400" />}
+              icon={<Star className="w-5 h-5 text-yellow-400 fill-yellow-400" />}
               value="4.7★"
               label="Average Rating"
             />
@@ -134,7 +134,7 @@ export function CallToActionSection() {
         <Compass className="w-32 h-32 text-white animate-spin" style={{ animationDuration: '20s' }} />
       </div>
       <div className="absolute bottom-10 left-10 opacity-20">
-        <Sparkles className="w-24 h-24 text-primary" />
+        <Plane className="w-24 h-24 text-primary" />
       </div>
     </section>
   );
@@ -150,7 +150,7 @@ function StatCard({ icon, value, label }: { icon: React.ReactNode; value: string
       <div className="mb-3 p-3 rounded-full bg-white/10">
         {icon}
       </div>
-      <div className="text-4xl font-bold text-white mb-2">{value}</div>
+      <div className="text-2xl font-bold text-white mb-2">{value}</div>
       <div className="text-sm text-gray-300">{label}</div>
     </motion.div>
   );

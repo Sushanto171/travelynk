@@ -32,13 +32,13 @@ export default function ContactPage() {
           <InfoCard
             icon={<Mail />}
             title="Email"
-            value="support@yourplatform.com"
+            value="sushantokumar171@gmail.com"
             description="Reach us anytime via email."
           />
           <InfoCard
             icon={<Phone />}
             title="Phone"
-            value="+880 1XXX-XXXXXX"
+            value="+880 17914-07583"
             description="Available during business hours."
           />
           <InfoCard

@@ -29,7 +29,7 @@ export default async function LandingPage() {
     <div className="flex flex-col">
       <HeroSection stats={stats} />
 
-      <div className="mx-auto max-w-7xl w-full">
+      <div className="mx-auto max-w-7xl w-full px-4 sm:px-6">
         <HowItWorksSection />
         <PopularDestinationsSection destinations={destinations} />
         <TopTravelersSection travelers={travelers} />

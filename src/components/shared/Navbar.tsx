@@ -45,7 +45,7 @@ export default async function PublicNavbar() {
 
   return (
     <header>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl w-full px-4 sm:px-8">
         <div className="flex items-center justify-between py-4">
           {/* Logo */}
           <Link href="/" className="flex items-center text-2xl font-bold hover:opacity-80 transition-opacity">
@@ -58,11 +58,10 @@ export default async function PublicNavbar() {
           {/* Desktop Navigation */}
           <NavLinks links={links} />
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 justify-end">
             <ModeToggle />
             {/* Desktop Buttons */}
             {user ? <LogoutButton className="hidden md:block" /> : <NavAuthButton />}
-          </div>
           {/* Mobile Menu */}
           <div className="md:hidden">
             <Sheet>
@@ -85,12 +84,12 @@ export default async function PublicNavbar() {
                 </SheetHeader>
 
                 <NavLinks isMobile={true} links={links} />
-                <ModeToggle />
                 <SheetFooter>
                   {user ? <LogoutButton /> : <NavAuthButton isMobile={true} />}
                 </SheetFooter>
               </SheetContent>
             </Sheet>
+          </div>
           </div>
         </div>
       </div>
