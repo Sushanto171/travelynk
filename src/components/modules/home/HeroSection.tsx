@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { gsap } from "gsap";
-import { ArrowRight, MapPin, Sparkles, Star, Users, Plane } from "lucide-react";
+import { ArrowRight, MapPin, Plane, Star, Users } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 
@@ -30,19 +30,19 @@ export function HeroSection({ stats }: HeroSectionProps) {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-const words = headlineRef.current?.querySelectorAll(".word");
+      const words = headlineRef.current?.querySelectorAll(".word");
 
-if (!words || words.length === 0) return;
-if (!buttonsRef || !buttonsRef?.current?.children) return;
+      if (!words || words.length === 0) return;
+      if (!buttonsRef || !buttonsRef?.current?.children) return;
 
-gsap.from(Array.from(words), {
-  opacity: 0,
-  y: 40,
-  rotationX: -90,
-  stagger: 0.08,
-  duration: 0.9,
-  ease: "back.out(1.6)",
-});
+      gsap.from(Array.from(words), {
+        opacity: 0,
+        y: 40,
+        rotationX: -90,
+        stagger: 0.08,
+        duration: 0.9,
+        ease: "back.out(1.6)",
+      });
 
 
       gsap.from(descriptionRef.current, {
