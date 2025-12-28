@@ -32,19 +32,38 @@ export function TopTravelersSection({ travelers }: TopTravelersSectionProps) {
   const data = travelers?.length ? travelers : DEFAULT_TRAVELERS;
   const totalSlides = data.length;
 
-  const [activeIndex, setActiveIndex] = useState(Math.floor(totalSlides / 2));
+  const [activeIndex, setActiveIndex] = useState(
+    Math.floor(totalSlides / 2)
+  );
   const [isHovered, setIsHovered] = useState(false);
+
+  // ✅ Responsive spacing (SSR-safe)
+  const [spacing, setSpacing] = useState(240);
+
+  useEffect(() => {
+    const updateSpacing = () => {
+      if (window.innerWidth < 640) setSpacing(120);
+      else if (window.innerWidth < 1024) setSpacing(180);
+      else setSpacing(240);
+    };
+
+    updateSpacing();
+    window.addEventListener("resize", updateSpacing);
+    return () => window.removeEventListener("resize", updateSpacing);
+  }, []);
 
   // Auto slide
   useEffect(() => {
     if (isHovered) return;
+
     const interval = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % totalSlides);
     }, 4000);
+
     return () => clearInterval(interval);
   }, [isHovered, totalSlides]);
 
-  // Circular offset
+  // Circular offset logic
   const circularOffset = (index: number) => {
     const raw = index - activeIndex;
     if (raw > totalSlides / 2) return raw - totalSlides;
@@ -55,7 +74,6 @@ export function TopTravelersSection({ travelers }: TopTravelersSectionProps) {
   return (
     <section className="overflow-hidden">
       <div className="container mx-auto px-4 py-12">
-
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:justify-between gap-6 mb-12">
           <div>
@@ -85,7 +103,7 @@ export function TopTravelersSection({ travelers }: TopTravelersSectionProps) {
 
         {/* Coverflow */}
         <section
-          className="relative h-[320px] sm:h-[380px] md:h-[440px] flex items-center justify-center"
+          className="h-[240] flex items-center justify-center"
           style={{ perspective: "1200px" }}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
@@ -94,19 +112,10 @@ export function TopTravelersSection({ travelers }: TopTravelersSectionProps) {
             const offset = circularOffset(index);
             const isActive = offset === 0;
 
-            // Responsive spacing
-            const x =
-              offset *
-              (typeof window !== "undefined" && window.innerWidth < 640
-                ? 120
-                : window.innerWidth < 1024
-                ? 180
-                : 240);
-
+            const x = offset * spacing;
             const z = isActive ? 60 : -120;
             const rotateY = isActive ? 0 : offset < 0 ? 30 : -30;
 
-            // Scale rules
             let scaleX = 1;
             let scaleY = 1;
 
@@ -149,12 +158,17 @@ export function TopTravelersSection({ travelers }: TopTravelersSectionProps) {
               >
                 <div
                   className={`
-                    w-[140px] 
+                    w-[180px]
                     sm:w-[220px]
                     md:w-[320px]
                     lg:w-[380px]
                     rounded-2xl overflow-hidden cursor-pointer
-                    ${isActive ? "bg-primary shadow-xl" : "bg-card border shadow-xl"}
+                    scale-70
+                    ${
+                      isActive
+                        ? "bg-primary shadow-xl"
+                        : "bg-card border shadow-xl"
+                    }
                   `}
                 >
                   <TravelerProfileCard
@@ -167,6 +181,26 @@ export function TopTravelersSection({ travelers }: TopTravelersSectionProps) {
             );
           })}
         </section>
+         {/* Navigation Dots */}
+        <div className="flex items-center justify-center mt-10 gap-6 bg-muted/50 px-6 py-2 rounded-full border border-border/50 backdrop-blur-sm w-fit mx-auto">
+          <div className="flex gap-2">
+            {data.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setActiveIndex(idx)}
+                className={`h-1.5 transition-all duration-500 rounded-full ${
+                  idx === activeIndex
+                    ? "w-10 bg-primary"
+                    : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                }`}
+                aria-label={`Go to traveler ${idx + 1}`}
+              />
+            ))}
+          </div>
+          <div className="text-muted-foreground font-mono text-xs tracking-tighter">
+            {String(activeIndex + 1).padStart(2, "0")} / {String(data.length).padStart(2, "0")}
+          </div>
+        </div>
       </div>
     </section>
   );

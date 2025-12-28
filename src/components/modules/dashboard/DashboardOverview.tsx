@@ -9,6 +9,7 @@ import { NotificationsFeed } from "./components/NotificationsFeed";
 import { StatsGrid } from "./components/StatsGrid";
 import { TripCard } from "./components/TripCard";
 import { UserMatchCard } from "./components/UserMatchCard";
+import { IUser } from "@/types/user.interface";
 
 /**
  * Main Dashboard Overview Component
@@ -16,7 +17,7 @@ import { UserMatchCard } from "./components/UserMatchCard";
  * 
  * @param stats - UserStats object containing all dashboard data
  */
-export default function DashboardOverview({ stats }: { stats: UserStats }) {
+export default function DashboardOverview({ stats ,user}: { stats: UserStats, user: IUser }) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5 text-foreground p-4 md:p-8 lg:p-12 font-sans selection:bg-primary/20">
       <motion.div
@@ -31,7 +32,7 @@ export default function DashboardOverview({ stats }: { stats: UserStats }) {
           transition={{ duration: 0.6 }}
         >
           <DashboardHeader
-            userName={stats.name}
+            userName={stats.name || user.name}
             pendingRequests={stats.pendingRequests}
             profileCompletion={60}
           />

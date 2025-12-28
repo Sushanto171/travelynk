@@ -65,6 +65,7 @@ export default function TravelersTable({ travelers, countries, interests }: { tr
         onDelete={setDeleteTraveler}
         onEdit={setTraveler}
         isRefreshing={isPending || isDeleting}
+        emptyMessage="No travelers found"
       />
     </div>
   );

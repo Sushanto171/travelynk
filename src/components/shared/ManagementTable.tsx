@@ -70,7 +70,7 @@ export default function ManagementTable<T>({
   const handleSort = (sortKey: string) => {
     const query = new URLSearchParams(searchParams.toString());
     if (currentSortBy === sortKey) {
-      const newSortOrder = currentSortBy === "asc" ? "desc" : "asc";
+      const newSortOrder = currentSortOrder === "asc" ? "desc" : "asc";
       query.set("sortOrder", newSortOrder);
     } else {
       query.set("sortBy", sortKey);

@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { MapPin, User, Star } from "lucide-react";
+import Link from "next/link";
 
 interface Traveler {
   id?: string;
@@ -121,13 +122,15 @@ export function TravelerProfileCard({
           transition={{ delay: 0.25 }}
           className="relative p-4 sm:p-5 border-t border-border/50 bg-gradient-to-b from-muted/30 to-muted/50 backdrop-blur-sm"
         >
+          <Link href={`/travelers/${traveler.id || ""}`} passHref>
           <Button
             size="sm"
             className="w-full gap-2 text-xs sm:text-sm font-semibold bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 shadow-lg shadow-primary/20 transition-all duration-300 hover:shadow-xl hover:shadow-primary/30 hover:scale-[1.02]"
           >
             <User className="w-3.5 h-3.5" />
-            View Profile
+            Visit Profile
           </Button>
+          </Link>
         </motion.div>
 
         {/* Decorative elements with proper color tokens */}
@@ -147,7 +150,7 @@ export function TravelerProfileCard({
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
       whileHover={{ y: -4, scale: 1.02 }}
-      className="group relative flex flex-col items-center w-full rounded-xl border border-border/50 bg-card p-4 sm:p-5 shadow-md hover:shadow-xl hover:border-primary/50 transition-all duration-300 overflow-hidden"
+      className="group relative flex flex-col items-center w-full rounded-xl border border-border/50 bg-card p-4 sm:p-5 shadow-md hover:shadow-xl hover:border-primary/50 transition-all duration-300 overflow-hidden  bg-red-400"
     >
       {/* Background gradient on hover */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

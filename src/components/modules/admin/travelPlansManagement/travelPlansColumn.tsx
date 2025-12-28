@@ -12,7 +12,7 @@ export const travelPlansColumn: Column<ITravelPlan>[] = [
     accessor: (row) => (
       <div className="font-medium text-sm">{row.title}</div>
     ),
-    sortKey: "created_at"
+    sortKey: "title"
 
   },
 
@@ -31,7 +31,7 @@ export const travelPlansColumn: Column<ITravelPlan>[] = [
   {
     header: "Destination",
     accessor: (row) => (
-      <div className="text-sm">{row.destination}</div>
+      <div className="text-sm w-[167]  truncate">{row.destination}</div>
     ),
   },
 
@@ -49,7 +49,7 @@ export const travelPlansColumn: Column<ITravelPlan>[] = [
     accessor: (row) => (
       <span>${row.budget}</span>
     ),
-    sortKey: "created_at"
+    sortKey: "budget"
 
   },
 

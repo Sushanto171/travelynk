@@ -37,6 +37,7 @@ export default async function PublicNavbar() {
     ...(user && user.role === UserRole.USER
       ? [{ title: "My travel plans", href: "/dashboard/my-travel-plans" }]
       : []),
+    { title: "Explore", href: "/explore" },
     { title: "Find travel plans", href: "/travel-plans" },
     { title: "About us", href: "/about-us" },
     { title: "Contact us", href: "/contact-us" },

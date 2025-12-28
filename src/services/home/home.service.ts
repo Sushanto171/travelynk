@@ -1,10 +1,10 @@
 "use server"
 
-import { serverFetch } from "@/lib/server-fetch"
+import { publicServerFetch } from "@/lib/public-fetch"
 
 export const getHomePageStats = async () => {
   try {
-    const res = await serverFetch.get(`/stats/home`)
+    const res = await publicServerFetch.get(`/stats/home`, )
     const result = await res.json()
 
     return (
@@ -30,7 +30,7 @@ export const getHomePageStats = async () => {
 
 export const getFeaturedTravelers = async (limit = 4) => {
   try {
-    const res = await serverFetch.get(`/traveler?limit=${limit}`)
+    const res = await publicServerFetch.get(`/traveler?limit=${limit}`, )
     const result = await res.json()
 
     return result?.data ?? []
@@ -43,8 +43,8 @@ export const getFeaturedTravelers = async (limit = 4) => {
 
 export const getPopularDestinations = async (limit = 4) => {
   try {
-    const res = await serverFetch.get(
-      `/destination?popular=true&limit=${limit}`
+    const res = await publicServerFetch.get(
+      `/destination?popular=true&limit=${limit}`,
     )
     const result = await res.json()
 
@@ -58,8 +58,8 @@ export const getPopularDestinations = async (limit = 4) => {
 
 export const getFeaturedTravelPlans = async (limit = 6) => {
   try {
-    const res = await serverFetch.get(
-      `/plan?status=PENDING&limit=${limit}&skip=4`
+    const res = await publicServerFetch.get(
+      `/plan?status=PENDING&limit=${limit}&skip=4`,
     )
     const result = await res.json()
 
@@ -73,8 +73,8 @@ export const getFeaturedTravelPlans = async (limit = 6) => {
 
 export const getTestimonials = async (limit = 6) => {
   try {
-    const res = await serverFetch.get(
-      `/review?limit=${limit}`
+    const res = await publicServerFetch.get(
+      `/review?limit=${limit}`, 
     )
     const result = await res.json()
 

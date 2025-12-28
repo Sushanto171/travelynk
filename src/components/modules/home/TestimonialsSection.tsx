@@ -1,32 +1,29 @@
+"use client";
 
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import { Star } from "lucide-react";
+import { motion } from 'framer-motion';
 
-// --- Mock Data ---
+// --- Mock Testimonials ---
 const TESTIMONIALS = [
   { id: 1, name: "Maya R.", quote: "Found a travel buddy for Bali — best trip of my life.", color: "#ef4444", initials: "M" },
   { id: 2, name: "Omar K.", quote: "Verified badge boosted my matches by 3x.", color: "#3b82f6", initials: "O" },
   { id: 3, name: "Lina P.", quote: "Easy to use and very secure — highly recommended.", color: "#10b981", initials: "L" },
+  { id: 4, name: "Sam T.", quote: "User-friendly, secure, and perfect for solo travelers.", color: "#f59e0b", initials: "S" },
 ];
 
 // --- PlaceholderAvatar Component ---
-const PlaceholderAvatar = ({
-  initials,
-  bgColor,
-  size = 40,
-}: {
-  initials: string;
-  bgColor: string;
-  size?: number;
-}) => (
+const PlaceholderAvatar = ({ initials, bgColor, size = 50 }: { initials: string; bgColor: string; size?: number }) => (
   <div
-    className="flex items-center justify-center rounded-full text-white font-semibold"
-    style={{
-      width: size,
-      height: size,
-      backgroundColor: bgColor,
-      fontSize: size / 2,
-    }}
+    className="flex items-center justify-center rounded-full text-white font-semibold shadow-md"
+    style={{ width: size, height: size, fontSize: size / 2, backgroundColor: bgColor }}
   >
     {initials}
   </div>
@@ -34,34 +31,62 @@ const PlaceholderAvatar = ({
 
 export function TestimonialsSection() {
   return (
-    <section className="py-16 sm:py-24 ">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-3xl sm:text-4xl font-bold  mb-12">
-          Traveler stories
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {TESTIMONIALS.map((t) => (
-            <Card
-              key={t.id}
-              className="p-6 text-left shadow-xl border-gray-100  transform rotate-1 transition-transform duration-500 hover:rotate-0"
+    <section className="py-16 sm:py-24">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8  text-center">
+     {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className=""
+        >
+          <div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, type: "spring" }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-4"
             >
-              <div className="flex items-center space-x-3 mb-4">
-                <PlaceholderAvatar initials={t.initials} bgColor={t.color} size={40} />
+              <Star className="w-4 h-4 text-blue-500" />
+              <span className="text-sm font-semibold text-blue-600 dark:text-blue-400">
+    Traveler Stories
+              </span>
+            </motion.div>
 
-                <div>
-                  <h4 className="font-semibold ">{t.name}</h4>
-                  <p className="text-xs text-green-600 font-medium flex items-center">
-                    <Star className="h-3 w-3 fill-green-500 mr-1" />
-                    Verified traveler
-                  </p>
+            <h2 className="text-3xl sm:text-5xl font-bold">
+ What <span className=" text-primary">Our Travelers Say</span>
+            </h2>
+            <p className="text-muted-foreground mt-2 text-lg">
+             
+    Real stories from verified travelers who connected, explored, and experienced adventures across the globe.
+            </p>
+          </div>
+        </motion.div>
+        <Carousel className="w-full px-12 sm:px-24">
+          <CarouselContent className="-ml-2 sm:gap-6 py-12 px-10 ">
+            {TESTIMONIALS.map((t) => (
+              <CarouselItem key={t.id} className="pl-2 md:basis-1/2 lg:basis-1/3">
+                <div className="p-1">
+                  <Card className="shadow-xl border border-border/30  backdrop-blur-lg hover:scale-105 transition-transform duration-300 relative">
+                    <CardContent className="flex flex-col items-center p-6 text-center">
+                      <PlaceholderAvatar initials={t.initials} bgColor={t.color} size={50} />
+                      <h4 className="mt-4 font-semibold text-lg">{t.name}</h4>
+                      <p className="flex items-center gap-1 text-sm text-green-600 font-medium">
+                        <Star className="w-4 h-4 fill-green-500" /> Verified traveler
+                      </p>
+                      <p className="mt-3 italic  text-sm sm:text-base">&ldquo;{t.quote}&rdquo;</p>
+                    </CardContent>
+                  </Card>
                 </div>
-              </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
 
-              <p className="italic text-lg text-gray-700">&ldquo;{t.quote}&ldquo;</p>
-            </Card>
-          ))}
-        </div>
+          <CarouselPrevious className="absolute top-1/2 left-0 -translate-y-1/2 z-10" />
+          <CarouselNext className="absolute top-1/2 right-0 -translate-y-1/2 z-10" />
+        </Carousel>
       </div>
     </section>
   );
