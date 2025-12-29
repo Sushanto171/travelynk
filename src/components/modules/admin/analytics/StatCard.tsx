@@ -29,9 +29,9 @@ export function StatCard({
       className={`rounded-xl shadow-lg overflow-hidden  ${bgColor}`}
     >
       <Card className={`${bgColor}`}>
-        <CardContent className="flex items-center  justify-between p-6 gap-4">
+        <CardContent className="flex items-center justify-between p-6 gap-4">
           <div>
-            <p className="text-sm text-muted-foreground">{title}</p>
+            <p className="text-sm">{title}</p>
             <AnimatePresence>
               <motion.div
                 initial={{ opacity: 0 }}

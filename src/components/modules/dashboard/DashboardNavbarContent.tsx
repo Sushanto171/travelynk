@@ -18,6 +18,7 @@ import { IUser } from "@/types/user.interface";
 import { useEffect, useState } from "react";
 import DashboardSidebarContent from "./DashboardSidebarContent";
 import UserDropdown from "./UserDropdown";
+import { ModeToggle } from "@/components/shared/ModeToggle";
 
 type DashboardNavbarContentProps = {
   user: IUser;
@@ -76,10 +77,11 @@ export default function DashboardNavbarContent({
       </div>
       {/* Notification Bell */}
       <div className="relative">
-        <Badge className="absolute -top-2 -right-2">3</Badge>
+        {/* <Badge className="absolute -top-2 -right-2">3</Badge>
         <Button variant="outline" size="icon">
           <Bell />
-        </Button>
+        </Button> */}
+        <ModeToggle />
       </div>
       {/* User Dropdown */}
       <UserDropdown user={user} />
