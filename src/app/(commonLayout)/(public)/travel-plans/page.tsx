@@ -14,7 +14,16 @@ export default async function TravelPlansPage({
   const plans = await getTravelPlans(queryString)
   return (
     <div className="py-12 space-y-8">
+      {/* Header */}
+      <div className="mb-8 text-center">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold">
+          Find <span className="text-primary">Plan Trips</span>
+        </h1>
+        <p className="mt-2 text-base sm:text-lg text-muted-foreground">
+          Join trusted travel plans and connect with real travelers heading to the same destinations.
+        </p>
 
+      </div>
       <div>
         <TravelPlanFilter className="mb-6" />
       </div>

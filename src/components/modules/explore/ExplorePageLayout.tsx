@@ -13,16 +13,8 @@ interface ExplorePageProps {
 
 export function ExplorePageLayout({ travelers }: ExplorePageProps) {
   return (
-    <section className="py-12 px-4 sm:px-6 lg:px-12">
-      {/* Header */}
-      <div className="mb-8 text-center">
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold">
-          Explore <span className="text-primary">Travelers</span>
-        </h1>
-        <p className="mt-2 text-base sm:text-lg text-muted-foreground">
-          Connect with travelers who share your interests
-        </p>
-      </div>
+    <section className="px-1 ">
+
 
       {/* Travelers Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -45,16 +37,6 @@ export function ExplorePageLayout({ travelers }: ExplorePageProps) {
               visited_countries={traveler.visited_countries ||[]}
             />
           </motion.div>
-        ))}
-      </div>
-
-      {/* Pagination / Dots */}
-      <div className="flex justify-center mt-6 gap-2">
-        {travelers.map((_, idx) => (
-          <div
-            key={idx}
-            className="w-2 h-2 rounded-full bg-muted-foreground/40"
-          />
         ))}
       </div>
     </section>

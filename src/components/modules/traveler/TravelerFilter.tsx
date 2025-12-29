@@ -22,7 +22,7 @@ export default function TravelerFilter({ className , showPadding=true}: TravelPl
         <div className="w-full flex-1 min-w-[300px]">
           <SearchFilter
             resetKey={`searchTerm-${key}`}
-            placeholder="Search travel plans..."
+            placeholder="Search name, email..."
             paramName="searchTerm"
           />
         </div>

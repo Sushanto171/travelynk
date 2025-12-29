@@ -31,7 +31,7 @@ export function ModernTravelerCard({
 }: TravelerCardProps) {
   return (
     <motion.div
-      whileHover={{ y: -6, scale: 1.03 }}
+      whileHover={{ y: -6,  }}
       transition={{ type: "spring", stiffness: 260, damping: 18 }}
       className="relative group w-full sm:max-w-sm overflow-visible"
     >
